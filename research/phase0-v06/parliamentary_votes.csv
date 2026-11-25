@@ -1,0 +1,9 @@
+﻿measure,date,chamber,yes,no,source_id,notes
+40_hours,1936-06-12,Chambre,408,100,N04;N05,summary and narrative
+40_hours,1936-06-12,Chambre,408,160,N05,same page dossier entry; unresolved conflict
+40_hours,1936-06-18,Sénat,176,80,N05,
+paid_leave,1936-06-11,Chambre,592,0,N06,unanimous after recount according to detailed account
+paid_leave,1936-06-11,Chambre,563,1,N66,"2016 account, stage not established"
+collective_agreements,1936-06-11,Chambre,571,5,N65,
+collective_agreements,1936-06-18,Sénat,280,2,N65,
+nationalization_war_material_production,1936,Chambre,487,68,N07,date not supplied in summary

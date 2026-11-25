@@ -1,0 +1,8 @@
+﻿period,indicator,value,unit,qualifier,source_id,notes
+1929-1933,housing_program_total,260000,dwellings,planned,N35,"Loucheur programme, not completions"
+1929-1933,housing_program_medium_rent,60000,dwellings,planned,N35,subset of total
+1931-01,wholly_unemployed,350000,persons,official_estimate_reported,N64,not registered unemployed
+1931-01,partially_unemployed,1000000,persons,official_estimate_reported,N64,distinct from full unemployment
+1931-1936,collective_agreements_signed,113,agreements,reported,N65,1919 legal framework
+1936-1938,collective_agreements_signed,6000,agreements,approx,N65,through end 1938
+1936-1938,collective_agreements_extended,600,agreements,approx,N65,ministerial orders

@@ -1,0 +1,29 @@
+﻿year,indicator,value,unit,scope,source_id,locator
+1931,Maisons,8800,thousand,provisional de facto census,V501,358
+1936,Maisons,9110,thousand,provisional de facto census,V501,358
+1931,Ménages,12990,thousand,provisional de facto census,V501,358
+1936,Ménages,13145,thousand,provisional de facto census,V501,358
+1931,Sans profession,20733,thousand,provisional de facto census,V501,358
+1936,Sans profession,21923,thousand,provisional de facto census,V501,358
+1931,Professionnels,19247,thousand,provisional de facto census,V501,358
+1936,Professionnels,17561,thousand,provisional de facto census,V501,358
+1931,Chômeurs,420,thousand,provisional de facto census,V501,358
+1936,Chômeurs,829,thousand,provisional de facto census,V501,358
+1931,Comptés à part,1027,thousand,provisional de facto census,V501,358
+1936,Comptés à part,1200,thousand,provisional de facto census,V501,358
+1931,Population présente totale,41427,thousand,provisional de facto census,V501,358
+1936,Population présente totale,41508,thousand,provisional de facto census,V501,358
+1931,Villes >100000,17,cities,legal census; city size bands,V501,358
+1936,Villes >100000,17,cities,legal census; city size bands,V501,358
+1931,Villes 50001–100000,39,cities,legal census; city size bands,V501,358
+1936,Villes 50001–100000,39,cities,legal census; city size bands,V501,358
+1931,Villes 30001–50000,47,cities,legal census; city size bands,V501,358
+1936,Villes 30001–50000,78,cities,legal census; city size bands,V501,358
+1931,Villes 20001–30000,71,cities,legal census; city size bands,V501,358
+1936,Villes 20001–30000,52,cities,legal census; city size bands,V501,358
+1931,Villes 10001–20000,225,cities,legal census; city size bands,V501,358
+1936,Villes 10001–20000,218,cities,legal census; city size bands,V501,358
+1931,Villes >10000 total,399,cities,legal census; city size bands,V501,358
+1936,Villes >10000 total,404,cities,legal census; city size bands,V501,358
+1936,Naturalisation ou réintégration 1931–1936,270000,persons,approximate cumulative,V501,358
+1936,Excédent émigration nette 1931–1936,105000,persons,approximate cumulative,V501,358

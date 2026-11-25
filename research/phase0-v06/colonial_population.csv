@@ -1,0 +1,185 @@
+﻿territory,source_category,year,value,unit,source_id,locator,notes
+Tunisie,Européens,1931,195,thousand_persons,V501,359,historical categories; aggregate and detail overlap
+Tunisie,Européens,1936,213,thousand_persons,V501,359,historical categories; aggregate and detail overlap
+Tunisie,Israélites,1931,56,thousand_persons,V501,359,historical categories; aggregate and detail overlap
+Tunisie,Israélites,1936,59,thousand_persons,V501,359,historical categories; aggregate and detail overlap
+Tunisie,Musulmans,1931,2159,thousand_persons,V501,359,historical categories; aggregate and detail overlap
+Tunisie,Musulmans,1936,2336,thousand_persons,V501,359,historical categories; aggregate and detail overlap
+Tunisie,Total,1931,2410,thousand_persons,V501,359,historical categories; aggregate and detail overlap
+Tunisie,Total,1936,2608,thousand_persons,V501,359,historical categories; aggregate and detail overlap
+Tunisie,Européens: Français,1931,91.4,thousand_persons,V501,359,historical categories; aggregate and detail overlap
+Tunisie,Européens: Français,1936,108.1,thousand_persons,V501,359,historical categories; aggregate and detail overlap
+Tunisie,Européens: Italiens,1931,91.2,thousand_persons,V501,359,historical categories; aggregate and detail overlap
+Tunisie,Européens: Italiens,1936,94.3,thousand_persons,V501,359,historical categories; aggregate and detail overlap
+Tunisie,Européens: Maltais,1931,8.6,thousand_persons,V501,359,historical categories; aggregate and detail overlap
+Tunisie,Européens: Maltais,1936,7.2,thousand_persons,V501,359,historical categories; aggregate and detail overlap
+Tunisie,Européens: Autres,1931,4.1,thousand_persons,V501,359,historical categories; aggregate and detail overlap
+Tunisie,Européens: Autres,1936,3.6,thousand_persons,V501,359,historical categories; aggregate and detail overlap
+Tunisie,Européens: total détaillé,1931,195.3,thousand_persons,V501,359,historical categories; aggregate and detail overlap
+Tunisie,Européens: total détaillé,1936,213.2,thousand_persons,V501,359,historical categories; aggregate and detail overlap
+Maroc (zone française),Français: citoyens,1931,115.6,thousand_persons,V501,359,military classification changes; 1931 foreign excludes military; 1936 military distributed; sum not inferred
+Maroc (zone française),Français: citoyens,1936,139.1,thousand_persons,V501,359,military classification changes; 1931 foreign excludes military; 1936 military distributed; sum not inferred
+Maroc (zone française),Français: sujets et protégés,1931,12.6,thousand_persons,V501,359,military classification changes; 1931 foreign excludes military; 1936 military distributed; sum not inferred
+Maroc (zone française),Français: sujets et protégés,1936,16.4,thousand_persons,V501,359,military classification changes; 1931 foreign excludes military; 1936 military distributed; sum not inferred
+Maroc (zone française),Français: militaires,1936,21.5,thousand_persons,V501,359,military classification changes; 1931 foreign excludes military; 1936 military distributed; sum not inferred
+Maroc (zone française),Français: total,1936,177,thousand_persons,V501,359,military classification changes; 1931 foreign excludes military; 1936 military distributed; sum not inferred
+Maroc (zone française),Étrangers,1931,44.3,thousand_persons,V501,359,military classification changes; 1931 foreign excludes military; 1936 military distributed; sum not inferred
+Maroc (zone française),Étrangers,1936,59.6,thousand_persons,V501,359,military classification changes; 1931 foreign excludes military; 1936 military distributed; sum not inferred
+Maroc (zone française),Militaires,1931,40,thousand_persons,V501,359,military classification changes; 1931 foreign excludes military; 1936 military distributed; sum not inferred
+Maroc (zone française),Population non marocaine,1931,212.5,thousand_persons,V501,359,military classification changes; 1931 foreign excludes military; 1936 military distributed; sum not inferred
+Maroc (zone française),Population non marocaine,1936,236.6,thousand_persons,V501,359,military classification changes; 1931 foreign excludes military; 1936 military distributed; sum not inferred
+Maroc (zone française),Musulmans,1931,5067.8,thousand_persons,V501,359,military classification changes; 1931 foreign excludes military; 1936 military distributed; sum not inferred
+Maroc (zone française),Musulmans,1936,5898.2,thousand_persons,V501,359,military classification changes; 1931 foreign excludes military; 1936 military distributed; sum not inferred
+Maroc (zone française),Israélites,1931,124.6,thousand_persons,V501,359,military classification changes; 1931 foreign excludes military; 1936 military distributed; sum not inferred
+Maroc (zone française),Israélites,1936,161.3,thousand_persons,V501,359,military classification changes; 1931 foreign excludes military; 1936 military distributed; sum not inferred
+Maroc (zone française),Total,1931,5404.9,thousand_persons,V501,359,military classification changes; 1931 foreign excludes military; 1936 military distributed; sum not inferred
+Maroc (zone française),Total,1936,6296.1,thousand_persons,V501,359,military classification changes; 1931 foreign excludes military; 1936 military distributed; sum not inferred
+AOF / Sénégal,Européens,1931,5.1,thousand_persons,V501,360,Dakar separately listed; 1931 Soudan/Niger/Côte d’Ivoire grouped
+AOF / Sénégal,Européens,1936,6.8,thousand_persons,V501,360,Dakar separately listed; 1931 Soudan/Niger/Côte d’Ivoire grouped
+AOF / Sénégal,Indigènes,1931,1579,thousand_persons,V501,360,historical classification
+AOF / Sénégal,Indigènes,1936,1691,thousand_persons,V501,360,historical classification
+AOF / Mauritanie,Européens,1931,0.3,thousand_persons,V501,360,Dakar separately listed; 1931 Soudan/Niger/Côte d’Ivoire grouped
+AOF / Mauritanie,Européens,1936,0.3,thousand_persons,V501,360,Dakar separately listed; 1931 Soudan/Niger/Côte d’Ivoire grouped
+AOF / Mauritanie,Indigènes,1931,323,thousand_persons,V501,360,historical classification
+AOF / Mauritanie,Indigènes,1936,383,thousand_persons,V501,360,historical classification
+AOF / Guinée française,Européens,1931,2.3,thousand_persons,V501,360,Dakar separately listed; 1931 Soudan/Niger/Côte d’Ivoire grouped
+AOF / Guinée française,Européens,1936,3.2,thousand_persons,V501,360,Dakar separately listed; 1931 Soudan/Niger/Côte d’Ivoire grouped
+AOF / Guinée française,Indigènes,1931,2235,thousand_persons,V501,360,historical classification
+AOF / Guinée française,Indigènes,1936,2008,thousand_persons,V501,360,historical classification
+AOF / Dahomey,Européens,1931,1,thousand_persons,V501,360,Dakar separately listed; 1931 Soudan/Niger/Côte d’Ivoire grouped
+AOF / Dahomey,Européens,1936,1,thousand_persons,V501,360,Dakar separately listed; 1931 Soudan/Niger/Côte d’Ivoire grouped
+AOF / Dahomey,Indigènes,1931,1111,thousand_persons,V501,360,historical classification
+AOF / Dahomey,Indigènes,1936,1350,thousand_persons,V501,360,historical classification
+AOF / Soudan,Européens,1936,2.7,thousand_persons,V501,360,Dakar separately listed; 1931 Soudan/Niger/Côte d’Ivoire grouped
+AOF / Soudan,Indigènes,1936,3566,thousand_persons,V501,360,historical classification
+AOF / Niger,Européens,1936,0.6,thousand_persons,V501,360,Dakar separately listed; 1931 Soudan/Niger/Côte d’Ivoire grouped
+AOF / Niger,Indigènes,1936,1747,thousand_persons,V501,360,historical classification
+AOF / Côte d’Ivoire,Européens,1936,3.7,thousand_persons,V501,360,Dakar separately listed; 1931 Soudan/Niger/Côte d’Ivoire grouped
+AOF / Côte d’Ivoire,Indigènes,1936,3846,thousand_persons,V501,360,historical classification
+AOF / Dakar,Européens,1931,6.5,thousand_persons,V501,360,Dakar separately listed; 1931 Soudan/Niger/Côte d’Ivoire grouped
+AOF / Dakar,Européens,1936,6.5,thousand_persons,V501,360,Dakar separately listed; 1931 Soudan/Niger/Côte d’Ivoire grouped
+AOF / Dakar,Indigènes,1931,47,thousand_persons,V501,360,historical classification
+AOF / Dakar,Indigènes,1936,86,thousand_persons,V501,360,historical classification
+AOF / Soudan + Niger + Côte d’Ivoire,Européens,1931,5.9,thousand_persons,V501,360,grouped 1931 only
+AOF / Soudan + Niger + Côte d’Ivoire,Indigènes,1931,9259,thousand_persons,V501,360,grouped 1931 only
+AOF,Français,1931,14.4,thousand_persons,V501,360,source aggregate; do not sum with component regions
+AOF,Français,1936,17.1,thousand_persons,V501,360,source aggregate; do not sum with component regions
+AOF,Étrangers,1931,6.7,thousand_persons,V501,360,source aggregate; do not sum with component regions
+AOF,Étrangers,1936,7.7,thousand_persons,V501,360,source aggregate; do not sum with component regions
+AOF,Indigènes: citoyens,1931,69,thousand_persons,V501,360,source aggregate; do not sum with component regions
+AOF,Indigènes: citoyens,1936,81,thousand_persons,V501,360,source aggregate; do not sum with component regions
+AOF,Indigènes: sujets,1931,14455,thousand_persons,V501,360,source aggregate; do not sum with component regions
+AOF,Indigènes: sujets,1936,14581,thousand_persons,V501,360,source aggregate; do not sum with component regions
+AOF,Indigènes: étrangers,1931,31,thousand_persons,V501,360,source aggregate; do not sum with component regions
+AOF,Indigènes: étrangers,1936,16,thousand_persons,V501,360,source aggregate; do not sum with component regions
+AOF,Total,1931,14576,thousand_persons,V501,360,source aggregate; do not sum with component regions
+AOF,Total,1936,14703,thousand_persons,V501,360,source aggregate; do not sum with component regions
+AEF / Gabon,Total,1931,388,thousand_persons,V501,360,historical boundaries and methods
+AEF / Gabon,Total,1936,410,thousand_persons,V501,360,historical boundaries and methods
+AEF / Moyen Congo,Total,1931,664,thousand_persons,V501,360,historical boundaries and methods
+AEF / Moyen Congo,Total,1936,747,thousand_persons,V501,360,historical boundaries and methods
+AEF / Oubangui-Chari,Total,1931,1090,thousand_persons,V501,360,historical boundaries and methods
+AEF / Oubangui-Chari,Total,1936,834,thousand_persons,V501,360,historical boundaries and methods
+AEF / Tchad,Total,1931,1053,thousand_persons,V501,360,historical boundaries and methods
+AEF / Tchad,Total,1936,1432,thousand_persons,V501,360,historical boundaries and methods
+AEF,Français,1931,3.7,thousand_persons,V501,360,aggregate
+AEF,Français,1936,3.9,thousand_persons,V501,360,aggregate
+AEF,Européens,1931,1,thousand_persons,V501,360,aggregate
+AEF,Européens,1936,0.8,thousand_persons,V501,360,aggregate
+AEF,Indigènes,1931,3190,thousand_persons,V501,360,aggregate
+AEF,Indigènes,1936,3418,thousand_persons,V501,360,aggregate
+AEF,Total,1931,3195,thousand_persons,V501,360,aggregate
+AEF,Total,1936,3423,thousand_persons,V501,360,aggregate
+Togo,Français,1931,0.5,thousand_persons,V501,360,rounded source totals
+Togo,Français,1936,0.3,thousand_persons,V501,360,rounded source totals
+Togo,Autres Européens,1931,0.1,thousand_persons,V501,360,rounded source totals
+Togo,Autres Européens,1936,0.05,thousand_persons,V501,360,rounded source totals
+Togo,Indigènes,1931,750,thousand_persons,V501,360,rounded source totals
+Togo,Indigènes,1936,738,thousand_persons,V501,360,rounded source totals
+Togo,Total,1931,750,thousand_persons,V501,360,rounded source totals
+Togo,Total,1936,738,thousand_persons,V501,360,rounded source totals
+Madagascar,Européens et assimilés: Français,1931,20.7,thousand_persons,V501,361,
+Madagascar,Européens et assimilés: Français,1936,25.3,thousand_persons,V501,361,
+Madagascar,Européens et assimilés: Autres Européens,1931,14.1,thousand_persons,V501,361,
+Madagascar,Européens et assimilés: Autres Européens,1936,14.3,thousand_persons,V501,361,
+Madagascar,Indigènes,1931,3724,thousand_persons,V501,361,
+Madagascar,Indigènes,1936,3758,thousand_persons,V501,361,
+Madagascar,Total,1931,3759,thousand_persons,V501,361,
+Madagascar,Total,1936,3798,thousand_persons,V501,361,
+Annam,Civils: Français,1936,3.5,thousand_persons,V501,361,1936 census not comparable with earlier estimates; dash for Laos European military not imputed
+Annam,Civils: Européens et Asiatiques étrangers,1936,11,thousand_persons,V501,361,1936 census not comparable with earlier estimates; dash for Laos European military not imputed
+Annam,Civils: Indigènes sujets ou protégés français,1936,5639,thousand_persons,V501,361,1936 census not comparable with earlier estimates; dash for Laos European military not imputed
+Annam,Militaires: Européens,1936,1.3,thousand_persons,V501,361,1936 census not comparable with earlier estimates; dash for Laos European military not imputed
+Annam,Militaires: Indigènes,1936,1.4,thousand_persons,V501,361,1936 census not comparable with earlier estimates; dash for Laos European military not imputed
+Annam,Total,1936,5656,thousand_persons,V501,361,1936 census not comparable with earlier estimates; dash for Laos European military not imputed
+Cambodge,Civils: Français,1936,2,thousand_persons,V501,361,1936 census not comparable with earlier estimates; dash for Laos European military not imputed
+Cambodge,Civils: Européens et Asiatiques étrangers,1936,109,thousand_persons,V501,361,1936 census not comparable with earlier estimates; dash for Laos European military not imputed
+Cambodge,Civils: Indigènes sujets ou protégés français,1936,2935,thousand_persons,V501,361,1936 census not comparable with earlier estimates; dash for Laos European military not imputed
+Cambodge,Militaires: Européens,1936,0.2,thousand_persons,V501,361,1936 census not comparable with earlier estimates; dash for Laos European military not imputed
+Cambodge,Militaires: Indigènes,1936,0.9,thousand_persons,V501,361,1936 census not comparable with earlier estimates; dash for Laos European military not imputed
+Cambodge,Total,1936,3046,thousand_persons,V501,361,1936 census not comparable with earlier estimates; dash for Laos European military not imputed
+Cochinchine,Civils: Français,1936,12.9,thousand_persons,V501,361,1936 census not comparable with earlier estimates; dash for Laos European military not imputed
+Cochinchine,Civils: Européens et Asiatiques étrangers,1936,173,thousand_persons,V501,361,1936 census not comparable with earlier estimates; dash for Laos European military not imputed
+Cochinchine,Civils: Indigènes sujets ou protégés français,1936,4424,thousand_persons,V501,361,1936 census not comparable with earlier estimates; dash for Laos European military not imputed
+Cochinchine,Militaires: Européens,1936,2.3,thousand_persons,V501,361,1936 census not comparable with earlier estimates; dash for Laos European military not imputed
+Cochinchine,Militaires: Indigènes,1936,4.4,thousand_persons,V501,361,1936 census not comparable with earlier estimates; dash for Laos European military not imputed
+Cochinchine,Total,1936,4616,thousand_persons,V501,361,1936 census not comparable with earlier estimates; dash for Laos European military not imputed
+Laos,Civils: Français,1936,0.5,thousand_persons,V501,361,1936 census not comparable with earlier estimates; dash for Laos European military not imputed
+Laos,Civils: Européens et Asiatiques étrangers,1936,3,thousand_persons,V501,361,1936 census not comparable with earlier estimates; dash for Laos European military not imputed
+Laos,Civils: Indigènes sujets ou protégés français,1936,1007,thousand_persons,V501,361,1936 census not comparable with earlier estimates; dash for Laos European military not imputed
+Laos,Militaires: Indigènes,1936,0.3,thousand_persons,V501,361,1936 census not comparable with earlier estimates; dash for Laos European military not imputed
+Laos,Total,1936,1012,thousand_persons,V501,361,1936 census not comparable with earlier estimates; dash for Laos European military not imputed
+Tonkin,Civils: Français,1936,11.8,thousand_persons,V501,361,1936 census not comparable with earlier estimates; dash for Laos European military not imputed
+Tonkin,Civils: Européens et Asiatiques étrangers,1936,36,thousand_persons,V501,361,1936 census not comparable with earlier estimates; dash for Laos European military not imputed
+Tonkin,Civils: Indigènes sujets ou protégés français,1936,8632,thousand_persons,V501,361,1936 census not comparable with earlier estimates; dash for Laos European military not imputed
+Tonkin,Militaires: Européens,1936,6.8,thousand_persons,V501,361,1936 census not comparable with earlier estimates; dash for Laos European military not imputed
+Tonkin,Militaires: Indigènes,1936,12.9,thousand_persons,V501,361,1936 census not comparable with earlier estimates; dash for Laos European military not imputed
+Tonkin,Total,1936,8700,thousand_persons,V501,361,1936 census not comparable with earlier estimates; dash for Laos European military not imputed
+Indochine,Civils: Français,1936,30.7,thousand_persons,V501,361,1936 census not comparable with earlier estimates; dash for Laos European military not imputed
+Indochine,Civils: Européens et Asiatiques étrangers,1936,332,thousand_persons,V501,361,1936 census not comparable with earlier estimates; dash for Laos European military not imputed
+Indochine,Civils: Indigènes sujets ou protégés français,1936,22637,thousand_persons,V501,361,1936 census not comparable with earlier estimates; dash for Laos European military not imputed
+Indochine,Militaires: Européens,1936,10.6,thousand_persons,V501,361,1936 census not comparable with earlier estimates; dash for Laos European military not imputed
+Indochine,Militaires: Indigènes,1936,19.9,thousand_persons,V501,361,1936 census not comparable with earlier estimates; dash for Laos European military not imputed
+Indochine,Total,1936,23030,thousand_persons,V501,361,1936 census not comparable with earlier estimates; dash for Laos European military not imputed
+Levant / Liban,Population autochtone,1936,800,thousand_persons,V501,361,estimate early 1936; earlier census dates
+Levant / Sandjak d’Alexandrette,Population autochtone,1936,205,thousand_persons,V501,361,estimate early 1936; earlier census dates
+Levant / État des Alaouites,Population autochtone,1936,350,thousand_persons,V501,361,estimate early 1936; earlier census dates
+Levant / État du Djebel Druze,Population autochtone,1936,64,thousand_persons,V501,361,estimate early 1936; earlier census dates
+Levant / Syrie,Population autochtone,1936,1782,thousand_persons,V501,361,estimate early 1936; earlier census dates
+Levant,Population française et assimilée,1936,16,thousand_persons,V501,361,estimate
+Levant,Total,1936,3217,thousand_persons,V501,361,estimate
+Établissements français de l’Inde,Total,1931,286410,persons,V501,361–362,as reported
+Établissements français de l’Inde,Total,1936,298851,persons,V501,361–362,as reported
+Pondichéry,Total,1936,187870,persons,V501,361–362,as reported
+Karikal,Total,1936,60447,persons,V501,361–362,as reported
+Chandernagor,Total,1936,31250,persons,V501,361–362,as reported
+Mahé,Total,1936,13635,persons,V501,361–362,as reported
+Yanaon,Total,1936,5645,persons,V501,361–362,as reported
+Saint-Pierre et Miquelon,Total,1931,4321,persons,V501,361–362,as reported
+Saint-Pierre et Miquelon,Total,1936,4175,persons,V501,361–362,as reported
+Guyane française,Total,1936,30876,persons,V501,361–362,as reported
+Inini,Total,1936,6099,persons,V501,361–362,as reported
+Guadeloupe,Total,1931,267407,persons,V501,361–362,as reported
+Guadeloupe,Total,1936,304239,persons,V501,361–362,as reported
+Nouvelle-Calédonie,Total,1936,53245,persons,V501,361–362,as reported
+Saint-Pierre et Miquelon,Français,1936,3969,persons,V501,361–362,as reported; Somali indigenous and total approximate
+Saint-Pierre et Miquelon,Étrangers,1936,206,persons,V501,361–362,as reported; Somali indigenous and total approximate
+Guyane française,"Transportés, relégués ou déportés",1936,5628,persons,V501,361–362,as reported; Somali indigenous and total approximate
+Nouvelle-Calédonie,Élément libre,1936,17055,persons,V501,361–362,as reported; Somali indigenous and total approximate
+Nouvelle-Calédonie,Élément libre: Français,1936,15143,persons,V501,361–362,as reported; Somali indigenous and total approximate
+Nouvelle-Calédonie,Élément libre: Étrangers,1936,1912,persons,V501,361–362,as reported; Somali indigenous and total approximate
+Nouvelle-Calédonie,Élément pénal,1936,329,persons,V501,361–362,as reported; Somali indigenous and total approximate
+Nouvelle-Calédonie,Immigration réglementée,1936,7061,persons,V501,361–362,as reported; Somali indigenous and total approximate
+Nouvelle-Calédonie,Indigènes,1936,28800,persons,V501,361–362,as reported; Somali indigenous and total approximate
+Côte française des Somalis,Français,1936,923,persons,V501,361–362,as reported; Somali indigenous and total approximate
+Côte française des Somalis,Européens,1936,958,persons,V501,361–362,as reported; Somali indigenous and total approximate
+Côte française des Somalis,Indigènes,1936,44000,persons,V501,361–362,as reported; Somali indigenous and total approximate
+Côte française des Somalis,Total,1936,46000,persons,V501,361–362,as reported; Somali indigenous and total approximate
+Algérie,Population municipale: non musulmans,1931,881584,persons,V510,table 1,secondary transcription; 1936 total includes population comptée à part
+Algérie,Population municipale: non musulmans,1936,946013,persons,V510,table 1,secondary transcription; 1936 total includes population comptée à part
+Algérie,Population municipale: musulmans,1931,5588314,persons,V510,table 1,secondary transcription; 1936 total includes population comptée à part
+Algérie,Population municipale: musulmans,1936,6201144,persons,V510,table 1,secondary transcription; 1936 total includes population comptée à part
+Algérie,Population comptée à part,1931,83553,persons,V510,table 1,secondary transcription; 1936 total includes population comptée à part
+Algérie,Population comptée à part,1936,87527,persons,V510,table 1,secondary transcription; 1936 total includes population comptée à part
+Algérie,Total,1931,6553451,persons,V510,table 1,secondary transcription; 1936 total includes population comptée à part
+Algérie,Total,1936,7234684,persons,V510,table 1,secondary transcription; 1936 total includes population comptée à part

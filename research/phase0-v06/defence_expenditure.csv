@@ -1,0 +1,99 @@
+﻿year,country,category,value,unit,price_basis,source_id
+1931,Britain,total,107.5,million GBP,current,V401
+1931,France,total,13852,million FRF,current,V401
+1931,Germany,total,610,million RM,current,V401
+1931,Italy,total,5034,million ITL,current,V401
+1931,Soviet Union,total,1790,million RUB,current,V401
+1931,United States,total,733,million USD,current,V401
+1931,Japan,total,434,million JPY,current,V401
+1932,Britain,total,103.3,million GBP,current,V401
+1932,France,total,13814,million FRF,current,V401
+1932,Germany,total,720,million RM,current,V401
+1932,Italy,total,5049,million ITL,current,V401
+1932,Soviet Union,total,4034,million RUB,current,V401
+1932,United States,total,703,million USD,current,V401
+1932,Japan,total,733,million JPY,current,V401
+1933,Britain,total,107.6,million GBP,current,V401
+1933,France,total,13431,million FRF,current,V401
+1933,Germany,total,750,million RM,current,V401
+1933,Italy,total,4575,million ITL,current,V401
+1933,Soviet Union,total,4299,million RUB,current,V401
+1933,United States,total,648,million USD,current,V401
+1933,Japan,total,873,million JPY,current,V401
+1934,Britain,total,113.9,million GBP,current,V401
+1934,France,total,11601,million FRF,current,V401
+1934,Germany,total,4093,million RM,current,V401
+1934,Italy,total,5317,million ITL,current,V401
+1934,Soviet Union,total,5393,million RUB,current,V401
+1934,United States,total,540,million USD,current,V401
+1934,Japan,total,955,million JPY,current,V401
+1935,Britain,total,137,million GBP,current,V401
+1935,France,total,12800,million FRF,current,V401
+1935,Germany,total,5492,million RM,current,V401
+1935,Italy,total,12108,million ITL,current,V401
+1935,Soviet Union,total,8174,million RUB,current,V401
+1935,United States,total,711,million USD,current,V401
+1935,Japan,total,1032,million JPY,current,V401
+1936,Britain,total,185.9,million GBP,current,V401
+1936,France,total,15101,million FRF,current,V401
+1936,Germany,total,10271,million RM,current,V401
+1936,Italy,total,13078,million ITL,current,V401
+1936,Soviet Union,total,14858,million RUB,current,V401
+1936,United States,total,914,million USD,current,V401
+1936,Japan,total,1105,million JPY,current,V401
+1937,Britain,total,256.3,million GBP,current,V401
+1937,France,total,21580,million FRF,current,V401
+1937,Germany,total,10963,million RM,current,V401
+1937,Italy,total,12282,million ITL,current,V401
+1937,Soviet Union,total,17481,million RUB,current,V401
+1937,United States,total,937,million USD,current,V401
+1937,Japan,total,3953,million JPY,current,V401
+1938,Britain,total,397.4,million GBP,current,V401
+1938,France,total,29153,million FRF,current,V401
+1938,Germany,total,17247,million RM,current,V401
+1938,Italy,total,13446,million ITL,current,V401
+1938,Soviet Union,total,23200,million RUB,current,V401
+1938,United States,total,1030,million USD,current,V401
+1938,Japan,total,6097,million JPY,current,V401
+1939,Britain,total,719,million GBP,current,V401
+1939,France,total,93687,million FRF,current,V401
+1939,Germany,total,38000,million RM,current,V401
+1939,Italy,total,24689,million ITL,current,V401
+1939,Soviet Union,total,39200,million RUB,current,V401
+1939,United States,total,1075,million USD,current,V401
+1939,Japan,total,6417,million JPY,current,V401
+1940,Britain,total,2600,million GBP,current,V401
+1940,France,total,,million FRF,current,V401
+1940,Germany,total,55900,million RM,current,V401
+1940,Italy,total,63235,million ITL,current,V401
+1940,Soviet Union,total,56752,million RUB,current,V401
+1940,United States,total,1498,million USD,current,V401
+1940,Japan,total,7266,million JPY,current,V401
+1933,France,War Ministry,12010,million FRF,constant 1938,V402
+1933,France,Naval Ministry,4194,million FRF,constant 1938,V402
+1933,France,Air-Force Ministry,2554,million FRF,constant 1938,V402
+1933,France,total,19897,million FRF,constant 1938,V402
+1934,France,War Ministry,10212,million FRF,constant 1938,V402
+1934,France,Naval Ministry,4539,million FRF,constant 1938,V402
+1934,France,Air-Force Ministry,2231,million FRF,constant 1938,V402
+1934,France,total,18126,million FRF,constant 1938,V402
+1935,France,War Ministry,11180,million FRF,constant 1938,V402
+1935,France,Naval Ministry,5075,million FRF,constant 1938,V402
+1935,France,Air-Force Ministry,4035,million FRF,constant 1938,V402
+1935,France,total,21507,million FRF,constant 1938,V402
+1936,France,War Ministry,11941,million FRF,constant 1938,V402
+1936,France,Naval Ministry,5358,million FRF,constant 1938,V402
+1936,France,Air-Force Ministry,4090,million FRF,constant 1938,V402
+1936,France,total,22708,million FRF,constant 1938,V402
+1937,France,War Ministry,13423,million FRF,constant 1938,V402
+1937,France,Naval Ministry,5247,million FRF,constant 1938,V402
+1937,France,Air-Force Ministry,4648,million FRF,constant 1938,V402
+1937,France,total,24523,million FRF,constant 1938,V402
+1938,France,War Ministry,15227,million FRF,constant 1938,V402
+1938,France,Naval Ministry,6143,million FRF,constant 1938,V402
+1938,France,Air-Force Ministry,6645,million FRF,constant 1938,V402
+1938,France,total,29153,million FRF,constant 1938,V402
+1939,France,War Ministry,53668,million FRF,constant 1938,V402
+1939,France,Naval Ministry,9897,million FRF,constant 1938,V402
+1939,France,Air-Force Ministry,23904,million FRF,constant 1938,V402
+1939,France,total,88584,million FRF,constant 1938,V402

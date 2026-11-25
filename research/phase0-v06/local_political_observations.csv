@@ -1,0 +1,10 @@
+﻿year,measure,value,scope,source_id,notes
+1929,municipal mandate length,6,years,V410,reform
+1935,communist municipalities,90,towns over 5000,V410,around 858 towns in denominator
+1935,communist municipalities,297,complete councils or majority,V422,party report; scope differs
+1935,PCF and SFIO councils,279,Interior Ministry retrospective,V411,do not infer shares; sample ambiguity
+1945,PCF and SFIO councils,458,Interior Ministry retrospective,V411,same caveat
+1935,left councils,600,Interior Ministry retrospective,V411,reported totals incompatible with 957 denominator
+1945,left councils,675,Interior Ministry retrospective,V411,same caveat
+1935,moderate councils,484,Interior Ministry retrospective,V411,same caveat
+1945,moderate councils,110,Interior Ministry retrospective,V411,same caveat

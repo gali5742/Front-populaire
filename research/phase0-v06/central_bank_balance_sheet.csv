@@ -1,0 +1,280 @@
+﻿year_raw,account,raw_value,numeric_value,unit,source_id
+1929,Gold reserve (coins and ingots),41622,41622,million FRF,V424
+1931,Gold reserve (coins and ingots),68481,68481,million FRF,V424
+1932,Gold reserve (coins and ingots),83129,83129,million FRF,V424
+1933*,Gold reserve (coins and ingots),76959,76959,million FRF,V424
+1934b,Gold reserve (coins and ingots),82123,82123,million FRF,V424
+1935,Gold reserve (coins and ingots),66298,66298,million FRF,V424
+1936,Gold reserve (coins and ingots),60359,60359,million FRF,V424
+1937a,Gold reserve (coins and ingots),58933,58933,million FRF,V424
+1938c,Gold reserve (coins and ingots),87265,87265,million FRF,V424
+1929,Silver coins and token money,222,222,million FRF,V424
+1931,Silver coins and token money,959,959,million FRF,V424
+1932,Silver coins and token money,1369,1369,million FRF,V424
+1933*,Silver coins and token money,670,670,million FRF,V424
+1934b,Silver coins and token money,685,685,million FRF,V424
+1935,Silver coins and token money,664,664,million FRF,V424
+1936,Silver coins and token money,552,552,million FRF,V424
+1937a,Silver coins and token money,378,378,million FRF,V424
+1938c,Silver coins and token money,540,540,million FRF,V424
+1929,Postal current accounts,761,761,million FRF,V424
+1931,Postal current accounts,467,467,million FRF,V424
+1932,Postal current accounts,643,643,million FRF,V424
+1933*,Postal current accounts,591,591,million FRF,V424
+1934b,Postal current accounts,496,496,million FRF,V424
+1935,Postal current accounts,669,669,million FRF,V424
+1936,Postal current accounts,769,769,million FRF,V424
+1937a,Postal current accounts,626,626,million FRF,V424
+1938c,Postal current accounts,641,641,million FRF,V424
+1929,Advances on gold coins and bars,—,,million FRF,V424
+1931,Advances on gold coins and bars,1266,1266,million FRF,V424
+1932,Advances on gold coins and bars,1516,1516,million FRF,V424
+1933*,Advances on gold coins and bars,1416,1416,million FRF,V424
+1934b,Advances on gold coins and bars,1446,1446,million FRF,V424
+1935,Advances on gold coins and bars,1205,1205,million FRF,V424
+1936,Advances on gold coins and bars,1258,1258,million FRF,V424
+1937a,Advances on gold coins and bars,—,,million FRF,V424
+1938c,Advances on gold coins and bars,—,,million FRF,V424
+1929,Foreign assets,26053,26053,million FRF,V424
+1931,Foreign assets,21500,21500,million FRF,V424
+1932,Foreign assets,4484,4484,million FRF,V424
+1933*,Foreign assets,1162,1162,million FRF,V424
+1934b,Foreign assets,962,962,million FRF,V424
+1935,Foreign assets,1329,1329,million FRF,V424
+1936,Foreign assets,1462,1462,million FRF,V424
+1937a,Foreign assets,919,919,million FRF,V424
+1938c,Foreign assets,820,820,million FRF,V424
+1929,Foreign assets / Sight funds abroad,7281,7281,million FRF,V424
+1931,Foreign assets / Sight funds abroad,13040,13040,million FRF,V424
+1932,Foreign assets / Sight funds abroad,2935,2935,million FRF,V424
+1933*,Foreign assets / Sight funds abroad,19,19,million FRF,V424
+1934b,Foreign assets / Sight funds abroad,11,11,million FRF,V424
+1935,Foreign assets / Sight funds abroad,11,11,million FRF,V424
+1936,Foreign assets / Sight funds abroad,10,10,million FRF,V424
+1937a,Foreign assets / Sight funds abroad,29,29,million FRF,V424
+1938c,Foreign assets / Sight funds abroad,17,17,million FRF,V424
+1929,Foreign assets / Foreign bills discounted,22,22,million FRF,V424
+1931,Foreign assets / Foreign bills discounted,900,900,million FRF,V424
+1932,Foreign assets / Foreign bills discounted,262,262,million FRF,V424
+1933*,Foreign assets / Foreign bills discounted,234,234,million FRF,V424
+1934b,Foreign assets / Foreign bills discounted,221,221,million FRF,V424
+1935,Foreign assets / Foreign bills discounted,207,207,million FRF,V424
+1936,Foreign assets / Foreign bills discounted,15,15,million FRF,V424
+1937a,Foreign assets / Foreign bills discounted,20,20,million FRF,V424
+1938c,Foreign assets / Foreign bills discounted,22,22,million FRF,V424
+1929,Foreign assets / Negotiable bills and other short-term investments abroad,18750,18750,million FRF,V424
+1931,Foreign assets / Negotiable bills and other short-term investments abroad,7560,7560,million FRF,V424
+1932,Foreign assets / Negotiable bills and other short-term investments abroad,1287,1287,million FRF,V424
+1933*,Foreign assets / Negotiable bills and other short-term investments abroad,909,909,million FRF,V424
+1934b,Foreign assets / Negotiable bills and other short-term investments abroad,730,730,million FRF,V424
+1935,Foreign assets / Negotiable bills and other short-term investments abroad,1111,1111,million FRF,V424
+1936,Foreign assets / Negotiable bills and other short-term investments abroad,1437,1437,million FRF,V424
+1937a,Foreign assets / Negotiable bills and other short-term investments abroad,870,870,million FRF,V424
+1938c,Foreign assets / Negotiable bills and other short-term investments abroad,781,781,million FRF,V424
+1929,Domestic bill portfolio,8471,8471,million FRF,V424
+1931,Domestic bill portfolio,7069,7069,million FRF,V424
+1932,Domestic bill portfolio,3256,3256,million FRF,V424
+1933*,Domestic bill portfolio,4180,4180,million FRF,V424
+1934b,Domestic bill portfolio,3744,3744,million FRF,V424
+1935,Domestic bill portfolio,9700,9700,million FRF,V424
+1936,Domestic bill portfolio,9192,9192,million FRF,V424
+1937a,Domestic bill portfolio,9726,9726,million FRF,V424
+1938c,Domestic bill portfolio,11145,11145,million FRF,V424
+1929,Domestic bill portfolio / Bills discounted,8436,8436,million FRF,V424
+1931,Domestic bill portfolio / Bills discounted,6894,6894,million FRF,V424
+1932,Domestic bill portfolio / Bills discounted,3224,3224,million FRF,V424
+1933*,Domestic bill portfolio / Bills discounted,4087,4087,million FRF,V424
+1934b,Domestic bill portfolio / Bills discounted,3572,3572,million FRF,V424
+1935,Domestic bill portfolio / Bills discounted,9528,9528,million FRF,V424
+1936,Domestic bill portfolio / Bills discounted,7644,7644,million FRF,V424
+1937a,Domestic bill portfolio / Bills discounted,8744,8744,million FRF,V424
+1938c,Domestic bill portfolio / Bills discounted,7442,7442,million FRF,V424
+1929,Domestic bill portfolio / Agricultural bills and warrants rediscounted,—,,million FRF,V424
+1931,Domestic bill portfolio / Agricultural bills and warrants rediscounted,—,,million FRF,V424
+1932,Domestic bill portfolio / Agricultural bills and warrants rediscounted,—,,million FRF,V424
+1933*,Domestic bill portfolio / Agricultural bills and warrants rediscounted,—,,million FRF,V424
+1934b,Domestic bill portfolio / Agricultural bills and warrants rediscounted,—,,million FRF,V424
+1935,Domestic bill portfolio / Agricultural bills and warrants rediscounted,—,,million FRF,V424
+1936,Domestic bill portfolio / Agricultural bills and warrants rediscounted,584,584,million FRF,V424
+1937a,Domestic bill portfolio / Agricultural bills and warrants rediscounted,674,674,million FRF,V424
+1938c,Domestic bill portfolio / Agricultural bills and warrants rediscounted,1794,1794,million FRF,V424
+1929,Domestic bill portfolio / Bills rediscounted for peoples' banks,—,,million FRF,V424
+1931,Domestic bill portfolio / Bills rediscounted for peoples' banks,—,,million FRF,V424
+1932,Domestic bill portfolio / Bills rediscounted for peoples' banks,—,,million FRF,V424
+1933*,Domestic bill portfolio / Bills rediscounted for peoples' banks,—,,million FRF,V424
+1934b,Domestic bill portfolio / Bills rediscounted for peoples' banks,—,,million FRF,V424
+1935,Domestic bill portfolio / Bills rediscounted for peoples' banks,—,,million FRF,V424
+1936,Domestic bill portfolio / Bills rediscounted for peoples' banks,757,757,million FRF,V424
+1937a,Domestic bill portfolio / Bills rediscounted for peoples' banks,1,1,million FRF,V424
+1938c,Domestic bill portfolio / Bills rediscounted for peoples' banks,—,,million FRF,V424
+1929,Domestic bill portfolio / Negotiable bills purchased in France,35,35,million FRF,V424
+1931,Domestic bill portfolio / Negotiable bills purchased in France,175,175,million FRF,V424
+1932,Domestic bill portfolio / Negotiable bills purchased in France,32,32,million FRF,V424
+1933*,Domestic bill portfolio / Negotiable bills purchased in France,93,93,million FRF,V424
+1934b,Domestic bill portfolio / Negotiable bills purchased in France,172,172,million FRF,V424
+1935,Domestic bill portfolio / Negotiable bills purchased in France,172,172,million FRF,V424
+1936,Domestic bill portfolio / Negotiable bills purchased in France,307,307,million FRF,V424
+1937a,Domestic bill portfolio / Negotiable bills purchased in France,307,307,million FRF,V424
+1938c,Domestic bill portfolio / Negotiable bills purchased in France,1909,1909,million FRF,V424
+1929,Advances on securities,2507,2507,million FRF,V424
+1931,Advances on securities,2717,2717,million FRF,V424
+1932,Advances on securities,2519,2519,million FRF,V424
+1933*,Advances on securities,2910,2910,million FRF,V424
+1934b,Advances on securities,3184,3184,million FRF,V424
+1935,Advances on securities,3247,3247,million FRF,V424
+1936,Advances on securities,3509,3509,million FRF,V424
+1937a,Advances on securities,3693,3693,million FRF,V424
+1938c,Advances on securities,3640,3640,million FRF,V424
+1929,30-day advances on Treasury bonds,—,,million FRF,V424
+1931,30-day advances on Treasury bonds,—,,million FRF,V424
+1932,30-day advances on Treasury bonds,—,,million FRF,V424
+1933*,30-day advances on Treasury bonds,—,,million FRF,V424
+1934b,30-day advances on Treasury bonds,—,,million FRF,V424
+1935,30-day advances on Treasury bonds,465,465,million FRF,V424
+1936,30-day advances on Treasury bonds,342,342,million FRF,V424
+1937a,30-day advances on Treasury bonds,530,530,million FRF,V424
+1938c,30-day advances on Treasury bonds,448,448,million FRF,V424
+1929,Negotiable bills of Caisse autonome d'amortissement,5612,5612,million FRF,V424
+1931,Negotiable bills of Caisse autonome d'amortissement,7157,7157,million FRF,V424
+1932,Negotiable bills of Caisse autonome d'amortissement,6802,6802,million FRF,V424
+1933*,Negotiable bills of Caisse autonome d'amortissement,6187,6187,million FRF,V424
+1934b,Negotiable bills of Caisse autonome d'amortissement,5898,5898,million FRF,V424
+1935,Negotiable bills of Caisse autonome d'amortissement,5800,5800,million FRF,V424
+1936,Negotiable bills of Caisse autonome d'amortissement,5640,5640,million FRF,V424
+1937a,Negotiable bills of Caisse autonome d'amortissement,5637,5637,million FRF,V424
+1938c,Negotiable bills of Caisse autonome d'amortissement,5530,5530,million FRF,V424
+1929,Non-interest bearing loans to the State,3200,3200,million FRF,V424
+1931,Non-interest bearing loans to the State,3200,3200,million FRF,V424
+1932,Non-interest bearing loans to the State,3200,3200,million FRF,V424
+1933*,Non-interest bearing loans to the State,3200,3200,million FRF,V424
+1934b,Non-interest bearing loans to the State,3200,3200,million FRF,V424
+1935,Non-interest bearing loans to the State,3200,3200,million FRF,V424
+1936,Non-interest bearing loans to the State,3200,3200,million FRF,V424
+1937a,Non-interest bearing loans to the State,3200,3200,million FRF,V424
+1938c,Non-interest bearing loans to the State,10000,10000,million FRF,V424
+1929,Provisional non-interest-bearing advances to the State,—,,million FRF,V424
+1931,Provisional non-interest-bearing advances to the State,—,,million FRF,V424
+1932,Provisional non-interest-bearing advances to the State,—,,million FRF,V424
+1933*,Provisional non-interest-bearing advances to the State,—,,million FRF,V424
+1934b,Provisional non-interest-bearing advances to the State,—,,million FRF,V424
+1935,Provisional non-interest-bearing advances to the State,—,,million FRF,V424
+1936,Provisional non-interest-bearing advances to the State,16098,16098,million FRF,V424
+1937a,Provisional non-interest-bearing advances to the State,26909,26909,million FRF,V424
+1938c,Provisional non-interest-bearing advances to the State,d20627,20627,million FRF,V424
+1929,Rentes held for special purposes,113,113,million FRF,V424
+1931,Rentes held for special purposes,113,113,million FRF,V424
+1932,Rentes held for special purposes,113,113,million FRF,V424
+1933*,Rentes held for special purposes,113,113,million FRF,V424
+1934b,Rentes held for special purposes,113,113,million FRF,V424
+1935,Rentes held for special purposes,113,113,million FRF,V424
+1936,Rentes held for special purposes,113,113,million FRF,V424
+1937a,Rentes held for special purposes,113,113,million FRF,V424
+1938c,Rentes held for special purposes,113,113,million FRF,V424
+1929,Other assets,1674,1674,million FRF,V424
+1931,Other assets,2390,2390,million FRF,V424
+1932,Other assets,2315,2315,million FRF,V424
+1933*,Other assets,2502,2502,million FRF,V424
+1934b,Other assets,2297,2297,million FRF,V424
+1935,Other assets,2442,2442,million FRF,V424
+1936,Other assets,2481,2481,million FRF,V424
+1937a,Other assets,3015,3015,million FRF,V424
+1938c,Other assets,2819,2819,million FRF,V424
+1929,Total balance sheet,90235,90235,million FRF,V424
+1931,Total balance sheet,115319,115319,million FRF,V424
+1932,Total balance sheet,109346,109346,million FRF,V424
+1933*,Total balance sheet,99890,99890,million FRF,V424
+1934b,Total balance sheet,104148,104148,million FRF,V424
+1935,Total balance sheet,95132,95132,million FRF,V424
+1936,Total balance sheet,104975,104975,million FRF,V424
+1937a,Total balance sheet,113679,113679,million FRF,V424
+1938c,Total balance sheet,143588,143588,million FRF,V424
+1929,Reserve funds,299,299,million FRF,V424
+1931,Reserve funds,299,299,million FRF,V424
+1932,Reserve funds,299,299,million FRF,V424
+1933*,Reserve funds,299,299,million FRF,V424
+1934b,Reserve funds,299,299,million FRF,V424
+1935,Reserve funds,300,300,million FRF,V424
+1936,Reserve funds,321,321,million FRF,V424
+1937a,Reserve funds,329,329,million FRF,V424
+1938c,Reserve funds,329,329,million FRF,V424
+1929,Notes in circulation,67769,67769,million FRF,V424
+1931,Notes in circulation,83547,83547,million FRF,V424
+1932,Notes in circulation,82721,82721,million FRF,V424
+1933*,Notes in circulation,80638,80638,million FRF,V424
+1934b,Notes in circulation,81855,81855,million FRF,V424
+1935,Notes in circulation,80669,80669,million FRF,V424
+1936,Notes in circulation,87420,87420,million FRF,V424
+1937a,Notes in circulation,91263,91263,million FRF,V424
+1938c,Notes in circulation,108532,108532,million FRF,V424
+1929,Creditors in current account,20094,20094,million FRF,V424
+1931,Creditors in current account,29512,29512,million FRF,V424
+1932,Creditors in current account,24328,24328,million FRF,V424
+1933*,Creditors in current account,16953,16953,million FRF,V424
+1934b,Creditors in current account,20343,20343,million FRF,V424
+1935,Creditors in current account,12131,12131,million FRF,V424
+1936,Creditors in current account,14792,14792,million FRF,V424
+1937a,Creditors in current account,19081,19081,million FRF,V424
+1938c,Creditors in current account,32199,32199,million FRF,V424
+1929,Creditors in current account / Treasury,7662,7662,million FRF,V424
+1931,Creditors in current account / Treasury,340,340,million FRF,V424
+1932,Creditors in current account / Treasury,166,166,million FRF,V424
+1933*,Creditors in current account / Treasury,238,238,million FRF,V424
+1934b,Creditors in current account / Treasury,1026,1026,million FRF,V424
+1935,Creditors in current account / Treasury,85,85,million FRF,V424
+1936,Creditors in current account / Treasury,137,137,million FRF,V424
+1937a,Creditors in current account / Treasury,32,32,million FRF,V424
+1938c,Creditors in current account / Treasury,3669,3669,million FRF,V424
+1929,Creditors in current account / Caisse autonome d'amortissement,4506,4506,million FRF,V424
+1931,Creditors in current account / Caisse autonome d'amortissement,5533,5533,million FRF,V424
+1932,Creditors in current account / Caisse autonome d'amortissement,2135,2135,million FRF,V424
+1933*,Creditors in current account / Caisse autonome d'amortissement,2066,2066,million FRF,V424
+1934b,Creditors in current account / Caisse autonome d'amortissement,2817,2817,million FRF,V424
+1935,Creditors in current account / Caisse autonome d'amortissement,2751,2751,million FRF,V424
+1936,Creditors in current account / Caisse autonome d'amortissement,1968,1968,million FRF,V424
+1937a,Creditors in current account / Caisse autonome d'amortissement,2391,2391,million FRF,V424
+1938c,Creditors in current account / Caisse autonome d'amortissement,2241,2241,million FRF,V424
+1929,Creditors in current account / Other current accounts and deposits,7519,7519,million FRF,V424
+1931,Creditors in current account / Other current accounts and deposits,23152,23152,million FRF,V424
+1932,Creditors in current account / Other current accounts and deposits,21799,21799,million FRF,V424
+1933*,Creditors in current account / Other current accounts and deposits,14460,14460,million FRF,V424
+1934b,Creditors in current account / Other current accounts and deposits,16318,16318,million FRF,V424
+1935,Creditors in current account / Other current accounts and deposits,9145,9145,million FRF,V424
+1936,Creditors in current account / Other current accounts and deposits,12613,12613,million FRF,V424
+1937a,Creditors in current account / Other current accounts and deposits,16648,16648,million FRF,V424
+1938c,Creditors in current account / Other current accounts and deposits,26163,26163,million FRF,V424
+1929,Creditors in current account / Other sight liabilities,407,407,million FRF,V424
+1931,Creditors in current account / Other sight liabilities,487,487,million FRF,V424
+1932,Creditors in current account / Other sight liabilities,228,228,million FRF,V424
+1933*,Creditors in current account / Other sight liabilities,190,190,million FRF,V424
+1934b,Creditors in current account / Other sight liabilities,182,182,million FRF,V424
+1935,Creditors in current account / Other sight liabilities,150,150,million FRF,V424
+1936,Creditors in current account / Other sight liabilities,74,74,million FRF,V424
+1937a,Creditors in current account / Other sight liabilities,110,110,million FRF,V424
+1938c,Creditors in current account / Other sight liabilities,126,126,million FRF,V424
+1929,Profit-and-loss accounts,309,309,million FRF,V424
+1931,Profit-and-loss accounts,157,157,million FRF,V424
+1932,Profit-and-loss accounts,47,47,million FRF,V424
+1933*,Profit-and-loss accounts,46,46,million FRF,V424
+1934b,Profit-and-loss accounts,72,72,million FRF,V424
+1935,Profit-and-loss accounts,143,143,million FRF,V424
+1936,Profit-and-loss accounts,119,119,million FRF,V424
+1937a,Profit-and-loss accounts,119,119,million FRF,V424
+1938c,Profit-and-loss accounts,45,45,million FRF,V424
+1929,Other liabilities,1581,1581,million FRF,V424
+1931,Other liabilities,1621,1621,million FRF,V424
+1932,Other liabilities,1768,1768,million FRF,V424
+1933*,Other liabilities,1771,1771,million FRF,V424
+1934b,Other liabilities,1396,1396,million FRF,V424
+1935,Other liabilities,1706,1706,million FRF,V424
+1936,Other liabilities,2140,2140,million FRF,V424
+1937a,Other liabilities,2704,2704,million FRF,V424
+1938c,Other liabilities,2300,2300,million FRF,V424
+1929,Discount rate,3.5,3.5,percent,V424
+1931,Discount rate,2.5,2.5,percent,V424
+1932,Discount rate,2.5,2.5,percent,V424
+1933*,Discount rate,2.5,2.5,percent,V424
+1934b,Discount rate,2.5,2.5,percent,V424
+1935,Discount rate,6,6,percent,V424
+1936,Discount rate,2,2,percent,V424
+1937a,Discount rate,3,3,percent,V424
+1938c,Discount rate,2.5,2.5,percent,V424

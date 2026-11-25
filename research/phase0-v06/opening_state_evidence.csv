@@ -1,0 +1,14 @@
+﻿field,value_raw,observation_date,source_ids,status_note
+President,Albert Lebrun,office at 1934-01-01,V618,confirmed contextual
+Premier,Camille Chautemps,cabinet formed 1933-11-26,V408,formation roster; exact handover date distinct
+SFIO general secretary,Paul Faure,1934,V508,leadership; no CAP roll
+Chamber SFIO group,132,1932-06-14,P01,stale baseline; not 1934
+SFIO split deputies lost,28,1933,V414,secondary estimate; not total group
+SFIO split senators lost,7,1933,V414,secondary estimate; not total group
+SFIO members,131000,1933,V602,rounded annual; not 1 Jan exact
+PCF members,42000,1933,V602,alternative rounded annual; not 1 Jan exact
+CGT members,491000,1934,V602,annual reference; date unknown
+CGTU members,264000,1934,V602,annual reference; date unknown
+Domestic public debt,303537 million francs,1933-12-31,V603,near opening; foreign debt missing
+Chamber current group counts,,1934-01-01,P01;V414,UNKNOWN
+SFIO CAP current roster,,1934-01-01,V508;S01,UNKNOWN

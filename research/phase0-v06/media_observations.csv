@@ -1,0 +1,9 @@
+﻿year,indicator,value,unit,source_id,notes
+1928,receivers,600000,sets,V507,approx
+1934,receivers,1500000,sets,V507,approx
+1936,declared receivers,3219000,sets,V506,declared not listeners
+1937,declared receivers,4164000,sets,V506,declared not listeners
+1938,receivers,4700000,sets,V507,approx
+1940,receivers,5200000,sets,V507,approx
+1938,public stations,16,stations,V507,3 in Paris
+1938,commercial stations,11,stations,V507,4 in Paris

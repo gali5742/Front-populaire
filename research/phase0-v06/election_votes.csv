@@ -1,0 +1,23 @@
+﻿year,classification,votes,percent,source_id,status
+1932,PCF,796630,8.32,P08,verified against official web table (Lachapelle transcription)
+1936,PCF,1502404,15.26,P08,verified against official web table (Lachapelle transcription)
+1932,SFIO,1964384,20.51,P08,verified against official web table (Lachapelle transcription)
+1936,SFIO,1955306,19.86,P08,verified against official web table (Lachapelle transcription)
+1932,other_left,596648,6.23,P08,verified against official web table (Lachapelle transcription)
+1936,other_left,748600,7.6,P08,verified against official web table (Lachapelle transcription)
+1932,RAD,1836991,19.18,P08,verified against official web table (Lachapelle transcription)
+1936,RAD,1422611,14.45,P08,verified against official web table (Lachapelle transcription)
+1932,centre_right,3064498,31.99,P08,verified against official web table (Lachapelle transcription)
+1936,centre_right,2536294,25.76,P08,verified against official web table (Lachapelle transcription)
+1932,conservative_right,1316219,13.74,P08,verified against official web table (Lachapelle transcription)
+1936,conservative_right,1666004,16.92,P08,verified against official web table (Lachapelle transcription)
+1932,total_left,5194653,54.24,P08,official web table
+1936,total_left,5628921,57.17,P08,official web table
+1932,total_right,4380717,45.76,P08,official web table
+1936,total_right,4202298,42.83,P08,official web table
+1932,misc,4112,0.04,P08,official web table
+1936,misc,16047,0.16,P08,official web table
+1932,valid_votes,9579482,100,P08,official web table
+1936,valid_votes,9847266,100,P08,official web table
+1932,registered,11740893,,P08,official web table
+1936,registered,11971923,,P08,official web table

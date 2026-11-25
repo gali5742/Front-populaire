@@ -1,0 +1,15 @@
+﻿year,transaction,item,francs,notes,source_id,page
+1936,party→federation,Carte rouge avec règlement,0.75,printed,V502,6
+1936,party→federation,Feuille de cotisation annuelle,1.5,printed,V502,6
+1936,party→federation,Timbre mensuel,,"printed figure overwritten; OCR 1.25, not accepted as verified",V502,6
+1936,federation→sections,Carte rouge,1,handwritten margin,V502,6
+1936,federation→sections,Feuille de cotisation annuelle,2,handwritten margin,V502,6
+1936,federation→sections,Timbre mensuel,1.25,handwritten margin,V502,6
+1936,Dijon section→member,Carte rouge,2,example,V502,6
+1936,Dijon section→member,Feuille de cotisation,2,example,V502,6
+1936,Dijon section→member,Règlement,0.5,example,V502,6
+1936,Dijon section→member,Timbre mensuel,2,example,V502,6
+1936,federation supplies for women,Carte rouge,1,printed note cost price,V502,6
+1936,federation supplies for women,Feuille de cotisation,0.2,printed note cost price,V502,6
+1936,federation supplies for women,Règlement,2,printed note cost price,V502,6
+1936,federation supplies for women,Timbre mensuel,1.25,printed note cost price,V502,6

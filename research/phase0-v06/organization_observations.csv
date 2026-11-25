@@ -1,0 +1,9 @@
+﻿period,organization,measure,value,qualifier,source_id,notes
+1934,PCF,members,28000,approx,N11,within-year date not defined
+1935,PCF,members,50000,greater_than,N11,threshold
+1936,PCF,members,200000,greater_than,N11,threshold
+1937,PCF,members,300000,greater_than,N11,threshold
+1935,CGT,members,785000,reported,N17,before reunification; coverage verify
+1937,CGT,members,4000000,greater_than,N17,institutional history
+1933,SFIO,deputies lost in split,28,secondary estimate,V414,not Jan 1934 group count
+1933,SFIO,senators lost in split,7,secondary estimate,V414,not Jan 1934 group count

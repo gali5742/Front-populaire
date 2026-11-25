@@ -1,0 +1,9 @@
+﻿period,measure,value,unit,scope,source_id
+1931-03,census unemployed,453000,persons,population census,V425
+1936-03,census unemployed,864000,persons,population census,V425
+1935-03,employment index,72.1,index 1930=100,establishments over 100 employees,V425
+1936,unemployment rate estimate,10.1,percent,wage earners incl partial unemployment,V425
+1930-07,insured unemployed,7500,persons,insurance,V426
+1930-07,registered public unemployment funds,1000,persons,public funds,V426
+1934,insured unemployed,35000,persons,insurance,V426
+1934,registered public unemployment funds,325000,persons,public funds,V426

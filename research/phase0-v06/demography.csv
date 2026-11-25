@@ -1,0 +1,24 @@
+﻿period,indicator,value,unit,source_id,notes
+1932,live_births,726299,persons,N29,metropolitan France
+1932,deaths,663705,persons,N30,metropolitan France; wartime exclusions apply
+1933,live_births,682394,persons,N29,metropolitan France
+1933,deaths,664133,persons,N30,metropolitan France; wartime exclusions apply
+1934,live_births,681518,persons,N29,metropolitan France
+1934,deaths,637713,persons,N30,metropolitan France; wartime exclusions apply
+1935,live_births,643870,persons,N29,metropolitan France
+1935,deaths,661722,persons,N30,metropolitan France; wartime exclusions apply
+1936,live_births,634344,persons,N29,metropolitan France
+1936,deaths,645844,persons,N30,metropolitan France; wartime exclusions apply
+1937,live_births,621453,persons,N29,metropolitan France
+1937,deaths,632896,persons,N30,metropolitan France; wartime exclusions apply
+1938,live_births,615582,persons,N29,metropolitan France
+1938,deaths,650832,persons,N30,metropolitan France; wartime exclusions apply
+1939,live_births,615599,persons,N29,metropolitan France
+1939,deaths,645677,persons,N30,metropolitan France; wartime exclusions apply
+1936-03-08,population_total,41905968,persons,N27,contemporary preliminary report
+1936-03-08,French_nationals,39452461,persons,N27,same report
+1936-03-08,foreign_nationals,2453507,persons,N27,same report
+1936-03-08,French_abroad_excluded,107538,persons,N27,excluded from reported total
+1931,foreign_nationals_approx,2700000,persons,N38,rounded
+1936-03-08,French_nationals_revised,39453532,persons,N28,web OCR; original page not inspected
+1936-03-08,foreign_nationals_revised,2453524,persons,N28,web OCR; original page not inspected

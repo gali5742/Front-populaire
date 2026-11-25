@@ -1,0 +1,181 @@
+﻿source_id,topic,title,url,coverage,acquisition_status,notes
+P01,议会,France Politique: Chambre 1932,https://www.france-politique.fr/assemblee-nationale-1932.htm,1932-06-14,摘录,二手整理；非1934初值
+P02,议会,France Politique: Chambre 1936,https://www.france-politique.fr/assemblee-nationale-1936.htm,1936-06,摘录,IURN于6月27日成立；页面以6月9日为标题截面，需保留时间差
+P03,议会,France Politique: Sénat 1932,https://www.france-politique.fr/elections-senatoriales-1932.htm,1933-01,摘录,二手整理；待核原始名册
+P04,议会,France Politique: Sénat 1935,https://www.france-politique.fr/elections-senatoriales-1935.htm,1936-01,摘录,二手整理；待核原始名册
+P05,议会,France Politique: Sénat 1938,https://www.france-politique.fr/elections-senatoriales-1938.htm,1939-01,摘录,二手整理；待核原始名册
+P06,议会,Les travaux du Sénat de la Troisième République,https://www.senat.fr/connaitre-le-senat/lhistoire-du-senat/les-travaux-du-senat-de-la-troisieme-republique.html,1876-1940,入口已核,逐日议程、辩论、法案及索引
+P07,议会,Mémoire du Sénat,https://archives.senat.fr/consulter-en-ligne.html,1814起,入口已核,
+P08,选举,Assemblée nationale: élections 1936,https://www.assemblee-nationale.fr/dyn/histoire/il-y-a-90-ans-le-front-populaire-et-les-lois-sociales-de-la-republique/les-elections-legislatives-des-26-avril-et-3-mai-1936,"1932,1936",入口已核,618选区原始档案及全国统计；口径不同
+P09,选举,Dossiers nominatifs des parlementaires,https://francearchives.gouv.fr/fr/findingaid/35391fcdf8f80dc5ef8e0988b30b409061df711a,1897-1940,目录已核,
+P10,政府,France Politique: Vie politique IIIe République,https://www.france-politique.fr/vie-politique-1871-1940.htm,1871-1940,摘录,采用正式交接日期，非辞职日期
+P11,政府,Ministres des finances,https://www.economie.gouv.fr/saef/iiie-republique-1870-1940,1870-1940,入口已核,
+P12,政府,Ministres de l’Intérieur,https://www.interieur.gouv.fr/ministere/lhistoire-du-ministere/ministres-de-linterieur-de-1790-a-nos-jours/iiie-republique-1902,1902-1940,入口已核,
+P13,选举,Cagé & Piketty: Une histoire du conflit politique,https://www.unehistoireduconflitpolitique.fr/telecharger.html,1789-2022,入口已核,市镇数据、原始选举文件、复现程序；尚未下载
+P14,地理,TRF-GIS Circonscriptions,https://doi.org/10.7910/DVN/L2LGDW,1870-1940,入口已核,CC BY 4.0
+P15,地理,TRF-GIS collection,https://dataverse.harvard.edu/dataverse/TRF-GIS,1870-1940,入口已核,CC BY 4.0；未下载
+S01,党务,OURS: congrès Paul Faure,https://www.lours.org/archives/default3025.html?pid=150,1921-1940,摘录,党代会日程及1938党纪表决
+S02,党务,France Politique: SFIO,https://www.france-politique.fr/wiki/Section_Fran%C3%A7aise_de_l%27Internationale_Ouvri%C3%A8re_(SFIO),1905-1969,摘录,1938分项与页面总人数冲突
+S03,党务,Archives socialistes: Congrès,https://archives-socialistes.fr/les-collections/les-congres,1905-1938及以后,入口已核,原始会议出版物链接
+S04,党务,Fonds Jean Zyromski,https://archives.humatheque-condorcet.fr/archive/fonds/FRCC_614756/inventaire?RECH_eadid=FRCC_614756&RECH_index=1259811&type=basic,1910-1946,目录已核,
+S05,党务,Fonds Pivert,https://histoire-sociale.cnrs.fr/pages-dhistoire/la-bibliotheque-jean-maitron/archives-chs/archives-non-inventories/inventaire-fonds-pivert/,跨时期,目录已核,
+S06,党务,Programmes SFIO,https://archives.humatheque-condorcet.fr/ark%3A/40358/65495.614852,1926-1936,目录已核,
+S07,党务,Archives PCF,https://www.pcf.fr/o_consulter_les_archives_du_pcf,跨时期,入口已核,
+E01,经济,NBER/FRED: wholesale prices,https://fred.stlouisfed.org/data/M04057FRM360NNBR,1913-1939-08,摘录,1914-07=100；月度未季调
+E02,经济,NBER/FRED: Industrial production total,https://fred.stlouisfed.org/data/A018BAFRA324NNBR,1898-1938,摘录,1913=100；年度
+E03,经济,NBER/FRED: Industrial production,https://fred.stlouisfed.org/data/A018BBFRA338NNBR,1928-1938,摘录,1928=100；年度；不能假定仅基期不同
+E04,经济,CEPII Pierre Villa,https://visiadata.cepii.fr/CEPII/en/bdd_modele/bdd_modele_item.asp?id=31,跨时期,入口已定位,主站403；原始文件未下载
+E05,经济,NBER Macrohistory Database,https://www.nber.org/research/data/nber-macrohistory-database,战前及两次大战间,入口已核,
+E06,经济,FRED France NBER NSA series,https://fred.stlouisfed.org/tags/series?t=france%3Bnber%3Bnsa,跨时期,入口已核,
+E07,金融,Eric Monnet historical banking data,https://www.ericmonnet.eu/historical-data-on-french-banks-and-macroeconomy,1901-1938银行年度数据；1800-2015利率,入口已核,网页上的两战间之外月季资料不可误用
+E08,财政,IMF: Public Debt Management in France during the Interwar Period,https://www.elibrary.imf.org/abstract/book/9781513511795/ch004.xml,两次大战间,入口已核,
+E09,财政,SAEF dette publique,https://www.economie.gouv.fr/saef/dette-publique-gestion-des-emprunts-francais-et-etrangers,含1929-1939,目录已核,
+E10,金融,DFIH,https://dfih.fr/,1795-1976,入口已核,
+E11,经济,Jordà-Schularick-Taylor Macrohistory Database,https://www.macrohistory.net/database/,1870起,入口已核,年度跨国比较
+E12,统计,Annuaire statistique de la France,https://www.economie.gouv.fr/saef/annuaire-statistique-france,跨时期,入口已核,
+E13,统计,Picsel statistiques,https://picsel.finances.gouv.fr/PATRIMOINE/statistiques.aspx,1900-1951等,入口已核,
+E14,国际统计,League of Nations Statistical Yearbooks,https://unstats.un.org/unsd/publications/statistical-yearbook/past-issues/,1926-1944,入口已核,
+L01,工运,ICPSR 8421 Strikes and Labor Activity in France,https://www.icpsr.umich.edu/web/ICPSR/studies/8421,1830-1960,入口已核,包括1936-38劳动部月报子集；逐子集覆盖待核
+D01,人口,Recensements de la population,https://www.data.gouv.fr/datasets/recensements-de-la-population-entre-1801-et-1936,1801-1936,入口已核,
+D02,人口,Archives de Paris: recensements,https://archives.paris.fr/archives-numerisees/sources-genealogiques-complementaires/recensement-de-population,"1926,1931,1936,1946",入口已核,
+D03,人口,INED: Paris 100 years ago,https://www.ined.fr/en/publications/editions/population-and-societies/paris-hundred-years-ago-more-people-than-today-and-mostly-born-elsewhere,1926-1936,入口已核,
+X01,外交,Documents diplomatiques français,https://www.diplomatie.gouv.fr/fr/archives-bibliotheque/publications-et-travaux-scientifiques/documents-diplomatiques-francais,含1932-1939,入口已核,
+X02,外交,Archives diplomatiques,https://archivesdiplomatiques.diplomatie.gouv.fr/,跨时期,入口已核,
+X03,殖民,Colonialism on the Cheap,https://www.cambridge.org/core/journals/journal-of-economic-history/article/abs/colonialism-on-the-cheap-the-french-empire-18301962/C366833D5DAD0117898DF5A084A34A74,1830-1962,研究入口,复制数据及访问状态待核
+X04,殖民,ANOM,https://anom.archivesnationales.culture.gouv.fr/,跨时期,上一轮入口,
+R01,权利,Assemblée nationale: Chronologie du droit de vote des femmes,https://www2.assemblee-nationale.fr/decouvrir-l-assemblee/histoire/le-suffrage-universel/la-conquete-de-la-citoyennete-politique-des-femmes/chronologie-du-droit-de-vote-et-d-eligibilite-des-femmes,跨时期,入口已核,
+R02,报刊,BnF: Journaux nationaux parisiens,https://presselocaleancienne.bnf.fr/html/journaux-nationaux-parisiens,含1938,入口已核,
+R03,法律,BnF: Journal officiel,https://presselocaleancienne.bnf.fr/html/node/368,跨时期,入口已核,
+N01,制度,1875三部宪制法律,https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine/troisieme-republique/trois-lois-constitutionnelles-instituent-la-troisieme-republique,1875,官网摘录,总统选举、两院制度
+N02,政策,人民阵线专题,https://www.assemblee-nationale.fr/dyn/histoire/il-y-a-90-ans-le-front-populaire-et-les-lois-sociales-de-la-republique,1934-1938,官网摘录,专题入口
+N03,政策,走向人民阵线,https://www.assemblee-nationale.fr/dyn/histoire/il-y-a-90-ans-le-front-populaire-et-les-lois-sociales-de-la-republique/vers-le-front-populaire,1934-1936,官网摘录,纲领原文线索
+N04,政策,首批法律,https://www.assemblee-nationale.fr/dyn/histoire/il-y-a-90-ans-le-front-populaire-et-les-lois-sociales-de-la-republique/des-accords-de-matignon-aux-cinq-premieres-lois-adoptees/les-lois-adoptees,1936,官网摘录,立法记录
+N05,政策,40小时制,https://www.assemblee-nationale.fr/dyn/histoire/il-y-a-90-ans-le-front-populaire-et-les-lois-sociales-de-la-republique/des-accords-de-matignon-aux-cinq-premieres-lois-adoptees/les-lois-adoptees/les-quarante-heures-hebdomadaires,1936,官网摘录,颁布与行业实施
+N06,政策,带薪休假,https://www.assemblee-nationale.fr/dyn/histoire/il-y-a-90-ans-le-front-populaire-et-les-lois-sociales-de-la-republique/des-accords-de-matignon-aux-cinq-premieres-lois-adoptees/les-lois-adoptees/les-conges-payes,1936,官网摘录,未列入共同纲领
+N07,政策,其他立法,https://www.assemblee-nationale.fr/dyn/histoire/il-y-a-90-ans-le-front-populaire-et-les-lois-sociales-de-la-republique/la-poursuite-de-la-session-et-l-adoption-de-nouveaux-textes,1936,官网摘录,央行、小麦等
+N08,选举,人民阵线胜利概述,https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine/troisieme-republique/adoption-et-publication-du-programme-du-rassemblement-populaire-victoire-du-front-populaire,1932-1938,官网摘录,608席口径；纲领叙述与N03/N06不一致
+N09,党务,共产党与工运数字图书馆,https://gabrielperi.fr/mediatheque/numerique-du-mouvement-communiste/,1922-1939,目录已核,中央委员会、政治局、书记处、财务委员会
+N10,党务,PCF与共产国际档案,https://gabrielperi.fr/bibliotheque/bibliotheque-numerique-du-mouvement-communiste-et-ouvrier/parti-communiste-francais/,1917-1943,目录已核,RGASPI档案缩微复制
+N11,党务,Julian Mischi 党员社会化史,https://projet.pcf.fr/32538,含1934-1937,研究摘录,党员约数及超过门槛值
+N12,党务,激进党地方组织档案,https://francearchives.gouv.fr/facomponent/f3756593d5a281a66c3916477b216f9e786ccfc8,1921-1943,目录已核,Lot-et-Garonne 地方会议、竞选材料、警察报告
+N13,党务,法国社会党档案机构记录,https://www.archivesportaleurope.net/advanced-search/search-in-names/results-%28names%29/?recordId=FRAN_NP_052630&repositoryCode=FR-FRAN,1936起,目录已核,PSF成立于1936-07-07
+N14,史学,PSF研究书目,https://catalogue.bnf.fr/rechercher.do?index=SUJ3&numNotice=12249817&typeNotice=c,1927-1945,书目已核,Kennedy、Berstein/Thomas、Sternhell
+N15,工运,CGT 1945年前档案,https://www.ihs.cgt.fr/avant-1945/,1945前,目录已核,工会出版物与返还档案
+N16,工运,CGT档案组织,https://www.ihs.cgt.fr/organisation-des-archives/,1921-1936等,目录已核,CGTU档案
+N17,工运,CGT冶金社会史,https://histoire.ftm-cgt.fr/explorer/terrain/lutter/1936-le-pain-la-paix-la-liberte/,1935-1938,机构史摘录,会员增长与制度参与
+N18,劳动,人民阵线劳动法研究,https://www.jean-jaures.org/publication/le-front-populaire-et-le-droit-du-travail/,1936-1938,研究摘录,CNE、雇主、工会和实施政令
+N19,地方,Corrèze市镇选举,https://francearchives.gouv.fr/fr/facomponent/81d3ae014843a185e8a676c1c6df543ccd7c6ff9,1935,目录已核,5月5日、12日；市长与副市长名单
+N20,地方,Santeny地方选举档案,https://francearchives.gouv.fr/fr/facomponent/12f5c703994e7a5bb2a14d48054c124a0466ccf5,1815-1940,目录已核,选票、名单、会议记录
+N21,经济,FRED进口总额,https://fred.stlouisfed.org/data/M07032FRM410NNBR,1932-01/1939-07,表格摘录,百万法郎，月度NSA
+N22,经济,FRED出口总额,https://fred.stlouisfed.org/data/M07027FRM410NNBR,1932-01/1939-07,表格摘录,百万法郎，月度NSA
+N23,工业,FRED粗钢产量,https://fred.stlouisfed.org/data/M01188FRM580NNBR,1932-01/1939-07,表格摘录,千公吨，月度NSA
+N24,金融,FRED纽约巴黎电汇汇率,https://fred.stlouisfed.org/data/M1404BUSM306NNBR,1932-01/1939-12,表格摘录,法郎/美元，月度NSA
+N25,农业,FRED小麦产量,https://fred.stlouisfed.org/data/A0112BFRA393NNBR,1919-1938,表格摘录,百万蒲式耳，每蒲式耳60磅
+N26,农业,法国农业年度统计,https://catalogue.bnf.fr/ark:/12148/cb328726954.public,含1930年代,目录已核,Gallica数字版链接
+N27,人口,1936人口普查同期报告,https://www.persee.fr/doc/geo_0003-4010_1937_num_46_259_12260,1936,研究摘录,初期人口统计
+N28,人口,1936人口普查修订同期报告,https://www.persee.fr/doc/geo_0003-4010_1939_num_48_272_11571,1936,研究摘录,修订人口；网页OCR总数可疑
+N29,人口,INSEE出生长期序列,https://www.insee.fr/fr/statistiques/9017867?sommaire=9000195,含1932-1939,表格摘录,法国本土活产
+N30,人口,INSEE死亡长期序列,https://www.insee.fr/fr/statistiques/3303354,含1932-1939,表格摘录,法国本土死亡；战时口径特殊
+N31,社会,社会保险主要法律,https://www.securite-sociale.fr/la-secu-cest-quoi/histoire/les-grands-textes,1928-1930等,官网摘录,社会保险基础制度
+N32,社会,医保博物馆年表,https://www.musee-assurance-maladie.fr/reperes-chronologiques,含1932,官网摘录,家庭津贴
+N33,劳动,劳动部劳动法年表,https://travail-emploi.gouv.fr/histoire-du-droit-du-travail-de-1841-nos-jours-reperes-chronologiques,跨时期,官网摘录,劳动监察与社会保险
+N34,住房,Loucheur法律原文入口,https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000000522962,1928-07-13,原文入口,住房计划
+N35,住房,UNAF住房政策史,https://www.unaf.fr/expert-des-familles/revue-realites-familiales/realites-familiales/1850-1995-les-etapes-de-la-politique-du-logement-en-france/,1850-1995,研究摘录,计划建设260000套；非完工数
+N36,教育,DEPP统计出版物档案,https://www.education.gouv.fr/depp/deppadoc-le-portail-des-publications-et-archives-statistiques-sur-l-education-et-la-formation-308628,1930年代起,目录已核,部分连续统计年代较晚
+N37,教育,国民议会教育流动性报告,https://www.assemblee-nationale.fr/14/rap-info/i1613.asp,含1936,研究摘录,Jean Zay学生社会来源调查
+N38,移民,移民史博物馆1931,https://www.histoire-immigration.fr/exposition-permanente/1931,1931-1938,机构史摘录,移民、遣返与排外政策
+N39,移民,OFPRA庇护史,https://www.ofpra.gouv.fr/en/timeline/1930,1930年代,机构史摘录,难民权利、1938政令
+N40,宗教,法国天主教档案,https://eglise.catholique.fr/conference-des-eveques-de-france/cef/autres-services-et-instances/372072-les-archives-de-leglise-catholique-en-france/,跨时期,目录已核,中央与教区档案
+N41,司法,国家安全总局档案,https://francearchives.gouv.fr/findingaid/a07fc13f73d5921aa00db23c3dadef9cb411bf77,1885-1940,目录已核,行政警务、外国人事务
+N42,司法,国家档案馆馆藏导引,https://www.archives-nationales.culture.gouv.fr/ce-que-vous-trouverez-aux-archives-nationales,跨时期,目录已核,难民、警务及司法
+N43,国防,国防拨款档案,https://www.servicehistorique.sga.defense.gouv.fr/ark/1455411,1922-1939,目录已核,国防预算与协调
+N44,国防,国防政策档案,https://www.servicehistorique.sga.defense.gouv.fr/ark/1455413,1921-1939,目录已核,国防政策与文官协调
+N45,媒体,解放博物馆战前媒体史,https://www.museeliberation-leclerc-moulin.paris.fr/ressources/ressource-pour-les-scolaires/les-medias-dans-les-annees-1930-et-1940-article,1930-1940年代,机构史摘录,报刊、广播、新闻电影
+N46,文化,人民阵线电影档案,https://www.cinearchives.org/parcours-un-nouveau-cinema-militant-1-1095-1124-1009-0.html,1930年代,机构史摘录,电影合作社、文化协会、电影俱乐部
+N47,文化,Radio-Sélection展览,https://mediatheque.cnsmdp.fr/radio-selection-accueil,1930年代,目录已核,广播史及书目
+N48,年表,Ciné-Archives人民阵线年表,https://www.cinearchives.org/parcours-reperes-chronologiques-1095-1019-1008-0.html,1934-1938,机构史索引,事件日期需区分公告与投票
+N49,史学,法国西班牙人民阵线比较史学,https://revistas.ucm.es/index.php/HPOL/es/article/view/64728,1930年代,研究入口,跨国史学比较
+N50,殖民,Colonialism on the Cheap 2024 working paper,https://aehnetwork.org/working-papers/colonialism-on-the-cheap-the-french-empire-1830-1962/,1830-1962,研究摘要,殖民财政流；全期结论不可当1934值
+N51,社会,Creating the Welfare State in France 1880-1940,https://www.jstor.org/stable/j.ctt7zx3g,1880-1940,书目摘要,社会保险及医院财政
+N52,人物,国民议会政府施政与议员活动,https://www.assemblee-nationale.fr/dyn/histoire/il-y-a-90-ans-le-front-populaire-et-les-lois-sociales-de-la-republique/une-ouverture-de-la-legislature-sur-fond-de-greves,1936,官网摘录,议会活动及政府声明
+N53,史学,法国公共支出长期演变,https://www.cambridge.org/core/journals/annales-histoire-sciences-sociales/article/abs/levolution-seculaire-des-depenses-publiques-en-france/3742A1B05C046EF0B2D0B2F4231498C4,跨时期,研究摘要,公共财政及社会政策
+N54,人口,巴黎历史人口普查字段限制,https://archives.paris.fr/archives-numerisees/sources-genealogiques-complementaires/recensement-de-population/interroger-les-recensements-de-population-1926-1931-et-1936,1926-1936,官网摘录,结构化职业等字段不在此界面
+N55,制度,第三共和国战间期年表,https://www2.assemblee-nationale.fr/decouvrir-l-assemblee/juniors/histoire/1918-1945-de-l-entre-deux-guerres-a-l-effondrement-de-la-iiie-republique,1918-1945,官网摘录,政治及政策时间线
+N56,人物,第十五届众议院议员名册,https://www2.assemblee-nationale.fr/sycomore/liste/41,1932-1936,目录已核,逐人传记未下载
+N57,人物,第十六届众议院议员名册,https://www2.assemblee-nationale.fr/sycomore/liste/42,1936-1940,目录已核,逐人传记未下载
+N58,史学,Serge Berstein Histoire du Parti radical,https://www.pressesdesciencespo.fr/fr/livre/?GCOI=27246100659780,含1930年代,书目摘要,党内年轻派与传统危机
+N59,经济,Cohen-Setton Hausman Wieland 经济政策研究,https://www.nber.org/papers/w22140,1936-1938,研究摘要,供给约束假说；非唯一解释
+N60,财政,IMF Public Finances in Modern History,https://www.imf.org/external/datamapper/datasets/FPP,长期,目录已核,初级财政余额与债务
+N61,史学,BnF人民阵线主题书目,https://data.bnf.fr/fr/ark:/12148/cb126485191,1936-1938,目录已核,多语种书目扩展入口
+N62,史学,Right-Wing Leagues and Electoral Politics,https://compass.onlinelibrary.wiley.com/doi/abs/10.1111/j.1478-0542.2007.00450.x,战间期,研究摘要,右翼组织与选举；会员估计
+N63,殖民,Colonialism on the Cheap 期刊版,https://www.cambridge.org/core/journals/journal-of-economic-history/article/abs/colonialism-on-the-cheap-the-french-empire-18301962/C366833D5DAD0117898DF5A084A34A74,1830-1962,研究摘要,与N50区分版本；未取得复现文件
+N64,就业,英国议会失业比较记录,https://hansard.parliament.uk/Commons/1931-07-08/debates/661ce397-0b85-46a7-b5f7-f304eeab0439/Statistics,1931,原文摘录,完全失业和部分失业分别估计
+N65,劳动,集体劳动协议详细立法档案,https://www.assemblee-nationale.fr/dyn/histoire/il-y-a-90-ans-le-front-populaire-et-les-lois-sociales-de-la-republique/des-accords-de-matignon-aux-cinq-premieres-lois-adoptees/les-lois-adoptees/les-conventions-collectives,1936,官网摘录,表决、执行及签署协议数
+N66,政策,2016带薪休假专题,https://www2.assemblee-nationale.fr/14/evenements/2016/80eme-anniversaire-de-la-victoire-du-front-populaire-3-mai-2016/les-premiers-conges-payes/de-la-revendication-de-second-plan-au-progres-moral-inconteste,1936,官网摘录,563赞成1反对，与N06复点数不同
+V401,国防,"Fighting the People’s War, Table 1.1",https://www.cambridge.org/core/books/fighting-the-peoples-war/interwar/3B841CF0080B55488E25048CAF670A15,1931–1940,表格摘录,各国当年本币；法国至1939
+V402,国防,"JMSS 19(4), Table 1, p.54; citing Larkin p.67",https://jmss.org/article/download/68869/53338,1933–1939,表格及扫描页核验,1938不变价格；表题1932但无1932行；总额不等于三部门之和
+V403,财政,"League of Nations historical statistical yearbook, Table 125 p.278",https://istmat.org/files/uploads/49591/10_strany_mira_-_finansy_i_ceny.pdf,1932–1935,网页表格摘录,Cl=closed; E=estimates; 1932 III-XII原样；扫描页访问失败
+V404,财政,"League of Nations historical statistical yearbook, Table 132 p.272",https://istmat.org/files/uploads/49915/10_strany_mira_-_finansy_i_ceny.pdf,1936–1939,网页表格摘录,普通预算；另列资本/特别支出；星号待核；扫描页访问失败
+V405,政党,"Roger Martelli, Prendre sa carte 1920–2009, p.79",https://gabrielperi.fr/wp-content/uploads/2019/03/Prendre_sa_carte_1920-2009_R_Martelli.pdf,1935–1938,网页表格摘录,PCF省级数据，合并地区与空格原样；扫描页因文件过大未取得
+V406,经济,NBER Coal and Lignite Production for France,https://fred.stlouisfed.org/data/M01191FRM580NNBR,1932–1939,完整目标月度摘录,千公吨；未季调
+V407,经济,"Beaudry & Portier, The French Depression in the 1930s, Tables III IX X XI",https://www.academia.edu/19029081/The_French_Depression_in_the_1930s,1929–1939,表格摘录,区分人均、去趋势、未去趋势，原论文转载
+V408,政府,"WHO GOVERNS, Chautemps II",https://whogoverns.eu/cabinets/?gabinete=3226&view=gabinete,1933-11-26–1934-01-27,完整网页名单摘录,数据库采用辞职日；任职党籍原样；未含次官和改组
+V409,财政,SAEF IIIe République finance ministers,https://www.economie.gouv.fr/saef/iiie-republique-1870-1940,1932–1940,官员任期摘录,1934-02-09起内阁标签疑误；任期以来源为准
+V410,地方,"Marrel & Payre, Le temps des maires, Politix 53",https://www.persee.fr/doc/polix_0295-2319_2001_num_14_53_1138?pageId=T1_72,1929–1935,研究摘录,市镇任期六年改革；90个大于5000人的市镇
+V411,地方,"Le Monde, 18 May 1945, Interior Ministry municipal communiqué",https://www.lemonde.fr/archives/article/1945/05/18/les-resultats-des-elections-municipales-dans-les-communes-de-4-000-habitants-et-plus_1865982_1819218.html,1935/1945,原文摘录,回溯比较口径，1935阵营数与957样本不一致，勿合算
+V412,宗教,"Fernand Boulard, Aspects de la pratique religieuse en France 1802–1939",https://www.persee.fr/doc/rhef_0300-9505_1973_num_59_163_1512,1802–1939,研究原文摘录,分教区、旧区及县；未转录数表
+V413,宗教,"Boulard, Matériaux… exemple des Pays de Loire",https://www.cambridge.org/core/journals/annales-histoire-sciences-sociales/article/abs/materiaux-pour-lhistoire-religieuse-du-peuple-francais-aspects-de-la-pratique-religieuse-en-france-18021939-lexemple-des-pays-de-loire/B94AC0B872E1F947230298CA4A6D8F9D,1802–1939,摘要,五教区六省；1977扩大至21教区24省
+V414,政党,"Mathieu Desan, Order Authority Nation: Neo-Socialism and the Fascist Destiny",https://deepblue.lib.umich.edu/bitstream/handle/2027.42/133506/mdesan_1.pdf?sequence=,1933,检索摘要,分裂损失28众议员7参议员；未核原始名册
+V415,纲领,"Programme du Rassemblement populaire, reproduction",https://cyber-lenin.com/en/commulingo/docs/popular-front-programme-1936/,1936-01,全文网页定位及部分摘录,非官方转录；原始版待核
+V416,纲领,"Assemblée nationale, Vers le Front populaire",https://www.assemblee-nationale.fr/dyn/histoire/il-y-a-90-ans-le-front-populaire-et-les-lois-sociales-de-la-republique/vers-le-front-populaire,1934–1936,官网摘录,统一行动及共同纲领
+V417,金融,NBER Bank of France Discount Rate,https://fred.stlouisfed.org/data/M13014FRM156NNBR,1932–1935,部分月度摘录,网页截断；仅保存确见月份
+V418,选举,"Cagé Piketty, database download portal",https://unehistoireduconflitpolitique.fr/download.html,1789–2022,目录核验,1932/36存在；运行环境无外网，未获取数据文件
+V419,法令,Légifrance tables du Journal officiel,https://www.legifrance.gouv.fr/jorf/tb/year/?date-end=1939&date-start=1920,1920–1939,目录核验,年度法令索引；未下载全卷
+V420,财政,SAEF Paul Marchandeau biography,https://www.economie.gouv.fr/saef/paul-marchandeau,1933–1938,官网摘录,1933-12-23财政措施、1938国防自主基金
+V421,财政,SAEF Louis Germain-Martin biography,https://www.economie.gouv.fr/saef/louis-germain-martin,1932–1935,官网摘录,1934-04-04紧缩措施及两届内阁
+V422,地方,"PCF Quatre ans, 1935 municipal elections",https://pandor.u-bourgogne.fr/archives-en-ligne/functions/ead/detached/BMP/c2858.pdf,1935,检索摘要,党自报297完整或多数市镇；原页待核
+V423,政府,Ministry of Interior Third Republic officeholders,https://www.interieur.gouv.fr/ministere/lhistoire-du-ministere/ministres-de-linterieur-de-1790-a-nos-jours/iiie-republique-1902,1933–1939,官网摘录,任期口径差异
+V424,金融,"League of Nations banking statistics, France Table III, p.70–71",https://dspace.gipe.ac.in/xmlui/bitstream/handle/10973/53852/GIPE-021046-06.pdf?isAllowed=y&sequence=1,"1929, 1931–1938",网页原表摘录,百万法郎；黄金重估；年末日期有脚注；扫描失败
+V425,就业,"La spécificité française du chômage structurel de masse, Vingtième Siècle 52, p.44",https://www.persee.fr/doc/xxs_0294-1759_1996_num_52_1_3561?pageId=T1_44,1931–1936,论文正文摘录,普查失业、部分失业合计估计及大企业就业
+V426,就业,"La spécificité française du chômage structurel de masse, p.47",https://www.persee.fr/doc/xxs_0294-1759_1996_num_52_1_3561?pageId=T1_47,1930–1934,论文正文摘录,参保失业和公共失业基金登记区别
+V501,人口及殖民,"Henri Bunle, Chronique de démographie, JSFS 78 (1937), pp. 355–362",https://www.numdam.org/article/JSFS_1937__78__355_0.pdf,1931–1936,原表扫描核验,pp.358–362核验；保留历史分类、舍入及调查差异
+V502,SFIO党务,"Te voilà secrétaire de section, SFIO 1936",https://www.lours.org/wp-content/uploads/2015/06/Secretaire_de-section_PS_1936.pdf,1936,原文摘录；部分扫描核验,"pp.2,5,6扫描核对；章程是可修改范例，价格是示例"
+V503,选举,"Tableau des élections à la Chambre des députés pendant la seizième législature, 1946",https://www2.assemblee-nationale.fr/static/histoire/1936/III_1936.pdf,1936–1939,原文文本部分可读,"pp.5,7–8；扫描请求失败；137页，选区表尚未转录"
+V504,SFIO党务,"32e congrès national de la SFIO, Wikipedia",https://fr.wikipedia.org/wiki/32e_congr%C3%A8s_national_de_la_SFIO,1935-06,三级资料摘录,动议代表票及CAP席位；原会议报告待核
+V505,SFIO党务,"34e congrès national de la SFIO, Wikipedia",https://fr.wikipedia.org/wiki/34e_congr%C3%A8s_national_de_la_SFIO,1937-07,三级资料摘录,动议代表票及CAP席位；原会议报告待核
+V506,广播,Radiodiffusion et politique : les élections radiophoniques de 1937 en France,https://www.persee.fr/doc/rhmc_0048-8003_1976_num_23_4_2371,1936–1937,论文摘录,登记接收机，不是受众人数
+V507,广播,Museum of Broadcast Communications: France,https://www.museum.tv/radio-encyclopedia-5/france,1928–1940,百科摘录,接收机约数；公共和商业台数量
+V508,SFIO党务,Larousse: SFIO,https://www.larousse.fr/encyclopedie/divers/SFIO/144647,1920–1930年代,百科摘录,领导职务与历史派别；非精确开局名册
+V509,政治史,"Fondation Jean-Jaurès: 6 février 1934, l’événement choc",https://www.jean-jaures.org/publication/6-fevrier-1934-levenement-choc-les-droites-les-gauches-et-la-rue/,1933–1934,研究摘录,社共关系及共产国际约束
+V510,阿尔及利亚人口,"Historique, qualité des données et omissions dans les recensements menés en Algérie, tableau 1",https://www.academia.edu/112076175/Historique_qualit%C3%A9_des_donn%C3%A9es_et_omissions_dans_les_recensements_men%C3%A9s_en_Alg%C3%A9rie,"1931,1936",二手数表,转录历史普查数；与历史分类、统计范围对应，未核扫描原表
+V601,宪制,"Élysée, Lois constitutionnelles de 1875 et révisions",https://www.elysee.fr/la-presidence/les-lois-constitutionnelles-de-1875,1875–1926,法律文本摘录,1884及1926修订同页；1875已废止条文不作1934现行法
+V602,工运及党务,"Auf dem Floß der Medusa, pp. 189–191; tables citing Lefranc, Prost, Fauvet",https://anton-dannat.com/pdf/Auf%20dem%20Flo%C3%9F%20der%20Medusa.pdf,1913–1939,二手表扫描核验,PDF页188–190；1937罢工人数异常；党史注释年份有误，不将其作为事件依据
+V603,财政,"League of Nations, Statistical Yearbook, table 136, France public debt",https://deriv.nls.uk/dcn23/1912/5386/191253863.23.pdf,1932–1936,原表网页转录,表136 France行；扫描请求超时；国内及国外债务、利息分开
+V604,报刊,"BnF, Journaux nationaux parisiens: tirages",https://presselocaleancienne.bnf.fr/html/journaux-nationaux-parisiens,"1912,1938",数表,1938年10月均值；巴黎警察局BA 1713；1912口径不同
+V605,政府,"Assemblée nationale, Composition du 1er cabinet Léon Blum",https://www2.assemblee-nationale.fr/14/evenements/2016/80eme-anniversaire-de-la-victoire-du-front-populaire-3-mai-2016/le-nouveau-gouvernement/composition-du-gouvernement,1936–1937,官方名册,官方网页同页16/17名社会主义者冲突；Dormoy日期语义异常
+V606,外交,"Traité franco-soviétique d’assistance mutuelle, transcription",https://fr.wikisource.org/wiki/Traité_franco-soviétique_d’assistance_mutuelle,1935-05-02,条约转录,五条；国际联盟条件；签署不等于生效
+V607,外交,"Avalon Project, Munich Pact",https://avalon.law.yale.edu/imt/munich1.asp,1938-09-29,条约转录,原件题署29日；签署跨夜与30日公布须区别
+V608,外交,"Avalon Project, French Yellow Book document 28",https://avalon.law.yale.edu/wwii/ylbk028.asp,1938-12-06,外交文件转录,法德宣言
+V609,纲领,"RetroNews, Janvier 1936 : Le Front populaire annonce son programme électoral",https://www.retronews.fr/politique/echo-de-presse/2019/08/20/front-populaire-programme-electoral,1936-01-11,研究摘录与原报入口,Le Populaire全文入口；不是完整扫描核验
+V610,纲领,"Programme du Rassemblement populaire, transcription",https://cyber-lenin.com/en/commulingo/docs/popular-front-programme-1936/,1936-01,电子转录,二次转录，待核报刊扫描
+V611,SFIO,"Zyromski, Notre position exacte pour le Congrès de Toulouse",https://bataillesocialiste.wordpress.com/documents-historiques/1934-05-notre-position-exacte-pour-le-congres-de-toulouse-zyromski/,1934-05,历史文件转录,非全党决议；个人立场
+V612,政府,"Ministère de l’Intérieur, IIIe République",https://www.interieur.gouv.fr/ministere/lhistoire-du-ministere/ministres-de-linterieur-de-1790-a-nos-jours/iiie-republique-1902,1934–1940,官方履历摘录,页面后段误标1939/1940，未采用矛盾记录
+V613,殖民,"Economic conditions and the limits to mobilization in the French Empire, 1936–1939",https://www.cambridge.org/core/journals/historical-journal/article/abs/economic-conditions-and-the-limits-to-mobilization-in-the-french-empire-19361939/D7BECAFD512A8E1A969F392F93F6A6F0,1936–1939,论文摘要,北非与印度支那；未获正文
+V614,殖民及党史,"Front Populaire, Front National: The Colonial Example",https://www.cambridge.org/core/journals/international-labor-and-working-class-history/article/abs/front-populaire-front-national-the-colonial-example/FD7AE8F80C9E27E6423EB1B5007B244B,1928–1939,论文摘要,PCF路线解释，非原决议
+V615,劳工,"The Political Life of the Rank and File: French Aircraft Workers During the Popular Front, 1934–38",https://www.cambridge.org/core/journals/international-labor-and-working-class-history/article/abs/political-life-of-the-rank-and-file-french-aircraft-workers-during-the-popular-front-193438/C2ED7F8C4C64AC94E6614C1D6D2C824D,1934–1938,论文摘要,基层工人声音与史料偏差
+V616,雇主,The mobilization of French business,https://www.cambridge.org/core/books/abs/politics-of-french-business-19361945/mobilization-of-french-business/CFA2EE35528E18E442B8DA131030B6D8,1936–1939,书章摘要,雇主协会改革及寻找社会盟友
+V617,工运,"ICPSR 8421 Strikes and Labor Activity in France, 1830–1960",https://www.icpsr.umich.edu/web/ICPSR/studies/8421/publications,1830–1960,数据集目录,DS1截至1935；1936–38另有BMT子集，未下载
+V618,政府,"Assemblée nationale, Développement de l’antiparlementarisme",https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine/troisieme-republique/developpement-de-l-antiparlementarisme-ministere-d-union-nationale-de-gaston-doumergue,1932–1934,官网摘录,政府危机与外交；日期与其他来源有差异
+V619,政治史,"Assemblée nationale, Vers le Front populaire",https://www.assemblee-nationale.fr/dyn/histoire/il-y-a-90-ans-le-front-populaire-et-les-lois-sociales-de-la-republique/vers-le-front-populaire,1934–1936,官网摘录,联盟形成、第二轮退选
+V620,劳动行政,"Ministère du Travail, État et Travail en France",https://travail-emploi.gouv.fr/etat-et-travail-en-france-du-13e-au-21e-siecle,1936–1938,官网摘录,1937劳动行政机构调整
+V621,议会,"Assemblée nationale, Léon Blum tables nominatives",https://www.assemblee-nationale.fr/histoire/tables_archives/880.asp,1936–1938,议员发言索引摘录,1938内阁辞职、特别授权
+V622,殖民,"The league against imperialism, national liberation, and the economic question",https://www.cambridge.org/core/journals/journal-of-global-history/article/league-against-imperialism-national-liberation-and-the-economic-question/1B8A2D985A9C75A5063CF947D60DA7EC,1930s,论文摘录,反帝联盟跨帝国组织联系
+G3229,政府,Who Governs Europe: Doumergue II,https://whogoverns.eu/cabinets/?gabinete=3229&view=gabinete,1934-02-09–1934-11-08,学术数据库名册,日期和编号按该库；不保证改组完整；政党缩写按原表
+G3230,政府,Who Governs Europe: Flandin,https://whogoverns.eu/cabinets/?gabinete=3230&view=gabinete,1934-11-09–1935-05-31,学术数据库名册,日期和编号按该库；不保证改组完整；政党缩写按原表
+G3231,政府,Who Governs Europe: Bouisson,https://whogoverns.eu/cabinets/?gabinete=3231&view=gabinete,1935-06-01–1935-06-04,学术数据库名册,日期和编号按该库；不保证改组完整；政党缩写按原表
+G3232,政府,Who Governs Europe: Laval III,https://whogoverns.eu/cabinets/?gabinete=3232&view=gabinete,1935-06-07–1936-01-22,学术数据库名册,日期和编号按该库；不保证改组完整；政党缩写按原表
+G3233,政府,Who Governs Europe: Sarraut II,https://whogoverns.eu/cabinets/?gabinete=3233&view=gabinete,1936-01-24–1936-05-03,学术数据库名册,日期和编号按该库；不保证改组完整；政党缩写按原表
+G3235,政府,Who Governs Europe: Chautemps III,https://whogoverns.eu/cabinets/?gabinete=3235&view=gabinete,1937-06-29–1938-01-14,学术数据库名册,日期和编号按该库；不保证改组完整；政党缩写按原表
+G3236,政府,Who Governs Europe: Chautemps IV,https://whogoverns.eu/cabinets/?gabinete=3236&view=gabinete,1938-01-18–1938-03-10,学术数据库名册,日期和编号按该库；不保证改组完整；政党缩写按原表
+G3237,政府,Who Governs Europe: Blum II,https://whogoverns.eu/cabinets/?gabinete=3237&view=gabinete,1938-03-13–1938-04-08,学术数据库名册,日期和编号按该库；不保证改组完整；政党缩写按原表
+G3238,政府,Who Governs Europe: Daladier IV (database numbering),https://whogoverns.eu/cabinets/?gabinete=3238&view=gabinete,1938-04-12–1938-09-12,学术数据库名册,日期和编号按该库；不保证改组完整；政党缩写按原表

@@ -1,0 +1,37 @@
+﻿id,subject,values_or_issue,source_ids,handling
+C01,1936 elected seats,608 vs 618 legal seats; scope varies,N08;P08,retain separately; reconcile constituency files
+C02,1932 SFIO seats,129 election vs 132 group,N08;P01,different measurement; not Jan 1934
+C03,1936 programme,N08 overview includes paid leave and 40h; N03/N05/N06 detailed sources say paid leave absent and no numeric hours,N03;N05;N06;N08,retain conflict; consult original programme
+C04,1936 population,41905968 preliminary vs revised figures from OCR,N27;N28,preserve both; verify scan before accepting total
+C05,industrial index,two distinct annual series,E02;E03,do not average or merge
+C06,1938 SFIO votes,source displayed total inconsistent; two separate motions,S01;S02,preserve prior extraction
+C07,1936 party membership,within-year measurement and threshold vs exact count,N11;N17,keep qualifiers
+C08,government handover,resignation and successor appointment dates differ,P10,retain old rows and source date convention
+C09,CGT membership 1935,pre-reunification scope unspecified,N17,avoid inference
+C10,election votes prior transcript,rechecked against current official text table; original Lachapelle edition not inspected,P08,new verified extraction retained beside archived prior transcription
+C11,40-hour bill Chamber vote,408:100 vs 408:160 on same official page,N04;N05,retain both; verify original ballot and corrections
+C12,paid leave vote,592:0 vs 563:1 in official publications,N06;N66,retain both; stage and recount verify
+C13,1936 turnout,84.3% first-round turnout vs 82.25% valid/registered in Lachapelle table,P08,retain distinct denominators
+C14,coal market law,18 Aug promulgation vs 19 Aug publication,N07,separate dates
+C15,1935 PCF membership,">50,000 vs Martelli 94,055 metropolitan",N11;V405,retain measurement timing and coverage; no averaging
+C16,Defence spend,nominal vs constant 1938; three departments do not sum to general total,V401;V402,no rescaling or residual imputation
+C17,Fiscal accounts,1932 partial year; 1934-35 estimates; 1936–39 ordinary budget excludes special expenditure,V403;V404,retain original account labels; not consolidated balance
+C18,1935 municipal councils,957 sample vs 600 left + 484 moderate in 1935,V411,retain conflicting denominators; no shares
+C19,Chautemps II dates,government_heads 1933-11-25 vs cabinet 1933-11-26; resignation 1934-01-27 vs transfer 1934-01-30,P10;V408;V409;V423,"separate formation, resignation, transfer"
+C20,GDP indices,real per capita undetrended vs detrended,V407,do not treat 69 as 1936 raw GDP index
+C21,PCF province sum,"grouped or blank cells, raw national totals may not equal sum",V405,preserve raw cells; no zeros or allocation
+C22,Gold reserve valuation,"1936,1937,1938 valuation changes; nominal gold stock rises without physical inflow",V424,do not equate nominal francs with tonnes
+C23,Unemployment measures,"census unemployed, insured, registered funds, partial unemployment-adjusted wage-earner rate",V425;V426,retain independent denominator and scope
+C24,1936 census provisional vs final,829k provisional de facto unemployed vs 864k census in later study,V501;V425,separate versions and scopes
+C25,Morocco 1931–36,1931 non-Moroccan total 212.5 thousand scan vs 242.5 OCR; military redistribution,V501,"use scan value, not OCR; preserve note"
+C26,SFIO fee schedule,central monthly stamp printed value overwritten; handwritten marginal and women rates separately recorded,V502,leave illegible value blank
+C27,Indochina,source printed 322k foreigners and 326k Chinese in prose vs 332k in table,V501,"use original table, do not infer nationality subtotal"
+C28,SFIO votes 1935/1937,mandates vary by motion; tertiary summaries only,V504;V505,do not treat as party membership or opening state
+C29,1937 strike participants,32300 as printed in secondary table; unusual,V602,retain; verify Lefranc and SGF before use
+C30,PCF national membership,1934 55k vs earlier ~28k; 1935 82k vs Martelli 94055,V602;V405;N11,"separate time, source and scope; no averaging"
+C31,Blum I cabinet counts,official page says 16 and 17 socialists in different passages; listed posts include replacements,V605,keep both; do not infer missing party
+C32,Cabinet dating and numbering,academic cabinet roster uses electoral/resignation cutoffs and different cabinet numbering; Flandin 9 Nov vs 8 Nov; Chautemps III 29 June vs 22 June,G3230;G3235;P10;V612,preserve conventions; not exact individual terms
+C33,Constitution 1875 dissolution,"original 3 months, 1884 revised 2 months; original Senate 1–7 no longer constitutional",V601,"use amended wording, distinguish later electoral law"
+C34,SFIO split dates in secondary membership table,"notes place neo-socialist split 1932 and PSOP 1937, contrary to established 1933/1938 chronology",V602;V414;S01,do not use these notes for events
+C35,Dormoy Interior date,official cabinet page says until 24 Nov; interior ministry chronology starts 24 Nov 1936,V605;V612,preserve raw note; prefer independent appointment record when deriving tenure
+C36,Public debt foreign component,post March 1932 foreign debt not listed; domestic debt not total,V603,no imputation
