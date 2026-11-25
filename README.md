@@ -2,7 +2,7 @@
 
 法国第三共和国人民阵线时期的社会党政治模拟。1934年1月—1938年12月，玩家代表法国工人国际支部（SFIO）中央领导层，围绕党内政治、联盟、议会、群众运动、两轮选举及执政实践展开决策。
 
-**项目状态（2026-11-25）：Phase 0.5C，UI01、UI02及UI03-01、UI03-02主页面与A/B/C详情、UI03-03主页面与A政治团体详情暂定通过；下一步UI03-03-B具体议题的各方立场，党中央其他交互仍待细化。尚未进入游戏代码开发。**
+**项目状态（2026-11-25）：Phase 0.5C，UI01、UI02及UI03-01、UI03-02主页面与A/B/C详情、UI03-03主页面与A/B详情暂定通过；下一步UI03-04地方联合会，党中央其他交互仍待细化。尚未进入游戏代码开发。**
 
 ## 项目文档
 | 文档 | 内容 |
@@ -39,7 +39,6 @@
 | [UI02-04-A 新建项目](design/mockups/ui02-04-a-new-project.png) | 暂定通过 |
 | [UI02-04-B 项目管理](design/mockups/ui02-04-b-project-management.png) | 暂定通过 |
 | [UI02-05 条件不足](design/mockups/ui02-05-prerequisites.png) | 暂定通过 |
-
 | [UI03-01 党务总览](design/mockups/ui03-01-party-overview.png) | 暂定通过 |
 | [UI03-02 党中央](design/mockups/ui03-02-central-committee.png) | 暂定通过 |
 | [UI03-02-A CAP构成](design/mockups/ui03-02-a-cap-composition.png) | 暂定通过 |
@@ -47,6 +46,7 @@
 | [UI03-02-C 动议审议](design/mockups/ui03-02-c-motion-review.png) | 暂定通过 |
 | [UI03-03 党内派系](design/mockups/ui03-03-party-factions.png) | 暂定通过 |
 | [UI03-03-A 政治团体详情（方案B）](design/mockups/ui03-03-a-faction-detail.png) | 暂定通过 |
+| [UI03-03-B 具体议题各方立场](design/UI03_SPEC.md#ui03-03-b-具体议题各方立场) | 暂定通过；最终PNG待上传 |
 
 效果图为视觉参考，不是实现规格、历史照片或正式数值。文字规范与图稿冲突时，以已确认决策及文字规范为准；未定机制留待后续确认。
 
