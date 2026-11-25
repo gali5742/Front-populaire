@@ -1,7 +1,46 @@
 # 人民阵线 · Front populaire
 
-法国社会党政治模拟（1934–1938）。项目设计与历史研究归档，尚未进入游戏代码开发。
+法国第三共和国人民阵线时期的社会党政治模拟。1934年1月—1938年12月，玩家代表法国工人国际支部（SFIO）中央领导层，围绕党内政治、联盟、议会、群众运动、两轮选举及执政实践展开决策。
 
-当前阶段：Phase 0.5C / UI02 已暂定通过，下一步 UI03 党务与组织。
+**项目状态（2026-11-25）：Phase 0.5C，UI01与UI02暂定通过；下一步UI03-01党务总览。尚未进入游戏代码开发。**
 
-本仓库为设计、证据和视觉参考的版本化归档。后续文件提交中；以最终归档清单为准。
+## 项目文档
+| 文档 | 内容 |
+|---|---|
+| [PROJECT_ROADMAP](docs/PROJECT_ROADMAP.md) | 阶段规划与验收边界 |
+| [GAME_DESIGN](docs/GAME_DESIGN.md) | 游戏设计理念与核心体验 |
+| [SIMULATION_SPEC](docs/SIMULATION_SPEC.md) | 已同意机制边界及未决规则 |
+| [HISTORICAL_MODEL](docs/HISTORICAL_MODEL.md) | 历史证据与模拟参数转换纪律 |
+| [DECISION_LOG](docs/DECISION_LOG.md) | 已确认、替代及暂定决策 |
+| [OPEN_ISSUES](docs/OPEN_ISSUES.md) | 历史、机制、UI及实现遗留事项 |
+
+## 历史资料
+- [Phase 0 v0.6 解包底库](research/phase0-v06/)：47张CSV、2份Markdown、1份JSON；180项来源，30个专题，2,823条CSV记录。
+- [原始ZIP](research/archives/front_populaire_phase0_v06.zip)。
+- [研究交接](research/phase0-v06/PHASE0_HANDOFF.md) · [审计](research/phase0-v06/audit.json)。
+
+状态 **CLOSED_WITH_GAPS**：允许阶段移交，非全部原档获取或全面准确性验收。保留原始口径、缺值及冲突。
+
+## UI 设计
+- [通用视觉规范](design/UI_DESIGN_SYSTEM.md) · [UI01](design/UI01_SPEC.md) · [UI02](design/UI02_SPEC.md) · [后续规划](design/UI_ROADMAP.md)。
+- [十张效果图](design/mockups/)。
+
+### 当前主要视觉基准
+![UI01 普通月份](design/mockups/ui01-01-normal.png)
+
+| 视觉参考 | 状态 |
+|---|---|
+| [UI01-02 重大危机](design/mockups/ui01-02-crisis.png) | 暂定通过 |
+| [UI01-03 已安排行动](design/mockups/ui01-03-queued.png) | 暂定通过 |
+| [UI01-04 抽屉展开](design/mockups/ui01-04-drawer.png) | 暂定通过 |
+| [UI02-01 主动行动](design/mockups/ui02-01-action-detail.png) | 暂定通过 |
+| [UI02-02 重大事件](design/mockups/ui02-02-required-event.png) | 暂定通过 |
+| [UI02-03 行动结果](design/mockups/ui02-03-result.png) | 暂定通过 |
+| [UI02-04-A 新建项目](design/mockups/ui02-04-a-new-project.png) | 暂定通过 |
+| [UI02-04-B 项目管理](design/mockups/ui02-04-b-project-management.png) | 暂定通过 |
+| [UI02-05 条件不足](design/mockups/ui02-05-prerequisites.png) | 暂定通过 |
+
+效果图为视觉参考，不是实现规格、历史照片或正式数值。文字规范与图稿冲突时，以已确认决策及文字规范为准；未定机制留待后续确认。
+
+## 设计边界
+每月两次主动行动；仅行动机会与党资金两种通用资源；四项经济状态；不设独立经济与地理经营，保留后台抽象选区和两轮退选协商；内阁职位遵循史实。坚持先形成视觉设计再开发。
