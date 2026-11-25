@@ -23,7 +23,7 @@
 
 ## UI 设计
 - [通用视觉规范](design/UI_DESIGN_SYSTEM.md) · [UI01](design/UI01_SPEC.md) · [UI02](design/UI02_SPEC.md) · [UI03](design/UI03_SPEC.md) · [后续规划](design/UI_ROADMAP.md)。
-- [十七张效果图](design/mockups/)。
+- [十八张效果图](design/mockups/)。
 
 ### 当前主要视觉基准
 ![UI01 普通月份](design/mockups/ui01-01-normal.png)
@@ -46,7 +46,7 @@
 | [UI03-02-C 动议审议](design/mockups/ui03-02-c-motion-review.png) | 暂定通过 |
 | [UI03-03 党内派系](design/mockups/ui03-03-party-factions.png) | 暂定通过 |
 | [UI03-03-A 政治团体详情（方案B）](design/mockups/ui03-03-a-faction-detail.png) | 暂定通过 |
-| [UI03-03-B 具体议题各方立场](design/UI03_SPEC.md#ui03-03-b-具体议题各方立场) | 暂定通过；最终PNG待上传 |
+| [UI03-03-B 具体议题各方立场](design/mockups/ui03-03-b-issue-positions.png) | 暂定通过 |
 
 效果图为视觉参考，不是实现规格、历史照片或正式数值。文字规范与图稿冲突时，以已确认决策及文字规范为准；未定机制留待后续确认。
 
