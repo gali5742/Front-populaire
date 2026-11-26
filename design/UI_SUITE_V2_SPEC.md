@@ -1,45 +1,45 @@
 # 全套 UI V2 视觉验收与实施交接
-2026-11-26 · 用户已确认全套34张V2效果图通过视觉验收。此记录不等于机制验收、可运行交互验收或PNG已经归档。
-原始交付包：front-populaire-ui-suite-v2.zip；SHA-256：6078a0dfa018ed2398ae5d3c03a7f3a5162d6219711783abb8955bbe6ef334a7。34张独立PNG均为1670×942，26张修订或同步背景，8张沿用V1原图；包内manifest.json保留逐图SHA-256，render_audit.json仅记录静态检查。用户按原有方式手动上传PNG至design/mockups/，入库后按manifest核验，不提前添加图片链接或计数。包内UI04-01参考图不是新增画面。
+2026-11-26 · 用户已确认全套34张V2效果图通过视觉验收。34张V2原始PNG现已归档；视觉验收与归档不等于机制验收或可运行交互验收。
+原始交付包：front-populaire-ui-suite-v2.zip；SHA-256：6078a0dfa018ed2398ae5d3c03a7f3a5162d6219711783abb8955bbe6ef334a7。34张独立PNG均为1670×942，26张修订或同步背景，8张沿用V1原图；包内manifest.json保留逐图SHA-256，render_audit.json仅记录静态检查。用户已手动上传PNG至`design/mockups/`。2026-11-26复核原始ZIP的SHA-256及完整性，逐图从ZIP原始字节计算Git blob SHA-1，与远程34张文件对象一致；此前另3张待上传确认图亦逐一核对一致。仓库现有58张已确认PNG，无待上传。包内UI04-01参考图不是新增画面。
 
 ## 已验收页面清单
-下列编号同时是原包PNG文件名（加.png），全部视觉通过、PNG待上传。
-| 图号 | 页面 | V2处理 |
-|---|---|---|
-| UI03-05-closed | 代表大会已闭幕 | 沿用V1 |
-| UI03-05-preparation | 代表大会筹备中 | 修订 |
-| UI04-01-A-economy | 经济详情 | 修订 |
-| UI04-02-party-relations | 政党关系 | 修订 |
-| UI04-02-A-party-detail | 政党详情 | 修订 |
-| UI04-02-B-agreement | 协议详情 | 修订 |
-| UI04-02-C-consultation | 磋商方案未选 | 修订 |
-| UI04-02-D-prerequisite | 磋商条件不足 | 修订 |
-| UI04-02-E-response | 等待回应 | 修订 |
-| UI04-02-F-issue-positions | 党际议题立场 | 修订 |
-| UI04-03-mass-movements | 群众运动 | 沿用V1 |
-| UI04-03-A-union-detail | 社会组织详情 | 修订 |
-| UI05-01-chamber | 众议院 | 修订 |
-| UI05-02-senate | 参议院 | 修订 |
-| UI05-03-bill-detail | 议案详情 | 修订 |
-| UI05-04-vote-result | 表决详情 | 修订 |
-| UI05-05-procedure-action | 议会行动未选 | 修订 |
-| UI06-01-election-preparation | 选举筹备 | 沿用V1 |
-| UI06-02-first-round | 首轮结果 | 修订 |
-| UI06-03-withdrawal | 第二轮退选协商 | 修订 |
-| UI06-04-election-result | 次轮结束 | 修订 |
-| UI06-05-election-idle | 非选举期 | 沿用V1 |
-| UI06-06-district-results | 首轮选区结果 | 修订 |
-| UI06-07-second-round-pending | 次轮协商进行中 | 沿用V1 |
-| UI07-01-government-in-office | 参政 | 沿用V1 |
-| UI07-02-government-opposition | 在野 | 沿用V1 |
-| UI07-03-cabinet-roster | 内阁名册 | 修订 |
-| UI07-04-office-detail | 内阁职务详情 | 沿用V1 |
-| UI07-05-policy-detail | 政策执行详情 | 修订 |
-| UI07-06-government-prerequisite | 行政权限不足 | 修订 |
-| UI08-01-run-archive | 本局记录 | 修订 |
-| UI08-02-historical-archive | 历史资料 | 修订 |
-| UI08-03-historical-detail | 历史资料详情 | 修订 |
-| UI08-04-run-record | 本局行动记录详情 | 修订 |
+下列编号链接至原包同名PNG，全部视觉通过且已归档；Git blob SHA-1为本次核验值。
+| 图号及原图 | 页面 | V2处理 | Git blob SHA-1 |
+|---|---|---|---|
+| [UI03-05-closed](mockups/UI03-05-closed.png) | 代表大会已闭幕 | 沿用V1 | `337da89cb9d2aa58800605187f5342727cde70b1` |
+| [UI03-05-preparation](mockups/UI03-05-preparation.png) | 代表大会筹备中 | 修订 | `82457c7b21baf5579aac902e1f4c9a191b7df69c` |
+| [UI04-01-A-economy](mockups/UI04-01-A-economy.png) | 经济详情 | 修订 | `9c17a57edab655f8703b44136978c0cb81d89d2b` |
+| [UI04-02-party-relations](mockups/UI04-02-party-relations.png) | 政党关系 | 修订 | `3ae3b651ee9a27a6a7ad8d75009e3810656b74f0` |
+| [UI04-02-A-party-detail](mockups/UI04-02-A-party-detail.png) | 政党详情 | 修订 | `9db8c2c157a0d6a53751112f1f491be5c270836f` |
+| [UI04-02-B-agreement](mockups/UI04-02-B-agreement.png) | 协议详情 | 修订 | `695a12438fc36d535b9fd9d26932a38e50fb6428` |
+| [UI04-02-C-consultation](mockups/UI04-02-C-consultation.png) | 磋商方案未选 | 修订 | `79c5883e73ba0678ddf2964f1c3c645cfaafa357` |
+| [UI04-02-D-prerequisite](mockups/UI04-02-D-prerequisite.png) | 磋商条件不足 | 修订 | `1a2992d8fd17e2ab1bc89ad4ca5e901a10815cfe` |
+| [UI04-02-E-response](mockups/UI04-02-E-response.png) | 等待回应 | 修订 | `8e23daaf19d75f6bc60a2c05f2b5f63dc046a50a` |
+| [UI04-02-F-issue-positions](mockups/UI04-02-F-issue-positions.png) | 党际议题立场 | 修订 | `8192ff6f6dcf24957ebb243c426253d90e12d595` |
+| [UI04-03-mass-movements](mockups/UI04-03-mass-movements.png) | 群众运动 | 沿用V1 | `0e8ad0a664bb3244baf8a6b1a5941423f070727f` |
+| [UI04-03-A-union-detail](mockups/UI04-03-A-union-detail.png) | 社会组织详情 | 修订 | `5d011dd32229ba7f32bff4010e0ca5d5a25ca789` |
+| [UI05-01-chamber](mockups/UI05-01-chamber.png) | 众议院 | 修订 | `0ab7aadd853a96ee5917492b6190ed35ba5ff6cc` |
+| [UI05-02-senate](mockups/UI05-02-senate.png) | 参议院 | 修订 | `c7f408fde7514a10223145663975f93c8c1e2d1d` |
+| [UI05-03-bill-detail](mockups/UI05-03-bill-detail.png) | 议案详情 | 修订 | `0aea4e758ff49243d3ccf70a11a0aac9df90da5d` |
+| [UI05-04-vote-result](mockups/UI05-04-vote-result.png) | 表决详情 | 修订 | `664c149d52f845825a0fe186f6bfeed2ee574504` |
+| [UI05-05-procedure-action](mockups/UI05-05-procedure-action.png) | 议会行动未选 | 修订 | `ef42787e5accc3e1593ae82e3c972de7236f64ae` |
+| [UI06-01-election-preparation](mockups/UI06-01-election-preparation.png) | 选举筹备 | 沿用V1 | `3c9d8066b3f70478d951e959887088dfc39a7524` |
+| [UI06-02-first-round](mockups/UI06-02-first-round.png) | 首轮结果 | 修订 | `580499b352da6b61987d9f74542edf36f1cb3cc0` |
+| [UI06-03-withdrawal](mockups/UI06-03-withdrawal.png) | 第二轮退选协商 | 修订 | `2e7438c5d04d0032babf6b436fd9405f03b332bf` |
+| [UI06-04-election-result](mockups/UI06-04-election-result.png) | 次轮结束 | 修订 | `fc317d3f64dd9d13d4b6b967655f5701f8783948` |
+| [UI06-05-election-idle](mockups/UI06-05-election-idle.png) | 非选举期 | 沿用V1 | `cd6920215daa1c2ddd54167ebde3da0c66cd3f42` |
+| [UI06-06-district-results](mockups/UI06-06-district-results.png) | 首轮选区结果 | 修订 | `41a4a707640d88c40c447b2341f067b1a9791d54` |
+| [UI06-07-second-round-pending](mockups/UI06-07-second-round-pending.png) | 次轮协商进行中 | 沿用V1 | `c4fac053208351fa7a8f770fcdac988a67819ff3` |
+| [UI07-01-government-in-office](mockups/UI07-01-government-in-office.png) | 参政 | 沿用V1 | `086e2cf3af1670371857a620446bd842ac60068e` |
+| [UI07-02-government-opposition](mockups/UI07-02-government-opposition.png) | 在野 | 沿用V1 | `b73a9592b70cbd4d3c7f0b649922c213471f18c2` |
+| [UI07-03-cabinet-roster](mockups/UI07-03-cabinet-roster.png) | 内阁名册 | 修订 | `4030844e867a08474d96ed545cfafb8b3084bdb3` |
+| [UI07-04-office-detail](mockups/UI07-04-office-detail.png) | 内阁职务详情 | 沿用V1 | `3f163a1e4e0d27f9f3bc3af887dc701613fab43d` |
+| [UI07-05-policy-detail](mockups/UI07-05-policy-detail.png) | 政策执行详情 | 修订 | `37dfb78f45cfe74a79e5939c27e592e585ff80cb` |
+| [UI07-06-government-prerequisite](mockups/UI07-06-government-prerequisite.png) | 行政权限不足 | 修订 | `40b3b0bd0c42698b7093e8b532864604be7bd361` |
+| [UI08-01-run-archive](mockups/UI08-01-run-archive.png) | 本局记录 | 修订 | `f557ebac996044f1d40c94825c2b38b6008fb26b` |
+| [UI08-02-historical-archive](mockups/UI08-02-historical-archive.png) | 历史资料 | 修订 | `8915839c40dce4d81733d4352e10f4207268e59c` |
+| [UI08-03-historical-detail](mockups/UI08-03-historical-detail.png) | 历史资料详情 | 修订 | `16eb8d4d93009451ba49b8ff09a8c5c3932a91f1` |
+| [UI08-04-run-record](mockups/UI08-04-run-record.png) | 本局行动记录详情 | 修订 | `6100e2462bb011567040c80c6768cea58a54bb1d` |
 
 ## 通用实施要求
 维持既有暖白、深灰、暗红、无底色表格、共享顶底栏和导航；已确认旧图不重做。修订页面放大正文/表格，详情按内容调整高度；未改页面保持原图，不声称全部字号已重排。普通状态深灰，不为对称添加空入口。前往切页、查看免费查阅、查看方案进入UI02、审议限真实程序、确认正式提交。选中且满足实际条件才可提交；条件不足从方案进入则返回方案，直接查阅可关闭；钻取返回父详情，恢复筛选、滚动及未提交选择，不重复执行。成本及结果共享真实资源记录，纯不干预无消耗，不等于所有正式暂缓决定免费。原型开发注释移出正式正文，按真实信息、记录与可见性呈现；不编造公文填空。图稿中的横线为原型未载入，不自动等于零或游戏内未知。
@@ -63,4 +63,4 @@
 本局记录与历史资料独立一级导航内分开，标准搜索框与放大镜，历史资料按主题筛选不照搬行动类别。记录详情只读，真实月份、实际消耗及关联磋商使用同源记录。所有查阅、搜索、过滤、相关跳转执行同一时间与可见性规则，不提前剧透。史料来源、原文范围与本局规则分开。
 
 ## 后续验收
-视觉阶段主要页面与关键状态已形成基准。旧规范遗留子入口（党中央、地方报告、完整名册/动态等）及V2静态入口的真实行为尚未验收，优先复用组件。先归档原图并梳理机制及实施验收标准，再决定下一阶段授权；不因视觉通过直接启动游戏代码或宣称Phase0.5所有条件完成。
+视觉阶段主要页面与关键状态已形成基准。旧规范遗留子入口（党中央、地方报告、完整名册/动态等）及V2静态入口的真实行为尚未验收，优先复用组件。原图归档已完成；下一步梳理机制及实施验收标准，再决定下一阶段授权；不因视觉通过直接启动游戏代码或宣称Phase0.5所有条件完成。
