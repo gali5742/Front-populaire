@@ -2,7 +2,7 @@
 
 法国第三共和国人民阵线时期的社会党政治模拟。1934年1月—1938年12月，玩家代表法国工人国际支部（SFIO）中央领导层，围绕党内政治、联盟、议会、群众运动、两轮选举及执政实践展开决策。
 
-**项目状态（2026-11-26）：Phase 0.5C，UI01、UI02及UI03-01、UI03-02主页面与A/B/C详情、UI03-03主页面与A/B详情、UI03-04主页面已暂定通过且归档；UI03-04-A地方联合会详情第三版、UI03-05-A表决详情第二版视觉均已暂定通过且原始PNG归档；UI03-05代表大会「进行中」第二版视觉已暂定通过、PNG待上传；筹备与闭幕状态仍待审阅。UI03-06「组织与财政」第五版视觉暂定通过，PNG待上传；UI04-01局势总览第三版视觉布局暂定通过，PNG待上传；下一设计UI04-02政党关系。其他子交互仍待细化，尚未进入游戏代码开发。**
+**项目状态（2026-11-26）：Phase 0.5C，UI01–UI08主要页面与关键状态视觉基准已获用户确认；新增34张全套V2视觉稿通过，连同此前3张已确认但待上传原图共37张待归档；仓库已有21张PNG。实际交互、机制、历史数据及代码尚未验收，未启动游戏开发。**
 
 ## 项目文档
 | 文档 | 内容 |
@@ -22,8 +22,8 @@
 状态 **CLOSED_WITH_GAPS**：允许阶段移交，非全部原档获取或全面准确性验收。保留原始口径、缺值及冲突。
 
 ## UI 设计
-- [通用视觉规范](design/UI_DESIGN_SYSTEM.md) · [UI01](design/UI01_SPEC.md) · [UI02](design/UI02_SPEC.md) · [UI03](design/UI03_SPEC.md) · [UI04](design/UI04_SPEC.md) · [后续规划](design/UI_ROADMAP.md)。
-- [二十一张已归档效果图](design/mockups/)；UI03-04-A及UI03-05-A原始PNG均已按Git对象哈希核验，与确认版一致。UI03-05进行中视觉已暂定通过但PNG尚未进入仓库；UI03-06第五版及UI04-01第三版视觉布局暂定通过但PNG待上传，均不计入已归档。
+- [通用视觉规范](design/UI_DESIGN_SYSTEM.md) · [UI01](design/UI01_SPEC.md) · [UI02](design/UI02_SPEC.md) · [UI03](design/UI03_SPEC.md) · [UI04](design/UI04_SPEC.md) · [全套V2验收与实施交接](design/UI_SUITE_V2_SPEC.md) · [后续规划](design/UI_ROADMAP.md)。
+- [二十一张已归档效果图](design/mockups/)；另37张已确认待上传（此前3张及全套V2新增34张），核验入库后再计数。全部已确认视觉基准共58张，不等于58张已归档。
 
 ### 当前主要视觉基准
 ![UI01 普通月份](design/mockups/ui01-01-normal.png)
@@ -49,11 +49,12 @@
 | [UI03-03-B 具体议题各方立场](design/mockups/ui03-03-b-issue-positions.png) | 暂定通过 |
 | [UI03-04 地方联合会](design/mockups/ui03-04-local-federations.png) | 暂定通过；原始PNG已归档 |
 | [UI03-04-A 地方联合会详情](design/mockups/ui03-04-a-local-federation-detail.png) | 第三版视觉暂定通过；原始PNG已归档 |
-| UI03-05 代表大会主页面（筹备/闭幕状态） | 待审阅；未归档 |
+| UI03-05 代表大会主页面（筹备/闭幕状态） | 全套V2视觉通过；2张PNG待上传 |
 | UI03-05 代表大会进行中 | 第二版视觉暂定通过；PNG待上传 |
 | [UI03-05-A 大会表决详情](design/mockups/UI03-05-A-congress-vote-detail-v2.png) | 第二版视觉暂定通过；原始PNG已归档 |
 | UI03-06 组织与财政 | 第五版视觉暂定通过；PNG待上传 |
 | UI04-01 局势总览 | 第三版视觉布局暂定通过；PNG待上传 |
+| [UI04-01-A至UI08-04全套设计](design/UI_SUITE_V2_SPEC.md) | 32张V2视觉通过；PNG待上传 |
 
 效果图为视觉参考，不是实现规格、历史照片或正式数值。文字规范与图稿冲突时，以已确认决策及文字规范为准；未定机制留待后续确认。
 
