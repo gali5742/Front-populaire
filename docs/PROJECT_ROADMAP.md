@@ -10,7 +10,7 @@
 | Phase 0 | 历史资料广泛收集、来源登记、差异与缺口 | v0.6 CLOSED_WITH_GAPS，允许移交，不等于史料完整 |
 | Phase 0.5A | 资料评估与模拟范围取舍 | 已完成讨论，保留不进入机制的资料 |
 | Phase 0.5B | 核心机制与简化边界 | 基本同意，实际体验困难时再修改；参数未冻结 |
-| Phase 0.5C | UI与视觉设计 | UI01、UI02及UI03-01、UI03-02主页面与A/B/C详情、UI03-03主页面及A/B详情、UI03-04主页面暂定通过；UI03-03-B、UI03-04及UI03-04-A、UI03-05-A原始PNG已归档；UI03-05进行中第二版、UI03-06第五版、UI04-01第三版视觉布局暂定通过但PNG待上传；UI03-05筹备/闭幕及其他子交互待验收；下一步UI04-02政党关系 |
+| Phase 0.5C | UI与视觉设计 | UI01–UI08主要页面及关键状态视觉基准已获确认；全套V2新增34张通过，21张PNG已归档、37张待上传；实际交互和机制验收尚未完成，下一步核验归档及准备实施规则 |
 | 后续实现 | 可运行原型、数据接入、引擎、测试、平衡、扩充 | 未启动 |
 
 用户明确要求：先形成图形化UI方案，再进入开发。不得把后续实现的建议当作现有实现状态。后续开发阶段的编号、任务拆分与技术选型仍需确认；建议先实现核心回合与政治行动最小闭环，再逐步加入党内、议会、选举、内阁及历史内容，最后开展全流程与可玩性测试。
@@ -21,6 +21,6 @@
 ## 阶段产物
 - 历史资料：[Phase 0 v0.6](../research/phase0-v06/README.md)、[交接说明](../research/phase0-v06/PHASE0_HANDOFF.md)。
 - 核心设计：[GAME_DESIGN](GAME_DESIGN.md)、[SIMULATION_SPEC](SIMULATION_SPEC.md)、[HISTORICAL_MODEL](HISTORICAL_MODEL.md)。
-- 视觉与交互：[设计规范](../design/UI_DESIGN_SYSTEM.md)、[UI01](../design/UI01_SPEC.md)、[UI02](../design/UI02_SPEC.md)、[UI03](../design/UI03_SPEC.md)、[UI04](../design/UI04_SPEC.md)、[后续UI规划](../design/UI_ROADMAP.md)。
+- 视觉与交互：[设计规范](../design/UI_DESIGN_SYSTEM.md)、[UI01](../design/UI01_SPEC.md)、[UI02](../design/UI02_SPEC.md)、[UI03](../design/UI03_SPEC.md)、[UI04](../design/UI04_SPEC.md)、[全套V2验收](../design/UI_SUITE_V2_SPEC.md)、[后续UI规划](../design/UI_ROADMAP.md)。
 - [决策记录](DECISION_LOG.md)、[遗留问题](OPEN_ISSUES.md)。
-- 进入开发前：完成其余关键界面并验证交互；确定最小可运行规则、初始状态、数据接口、回合顺序、条件与成本校验；明确历史缺失的处理，不要求先补齐全部30专题原始档案。
+- 进入开发前：完成原图归档、遗留子交互与实际交互验收规划；确定最小可运行规则、初始状态、数据接口、回合顺序、条件与成本校验；明确历史缺失的处理，不要求先补齐全部30专题原始档案。
