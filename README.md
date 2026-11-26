@@ -2,7 +2,7 @@
 
 法国第三共和国人民阵线时期的社会党政治模拟。1934年1月—1938年12月，玩家代表法国工人国际支部（SFIO）中央领导层，围绕党内政治、联盟、议会、群众运动、两轮选举及执政实践展开决策。
 
-**项目状态（2026-11-26）：Phase 0.5C，UI01–UI08主要页面及关键状态视觉基准已获用户确认，58张PNG全部归档（本次新增37张已与确认原图逐一核对Git blob SHA-1）。实际交互、模拟机制、历史数据及代码尚未验收，未启动游戏开发。下一步为实施前机制细化。**
+**项目状态（2026-11-26）：Phase 0.5C，UI01–UI08主要页面及关键状态视觉基准已获用户确认，58张PNG全部归档（本次新增37张已与确认原图逐一核对Git blob SHA-1）。实际交互、模拟机制、历史数据及代码尚未验收，未启动游戏开发。实施前机制细化已启动（暂编Phase 0.5D；D1候选待确认）。**
 
 ## 项目文档
 | 文档 | 内容 |
@@ -10,6 +10,7 @@
 | [PROJECT_ROADMAP](docs/PROJECT_ROADMAP.md) | 阶段规划与验收边界 |
 | [GAME_DESIGN](docs/GAME_DESIGN.md) | 游戏设计理念与核心体验 |
 | [SIMULATION_SPEC](docs/SIMULATION_SPEC.md) | 已同意机制边界及未决规则 |
+| [MECHANISM_DESIGN_DRAFT](docs/MECHANISM_DESIGN_DRAFT.md) | 实施前机制审计、阶段依赖与D1候选规则（待确认） |
 | [HISTORICAL_MODEL](docs/HISTORICAL_MODEL.md) | 历史证据与模拟参数转换纪律 |
 | [DECISION_LOG](docs/DECISION_LOG.md) | 已确认、替代及暂定决策 |
 | [OPEN_ISSUES](docs/OPEN_ISSUES.md) | 历史、机制、UI及实现遗留事项 |
