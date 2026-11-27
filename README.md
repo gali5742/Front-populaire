@@ -2,7 +2,7 @@
 
 法国第三共和国人民阵线时期的社会党政治模拟。1934年1月—1938年12月，玩家代表法国工人国际支部（SFIO）中央领导层，围绕党内政治、联盟、议会、群众运动、两轮选举及执政实践展开决策。
 
-**项目状态（2026-11-27）：Phase 0.5D（暂编），UI01–UI08主要页面及关键状态视觉基准已获用户确认，58张PNG全部归档（本次新增37张已与确认原图逐一核对Git blob SHA-1）。实际交互、模拟机制、历史数据及代码尚未验收，未启动游戏开发。实施前机制细化已启动（暂编Phase 0.5D；D1–D5 v0.2原则通过，D6 v0.2候选待复审）。**
+**项目状态（2026-11-27）：Phase 0.5D（暂编），UI01–UI08主要页面及关键状态视觉基准已获用户确认，58张PNG全部归档（本次新增37张已与确认原图逐一核对Git blob SHA-1）。实际交互、模拟机制、历史数据及代码尚未验收，未启动游戏开发。实施前机制细化已启动（暂编Phase 0.5D；D1–D6 v0.2及D6配套补丁原则通过，D7 v0.1候选待审阅）。**
 
 ## 项目文档
 | 文档 | 内容 |
@@ -15,7 +15,8 @@
 | [MECHANISM_D3_DRAFT](docs/MECHANISM_D3_DRAFT.md) | SFIO党内制度 v0.2（原则通过）、史料审计及验收用例 |
 | [MECHANISM_D4_DRAFT](docs/MECHANISM_D4_DRAFT.md) | 党际磋商、协议义务及群众运动 v0.2（原则通过） |
 | [MECHANISM_D5_DRAFT](docs/MECHANISM_D5_DRAFT.md) | 两院、政府责任、内阁职务及政策实施 v0.2（原则通过） |
-| [MECHANISM_D6_DRAFT](docs/MECHANISM_D6_DRAFT.md) | 抽象选区、两轮选举及跨月退选协调 v0.2候选（待复审，含D1/D5/UI配套补丁） |
+| [MECHANISM_D6_DRAFT](docs/MECHANISM_D6_DRAFT.md) | 抽象选区、两轮选举及跨月退选协调 v0.2（原则通过，含D1/D5/UI配套补丁） |
+| [MECHANISM_D7_DRAFT](docs/MECHANISM_D7_DRAFT.md) | 四项经济状态、财政连续性及社会反馈 v0.1候选（待审阅） |
 | [HISTORICAL_MODEL](docs/HISTORICAL_MODEL.md) | 历史证据与模拟参数转换纪律 |
 | [DECISION_LOG](docs/DECISION_LOG.md) | 已确认、替代及暂定决策 |
 | [OPEN_ISSUES](docs/OPEN_ISSUES.md) | 历史、机制、UI及实现遗留事项 |
