@@ -1,5 +1,5 @@
 export function role(path){
- if(path==="src/app/probe-session.ts")return "adapter";
+ if(["src/app/probe-session.ts","src/app/game-session.ts"].includes(path))return "adapter";
  if(path.startsWith("src/contracts/"))return "contracts";
  if(path.startsWith("src/engine/"))return "engine";
  if(path.startsWith("src/app/")||path.startsWith("src/ui/"))return "ui";
@@ -21,8 +21,8 @@ export function allowedImport(from,spec,kind="import"){
  if(!spec.startsWith("."))return source==="ui"&&["react","react-dom/client","react/jsx-runtime","react/jsx-dev-runtime"].includes(spec);
  const dst=normalizedImport(from,spec);if(!dst)return false;
  if(source==="ui"){
-  if(dst==="src/app/probe-session"||dst==="src/app/probe-session.ts")return true;
-  if(dst.startsWith("src/app/probe-session/"))return false;
+  if(["src/app/probe-session","src/app/probe-session.ts","src/app/game-session","src/app/game-session.ts"].includes(dst))return true;
+  if(dst.startsWith("src/app/probe-session/")||dst.startsWith("src/app/game-session/"))return false;
   return ["ui","contracts"].includes(role(dst))&&!(dst.startsWith("src/app/")&&/session-adapter|composition|bootstrap/.test(dst));
  }
  if(source==="adapter")return ["engine","contracts"].includes(role(dst));
