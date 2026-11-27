@@ -2,7 +2,7 @@
 
 法国第三共和国人民阵线时期的社会党政治模拟。1934年1月—1938年12月，玩家代表法国工人国际支部（SFIO）中央领导层，围绕党内政治、联盟、议会、群众运动、两轮选举及执政实践展开决策。
 
-**项目状态（2026-11-26）：Phase 0.5C，UI01–UI08主要页面及关键状态视觉基准已获用户确认，58张PNG全部归档（本次新增37张已与确认原图逐一核对Git blob SHA-1）。实际交互、模拟机制、历史数据及代码尚未验收，未启动游戏开发。实施前机制细化已启动（暂编Phase 0.5D；D1、D2 v0.2原则通过，D3 v0.2候选待复审）。**
+**项目状态（2026-11-26）：Phase 0.5C，UI01–UI08主要页面及关键状态视觉基准已获用户确认，58张PNG全部归档（本次新增37张已与确认原图逐一核对Git blob SHA-1）。实际交互、模拟机制、历史数据及代码尚未验收，未启动游戏开发。实施前机制细化已启动（暂编Phase 0.5D；D1–D3 v0.2原则通过，D4 v0.1候选待审阅）。**
 
 ## 项目文档
 | 文档 | 内容 |
@@ -12,7 +12,8 @@
 | [SIMULATION_SPEC](docs/SIMULATION_SPEC.md) | 已同意机制边界及未决规则 |
 | [MECHANISM_DESIGN_DRAFT](docs/MECHANISM_DESIGN_DRAFT.md) | 实施前机制审计、阶段依赖与D1规则（原则通过） |
 | [MECHANISM_D2_DRAFT](docs/MECHANISM_D2_DRAFT.md) | 政治主体、议题、自主行为与信息可见性 v0.2（原则通过） |
-| [MECHANISM_D3_DRAFT](docs/MECHANISM_D3_DRAFT.md) | SFIO党内制度 v0.2候选、史料审计及验收用例（待复审） |
+| [MECHANISM_D3_DRAFT](docs/MECHANISM_D3_DRAFT.md) | SFIO党内制度 v0.2（原则通过）、史料审计及验收用例 |
+| [MECHANISM_D4_DRAFT](docs/MECHANISM_D4_DRAFT.md) | 党际磋商、协议义务及群众运动 v0.1候选（待审阅） |
 | [HISTORICAL_MODEL](docs/HISTORICAL_MODEL.md) | 历史证据与模拟参数转换纪律 |
 | [DECISION_LOG](docs/DECISION_LOG.md) | 已确认、替代及暂定决策 |
 | [OPEN_ISSUES](docs/OPEN_ISSUES.md) | 历史、机制、UI及实现遗留事项 |
