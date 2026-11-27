@@ -29,3 +29,5 @@
 - 视觉与交互：[设计规范](../design/UI_DESIGN_SYSTEM.md)、[UI01](../design/UI01_SPEC.md)、[UI02](../design/UI02_SPEC.md)、[UI03](../design/UI03_SPEC.md)、[UI04](../design/UI04_SPEC.md)、[全套V2验收](../design/UI_SUITE_V2_SPEC.md)、[后续UI规划](../design/UI_ROADMAP.md)。
 - [决策记录](DECISION_LOG.md)、[遗留问题](OPEN_ISSUES.md)。
 - 进入开发前：原图归档已完成；补齐遗留子交互与实际交互验收规划；确定最小可运行规则、初始状态、数据接口、回合顺序、条件与成本校验；明确历史缺失的处理，不要求先补齐全部30专题原始档案。
+
+2026-11-27：D91 C-R09–R12 [完整基准CI复验通过](G2_C_STATUS.md)（46单测、7 E2E），G2-C待人工走查，G2-D未启动。

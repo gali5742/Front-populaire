@@ -81,4 +81,4 @@
 
 [G2-C实施状态](docs/G2_C_STATUS.md)：D89/D90；工作管理、恢复、日期依赖、专款及支付冲突修订基准CI通过（40单测、6 E2E），待人工走查。
 
-[G2-C C-R09–R12收尾修订](docs/G2_C_STATUS.md)：已获授权，候选代码及回归测试提交待CI核验；此前17项F1 PASS为上一验证版本，仍待用户人工确认。
+[G2-C C-R09–R12收尾修订](docs/G2_C_STATUS.md)：已获授权，完整CI复验通过（46单测、7 E2E）；17项F1 PASS相关测试复跑，315项NOT_RUN；待用户人工确认。[最新离线HTML](https://github.com/gali5742/Front-populaire/actions/runs/45977995535/artifacts/15187877657)。
