@@ -27,3 +27,77 @@ it("manual pause survives an unpaid month and resumes the same plan without exte
 it("execution condition lost at actual checkpoint; release reservation, no substitute action",()=>{const c=JSON.parse(rawFixture);c.initial.hard_checkpoints=[{id:"permission-change",month:0,day:29,title:"测试组织活动资格失效",description:"本月组织活动的执行条件已不再满足。",invalidates:["organize_notice"]}];const g=createCoreSession(JSON.stringify(c)) as GameSession;expect(act(g,"organize_notice","plan").status).toBe("committed");const id=g.queryWork()[0].id;end(g,"advance");expect(g.getSnapshot().reservedCentimes).toBe(300000);act(g,"acknowledge_no_commitment","ack");expect(end(g,"resume").status).toBe("committed");expect(g.queryWorkDetail(id)?.status).toBe("已失效");expect(g.getSnapshot()).toMatchObject({partyCashCentimes:1200000,reservedCentimes:0,actionRemaining:2});expect(g.queryArchive({text:"预约失效",page:1,pageSize:20}).total).toBe(1);expect(g.queryArchive({text:"组织活动已执行",page:1,pageSize:20}).total).toBe(0);});
 it("idempotent plan, interrupt, response and resume commands after save",()=>{const c=JSON.parse(rawFixture);c.initial.hard_checkpoints=[{id:"stop",month:0,day:31,title:"测试必答",description:"零资源回应"}];const cfg=JSON.stringify(c),g=createCoreSession(cfg) as GameSession;const a=g.listActions().find(a=>a.draft.actionId==="organize_notice")!;const plan={requestId:"plan",draft:a.draft,confirmedQuote:a.quote};expect(g.dispatch(plan).status).toBe("committed");const d:ActionDraft={actionId:"end_month",targetId:"current_month",proposalVersion:"m0"};const advance={requestId:"advance",draft:d,confirmedQuote:g.previewQuote(d)};expect(g.dispatch(advance).status).toBe("committed");const h=createCoreSession(cfg) as GameSession;expect(h.importSave(g.exportSave()).ok).toBe(true);const saved=h.exportSave();expect(h.dispatch(plan).status).toBe("committed");expect(h.dispatch(advance).status).toBe("committed");expect(h.exportSave()).toBe(saved);const ack=h.listActions()[0];const response={requestId:"ack",draft:ack.draft,confirmedQuote:ack.quote};expect(h.dispatch(response).status).toBe("committed");const resume={requestId:"resume",draft:d,confirmedQuote:h.previewQuote(d)};expect(h.dispatch(resume).status).toBe("committed");const sealed=h.exportSave();expect(h.dispatch(response).status).toBe("committed");expect(h.dispatch(resume).status).toBe("committed");expect(h.exportSave()).toBe(sealed);expect(h.getSnapshot().partyCashCentimes).toBe(900000);expect(h.queryArchive({text:"组织活动已执行",page:1,pageSize:20}).total).toBe(1);});
 it("due conflict supersedes adjustable rolling plan but never takes future dedicated funds",()=>{const c=JSON.parse(rawFixture);c.initial.party_cash=1000000;c.parameters.monthly_income=0;c.parameters.monthly_routine_due=0;c.initial.binding_dues=[{id:"a",month:1,amount:500000,priority:0,dedicated:0},{id:"b",month:1,amount:500000,priority:0,dedicated:0},{id:"future",month:2,amount:200000,priority:1,dedicated:200000}];const g=createCoreSession(JSON.stringify(c)) as GameSession;expect(act(g,"start_project","p").status).toBe("committed");expect(g.getSnapshot().reservedCentimes).toBe(700000);expect(end(g,"jan").status).toBe("committed");expect(g.getSnapshot()).toMatchObject({partyCashCentimes:1000000,reservedCentimes:200000,restrictedCentimes:800000,unpaidCentimes:1000000,unpaidGapCentimes:200000,projectGapCentimes:500000,partyAvailableCentimes:0});expect(act(g,"organize_notice","blocked").status).toBe("rejected");expect(g.queryWorkDetail(g.queryWork()[0].id)?.paidCentimes).toBe(0);expect(end(g,"feb").status).toBe("committed");expect(g.getSnapshot()).toMatchObject({partyCashCentimes:800000,reservedCentimes:0,restrictedCentimes:800000,unpaidCentimes:1000000,partyAvailableCentimes:0});});
+
+// C-R09–R11: assert actual commands and money, not just labels.
+function manage(g:GameSession,id:string,actionId:string,requestId:string){
+ const op=g.queryWorkDetail(id)?.operations.find(o=>o.draft.actionId===actionId);
+ if(!op)throw Error("missing "+actionId+" for "+id);
+ return g.dispatch({requestId,draft:op.draft,confirmedQuote:op.quote});
+}
+function conflictGame(cash:number,required=false){
+ const c=JSON.parse(rawFixture);c.initial.party_cash=cash;c.parameters.monthly_income=0;c.parameters.monthly_routine_due=0;
+ if(required)c.initial.hard_checkpoints=[{id:"cancel-conflict",month:2,day:26,title:"测试到期事项",description:"测试受限态撤销"}];
+ const g=createCoreSession(JSON.stringify(c)) as GameSession;
+ expect(act(g,"start_project","p1").status).toBe("committed");expect(end(g,"jan").status).toBe("committed");
+ const first=g.queryWork()[0].id;
+ expect(act(g,"start_project","p2").status).toBe("committed");expect(end(g,"feb").status).toBe("committed");
+ expect(manage(g,first,"pause_adjustable_project","pause").status).toBe("committed");
+ expect(act(g,"organize_notice","notice").status).toBe("committed");
+ expect(manage(g,first,"resume_project","resume").status).toBe("committed");
+ return {g,config:JSON.stringify(c)};
+}
+it("C-R09 cancellation restores full or partial shared pool and replays once across save",()=>{
+ for(const [cash,hold,reserved,remainingHold,gap] of [[2500000,700000,1000000,0,0],[2300000,500000,0,800000,200000]]){
+  const {g,config}=conflictGame(cash);
+  expect(g.getSnapshot()).toMatchObject({restrictedCentimes:hold,reservedCentimes:300000,partyAvailableCentimes:0,actionRemaining:1});
+  const op=g.queryWork().flatMap(w=>g.queryWorkDetail(w.id)?.operations??[]).find(o=>o.draft.actionId==="cancel_pending")!;
+  const command={requestId:"cancel",draft:op.draft,confirmedQuote:op.quote};
+  expect(g.dispatch(command).status).toBe("committed");
+  expect(g.getSnapshot()).toMatchObject({partyCashCentimes:cash-1500000,restrictedCentimes:remainingHold,reservedCentimes:reserved,projectGapCentimes:gap,partyAvailableCentimes:0,actionRemaining:2});
+  const h=createCoreSession(config) as GameSession;expect(h.importSave(g.exportSave()).ok).toBe(true);
+  const saved=h.exportSave();expect(h.dispatch(command).status).toBe("committed");expect(h.exportSave()).toBe(saved);
+ }
+});
+it("C-R09 cancel single project competing reservation replenishes next fee",()=>{
+ const g=make(1000000,0,0);act(g,"start_project","p");end(g,"jan");const id=g.queryWork()[0].id;
+ expect(manage(g,id,"pause_adjustable_project","pause").status).toBe("committed");
+ expect(act(g,"organize_notice","notice").status).toBe("committed");
+ expect(manage(g,id,"resume_project","resume").status).toBe("committed");
+ expect(g.getSnapshot()).toMatchObject({reservedCentimes:500000,projectGapCentimes:300000,partyAvailableCentimes:0});
+ expect(act(g,"cancel_pending","cancel").status).toBe("committed");
+ expect(g.getSnapshot()).toMatchObject({reservedCentimes:500000,projectGapCentimes:0,partyAvailableCentimes:0});
+ expect(g.queryWorkDetail(id)?.reservedCentimes).toBe(500000);
+});
+it("C-R09 cancellation at required checkpoint recomputes shared pool without resolving deadline",()=>{
+ const {g}=conflictGame(2500000,true);expect(end(g,"checkpoint").status).toBe("committed");
+ expect(g.getSnapshot().requiredBlock).toBe(true);expect(act(g,"cancel_pending","cancel").status).toBe("committed");
+ expect(g.getSnapshot()).toMatchObject({requiredBlock:true,reservedCentimes:1000000,restrictedCentimes:0,partyAvailableCentimes:0});
+ expect(end(g,"blocked").status).toBe("rejected");expect(act(g,"acknowledge_no_commitment","ack").status).toBe("committed");
+ expect(end(g,"continue").status).toBe("committed");expect(g.getSnapshot().time.monthIndex).toBe(3);
+});
+it("C-R10 funding shortfall does not accept resume commands; automatic recovery retained",()=>{
+ const g=make(300000,200000,0);act(g,"start_project","p");end(g,"jan");end(g,"feb");
+ const id=g.queryWork()[0].id;const detail=g.queryWorkDetail(id)!;
+ expect(detail.status).toBe("经费不足");expect(detail.operations.some(o=>o.draft.actionId==="resume_project")).toBe(false);
+ const draft={actionId:"resume_project",targetId:id.slice(5),proposalVersion:"m2"};
+ for(const requestId of ["invalid-resume-1","invalid-resume-2"]){const confirmedQuote=g.previewQuote(draft);expect(confirmedQuote.allowed).toBe(false);expect(g.dispatch({requestId,draft,confirmedQuote}).status).toBe("rejected");}
+ expect(g.queryArchive({text:"已确认恢复长期工作",page:1,pageSize:20}).total).toBe(0);
+ end(g,"mar");expect(g.queryWorkDetail(id)?.status).toBe("执行中");
+});
+it("C-R10 explicit resume when funds are insufficient grants authorization once, not paid execution",()=>{
+ const g=make(1000000,0,0);act(g,"start_project","p");end(g,"jan");const id=g.queryWork()[0].id;
+ manage(g,id,"pause_adjustable_project","pause");act(g,"organize_notice","notice");expect(manage(g,id,"resume_project","resume").status).toBe("committed");
+ expect(g.queryWorkDetail(id)?.operations.some(o=>o.draft.actionId==="resume_project")).toBe(false);
+ expect(g.queryWorkDetail(id)?.nextPeriod).toContain("尚未独立足额保障");
+ const draft={actionId:"resume_project",targetId:id.slice(5),proposalVersion:"m1"};expect(g.dispatch({requestId:"again",draft,confirmedQuote:g.previewQuote(draft)}).status).toBe("rejected");
+ expect(g.queryArchive({text:"已确认恢复长期工作",page:1,pageSize:20}).total).toBe(1);
+});
+it("C-R11 paid March remains execution; April pause is unpaid and deadline expires incomplete",()=>{
+ const g=make(2000000,0,0);act(g,"start_project","p");end(g,"jan");end(g,"feb");const id=g.queryWork()[0].id;
+ expect(manage(g,id,"pause_adjustable_project","pause").status).toBe("committed");
+ expect(g.queryWorkDetail(id)).toMatchObject({currentPeriod:"本期执行中（已付款，月底结算）",nextPeriod:"1934年4月起主动暂停",paidCentimes:1000000,progress:1,reservedCentimes:0});
+ end(g,"mar");expect(g.queryWorkDetail(id)).toMatchObject({currentPeriod:"本期未执行（未付款）",nextPeriod:"无后续执行期",paidCentimes:1000000,progress:2});
+ expect(g.queryArchive({text:"长期工作月度执行",page:1,pageSize:20,monthIndex:2}).total).toBe(1);
+ end(g,"apr");expect(g.queryArchive({text:"长期工作月度执行",page:1,pageSize:20,monthIndex:3}).total).toBe(0);
+ expect(g.queryWorkDetail(id)?.status).toBe("计划期结束（未完成）");
+});
