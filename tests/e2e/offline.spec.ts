@@ -16,10 +16,12 @@ test("offline file protocol probe, import/export and failed import",async({page,
  expect(download.suggestedFilename()).toBe("front-probe.json");
  const saved=await download.path();if(!saved)throw Error("download unavailable");
  await page.reload();
+ await expect(page.getByLabel("测试计数")).toHaveText("0");
  await page.locator('input[type=file]').setInputFiles(saved);
+ await expect(page.getByRole("status",{name:"存档操作反馈",exact:true})).toHaveText("导入成功");
  await expect(page.getByLabel("测试计数")).toHaveText("1");
  await page.locator('input[type=file]').setInputFiles({name:"bad.json",mimeType:"application/json",buffer:Buffer.from("{bad")});
- await expect(page.getByRole("status")).toContainText("导入失败");
+ await expect(page.getByRole("status",{name:"存档操作反馈",exact:true})).toContainText("导入失败");
  await expect(page.getByLabel("测试计数")).toHaveText("1");
  expect(outside).toEqual([]);expect(errors).toEqual([]);
 });

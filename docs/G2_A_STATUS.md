@@ -1,22 +1,25 @@
 # G2-A · 工具链及基础契约
-状态：STARTED / PARTIAL / VALIDATION BLOCKED；2026-11-27。D87授权G2-A。以下是真实工程试验代码，不是可玩游戏。
+状态：STARTED / REMOTE BUILD PASS / BROWSER RETEST PENDING；2026-11-27。D87授权G2-A。本阶段为工程试验，不是可玩游戏。
 
-本轮新增双构建入口、React工程试验页、公共会话类型、键控随机、CSV对账及单元/浏览器测试代码。未实现真实政治引擎或完整存档契约。新增F1 v0.2明确schema的加载校验，不执行政治规则。npm registry在当前验证环境无法解析（EAI_AGAIN）；Node 22.16.0/npm 10.9.2非目标Node24，未安装项目依赖、未生成锁文件、未执行TypeScript/React/Vite/Vitest/Playwright完整验收。package.json版本范围是待解析候选，锁定以真实安装与锁文件为准。
-
-实际执行：在JS执行环境中运行与提交文件同源函数体，11项针对随机和CSV对账的检查均通过；332项当前原断言一致，全部NOT_RUN。固定向量由本实现生成；另用独立Python UTF-16LE/FNV-1a64/SplitMix64实现实际交叉核验，5/5一致。此结果不等于Node/Vitest/浏览器运行通过。本轮通过GitHub原始blob接口取回8份登记源文档，332条来源原断言逐项匹配。F1 v0.2修复原v0.1未定义f1-issue引用，以明确初始议题、主体引用、策略/处理器标识形成可解析基准；原v0.1保留（含7个非执行测试情境），数值不变。20项JS加载/错误配置测试通过；边界策略14项JS检查通过，TypeScript AST扫描/自测待目标工具链执行。真实存档及政治命令仍待实施/验证。
+## 远程实测（2026-11-27）
+[运行#3](https://github.com/gali5742/Front-populaire/actions/runs/45956121730)，提交9475907e97dda69cba62981d3497220766e0652b，job 140362874922：Node v24.22.3，Ubuntu runner，依赖安装、锁文件归档、TypeScript类型检查、验收登记及8个原始blob核对、F1 v0.2配置校验、AST边界自测10/10（6个源文件、0违规）、Vitest 4个测试文件11项全部通过、标准与离线构建、Chromium安装通过。Chromium headless shell 159.0.8154.6。332项机制验收仍全部NOT_RUN。
+[运行#1](https://github.com/gali5742/Front-populaire/actions/runs/45955579460)、[运行#2](https://github.com/gali5742/Front-populaire/actions/runs/45955950724)、运行#3均在同一E2E断言失败：getByRole('status')同时匹配隐含status角色的output计数器及显式role=status的导入反馈，Playwright strict mode violation；实际日志显示导入失败反馈正确出现，计数为1。前序file://离线打开、按钮交互、导出、刷新与有效导入断言通过，最后的错误导入状态保留与网络/页面错误断言未完整执行。修复：导入反馈添加独立可访问名称“存档操作反馈”，测试按角色及确切名称定位，补测刷新计数归零与成功导入反馈；原错误、状态保留、网络与页面错误断言均保留。修复提交须重新运行CI，未提前判PASS。
+真实锁文件artifact ID 15179056354（运行#3），已下载并核查JSON（lockfileVersion 3、105个packages条目），尚未写入main；原文件SHA256 520e94729de7d861e03bd01ea4f39fdc19d83c36533220bc4f17b29388a3c7a1。后续必须提交真实锁文件并以npm ci复验，禁止手工编造。当前本地Node22/npm registry解析失败不再阻断远程安装；不意味着本地已验证。
+此前独立JS检查（11项、F1 20项、边界策略14项）、Python随机向量5/5及原始blob核对保留。F1 v0.2基准修复f1-issue及主体引用；v0.1七个测试意图与金额不变。真实政治引擎、存档契约、情境执行未实施。
 
 ## 验收状态
 | 项目 | 状态 |
 |---|---|
 | G1 v0.2技术方向 | D87确认 |
-| 332项原断言对账（JS执行） | PASS，非机制测试 |
-| 键控随机初步隔离及范围（JS执行） | PASS，独立Python向量5/5一致，待目标工具链 |
-| Node24、npm安装、锁文件 | BLOCKED，网络不可用 |
-| TypeScript、双构建、Vitest、Playwright | NOT_RUN |
-| F1 v0.2基准schema及加载 | PASS（20项JS检查）；7个场景仍是测试意图 |
-| 静态依赖边界 | 14项策略检查PASS；TypeScript AST扫描及自测待运行 |
-| 8份原始验收blob | PASS（332项原文一致）；Git本地历史检查脚本待运行 |
-| G2-A阶段验收 | BLOCKED / 未通过 |
+| Node24、npm install | 远程PASS |
+| 真实锁文件 | 已归档并取得，待提交及npm ci复验 |
+| TypeScript、双构建 | 远程PASS（运行#3） |
+| Vitest | 11/11 PASS（运行#3） |
+| 332项原断言及8个原始blob | 远程PASS，非机制测试 |
+| F1 v0.2加载与静态依赖 | 远程PASS，AST自测10/10、0违规 |
+| Chromium离线E2E | 原测试FAIL（定位器歧义）；修复待复验 |
+| 真实Chrome/Edge及Firefox兼容、字体 | 未验收；Linux Chromium headless不是全部平台 |
+| G2-A阶段验收 | 尚未通过 |
 | G2-B | 未启动 |
 
-另增加离线构建的production环境常量与试验存档会话适配器，尚未浏览器验证。待实际目标环境安装依赖、生成并提交真实package-lock.json、运行npm run check及npm run test:e2e、运行新增配置/依赖检查、完整Git来源对账，记录机器/浏览器及日志后再判定G2-A。不得将试验页作为游戏发布。
+G2-A关闭前须确认锁文件已入库且npm ci成功、修复后的E2E完整PASS、记录实际浏览器范围；不得把试验页当作可玩游戏。
