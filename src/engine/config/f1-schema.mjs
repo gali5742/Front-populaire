@@ -15,7 +15,7 @@ export function validateF1(input) {
  const c=object(input.clock,"clock",["start_month","end_month","initial_month_index","action_allowance","initial_phase"]);
  equals(c.start_month,"clock.start_month","1934-01");equals(c.end_month,"clock.end_month","1938-12");equals(c.initial_month_index,"clock.initial_month_index",0);equals(c.action_allowance,"clock.action_allowance",2);equals(c.initial_phase,"clock.initial_phase","month_entry");
  const currency=object(input.currency,"currency",["unit","centimes_per_franc"]);equals(currency.unit,"currency.unit","centime");equals(currency.centimes_per_franc,"currency.centimes_per_franc",100);
- const i=object(input.initial,"initial",["party_cash","spent_ap","reserved_ap","reserved_cash","restricted_cash","members","chamber_seats","actors","facts","issues"]);
+ const i=object(input.initial,"initial",["party_cash","spent_ap","reserved_ap","reserved_cash","restricted_cash","members","chamber_seats","actors","facts","issues"],["hard_checkpoints"]);
  for(const k of ["party_cash","spent_ap","reserved_ap","reserved_cash","restricted_cash"])integer(i[k],"initial."+k);
  if(i.spent_ap+i.reserved_ap>2||i.reserved_cash>i.party_cash-i.restricted_cash)fail("initial","resource conservation");
  // This baseline has no backing reservation records; nonzero pre-entry budgets cannot be loaded.
@@ -47,6 +47,11 @@ export function validateF1(input) {
  unique(actions.map(a=>a.id),"action ids");
  for(const h of Object.keys(handlers))if(!actions.some(a=>a.handler===h))fail("actions","missing "+h);
  for(const issue of issues)for(const variant of issue.variants)if(!actions.some(a=>a.handler==="CONTACT"&&a.issue===issue.id&&a.variant===variant))fail("actions","missing contact variant");
+ if(i.hard_checkpoints!==undefined){
+  const events=arr(i.hard_checkpoints,"hard_checkpoints",0,32);
+  unique(events.map(e=>{object(e,"hard checkpoint",["id","month","day","title","description"]);id(e.id,"checkpoint id");if(e.id.length>100)fail("checkpoint id","too long");integer(e.month,"checkpoint month",0,59);const y=1934+Math.floor(e.month/12),m=e.month%12;const days=[31,y%4===0&&(y%100!==0||y%400===0)?29:28,31,30,31,30,31,31,30,31,30,31];equals(e.day,"checkpoint deadline",days[m]);str(e.title,"checkpoint title");str(e.description,"checkpoint description");if(factIds.has("hard-"+e.id)||factIds.has("hard-"+e.id+"-ack"))fail("checkpoint","fact collision");return e.id;}),"checkpoint ids");
+  if(events.length&&!central[0].capabilities.includes("respond"))fail("hard_checkpoints","zero-cost response unavailable");
+ }
  return input;
 }
 

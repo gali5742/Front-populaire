@@ -1,6 +1,6 @@
 // G2-B: deliberately limited F1 vertical slice. All state private to the session.
 import {loadF1} from "../config/f1-schema.mjs";
-const RULES="g2-c-1", FORMAT="front-populaire-save-1";
+const RULES="g2-c-2", FORMAT="front-populaire-save-1";
 const copy=x=>JSON.parse(JSON.stringify(x));
 const fail=m=>{throw new Error(m)};
 const integer=(x,min=0,max=Number.MAX_SAFE_INTEGER)=>Number.isSafeInteger(x)&&x>=min&&x<=max;
@@ -28,8 +28,23 @@ function transaction(s,id,delta,kind,ref){
 const queued=s=>s.plans.filter(p=>p.status==="queued");
 const reservedAP=s=>queued(s).reduce((n,p)=>n+p.ap,0);
 const reservedMoney=s=>queued(s).reduce((n,p)=>n+p.amount,0)+s.projects.reduce((n,p)=>n+p.reserve,0);
-const available=s=>s.cash-s.restricted-reservedMoney(s);
+const available=s=>s.cash-s.restricted-s.projectHold-reservedMoney(s);
 const routineDue=s=>s.obligations.filter(o=>!o.paid).reduce((n,o)=>n+o.amount,0);
+function reserveNext(s){
+ // In F1 these are adjustable, equal-priority next-period plans.
+ s.projectHold=0;
+ for(const p of s.projects)p.reserve=0;
+ const next=s.projects.filter(p=>p.status==="active"&&s.month<p.last);
+ const demand=next.reduce((n,p)=>n+p.fee,0),pool=available(s);
+ if(!integer(demand)||!integer(pool))fail("next reserve pool");
+ if(demand<=pool){for(const p of next)p.reserve=p.fee;}
+ else if(next.length===1)next[0].reserve=pool;
+ else if(next.length){
+  s.projectHold=pool;
+  const id="project-reserve-short-"+s.month;
+  if(!s.facts.some(f=>f.id===id))addFact(s,id,"下一期经费竞争","同级工作争用下一期资金；保留共享受限金额，不擅自选择分配对象。",s.month,"decision");
+ }
+}
 function enter(s,c,m){
  if(m<0||m>=60||s.entered.includes(m))fail("entry invariant");
  s.month=m;s.entered.push(m);s.spent=0;s.phase="decision";
@@ -41,6 +56,7 @@ function enter(s,c,m){
  // F1 project fees are explicitly adjustable future plans, not binding obligations.
  // Release their old earmarks as a group before the higher priority routine obligations.
  for(const p of s.projects)p.reserve=0;
+ s.projectHold=0;
  if(total<=s.cash){for(const o of unpaid){transaction(s,"pay-"+o.id,-o.amount,"routine",o.id);o.paid=true;}s.restricted=0;}
  else{s.restricted=Math.min(s.cash,total);addFact(s,"shortfall-"+m,"例行经费短缺","到期例行费用未获足额保障；保留实际未付义务和受限资金，不自动分配。",m,"opening");}
  const active=s.projects.filter(p=>p.status==="active"&&m>=p.first&&m<=p.last);
@@ -52,23 +68,18 @@ function enter(s,c,m){
   // Equal priority adjustable plans: no arbitrary winner or partial payment.
   for(const p of active){p.status="paused";addFact(s,p.id+"-short-"+m,"长期工作经费不足","本期未获合法足额经费，暂停；不计付费进展，不生成虚构债务。",m,"opening");}
  }
- const next=s.projects.filter(p=>p.status==="active"&&m<p.last);
- const nextDemand=next.reduce((n,p)=>n+p.fee,0);
- if(!integer(nextDemand))fail("next demand overflow");
- if(nextDemand<=available(s)){for(const p of next)p.reserve=p.fee;}
- else if(next.length===1){next[0].reserve=available(s);}
- else if(next.length){ // No individual partial allocations without an allocation rule.
-  addFact(s,"project-reserve-short-"+m,"下一期经费竞争","同级工作争用下一期资金；没有合法分配依据，未擅自分配。",m,"opening");
- }
+ reserveNext(s);
 }
 function initial(c){
- const s={month:0,phase:"entry",entered:[],sealed:[],cash:c.initial.party_cash,spent:0,restricted:0,ledger:[],obligations:[],contacts:[],plans:[],projects:[],facts:c.initial.facts.map(f=>({id:f.id,title:"公开政治表态",description:f.text,month:0,slot:"opening"})),processed:[]};
+ const s={month:0,phase:"entry",entered:[],sealed:[],cash:c.initial.party_cash,spent:0,restricted:0,projectHold:0,checkpoints:[],ledger:[],obligations:[],contacts:[],plans:[],projects:[],facts:c.initial.facts.map(f=>({id:f.id,title:"公开政治表态",description:f.text,month:0,slot:"opening"})),processed:[]};
  enter(s,c,0);return s;
 }
 function snapshot(s,c){
- return {time:{monthIndex:s.month,label:monthLabel(s.month),phase:s.phase},identity:c.initial.actors.find(a=>a.kind==="player_central").name,actionRemaining:s.phase==="ended"?0:2-s.spent-reservedAP(s),partyAvailableCentimes:available(s),partyCashCentimes:s.cash,restrictedCentimes:s.restricted,reservedCentimes:reservedMoney(s),reservedAP:reservedAP(s),unpaidCentimes:routineDue(s),requiredBlock:false,workCount:s.contacts.filter(x=>x.status==="sent"||x.status==="waiting").length+queued(s).length+s.projects.filter(p=>["active","paused"].includes(p.status)).length,briefCount:s.facts.filter(f=>f.month===s.month).length,profileLabel:c.display_label};
+ return {time:{monthIndex:s.month,label:monthLabel(s.month),phase:s.phase},identity:c.initial.actors.find(a=>a.kind==="player_central").name,actionRemaining:s.phase==="ended"?0:2-s.spent-reservedAP(s),partyAvailableCentimes:available(s),partyCashCentimes:s.cash,restrictedCentimes:s.restricted+s.projectHold,reservedCentimes:reservedMoney(s),reservedAP:reservedAP(s),unpaidCentimes:routineDue(s),requiredBlock:s.phase==="required",workCount:s.contacts.filter(x=>x.status==="sent"||x.status==="waiting").length+queued(s).length+s.projects.filter(p=>["active","paused"].includes(p.status)).length,briefCount:s.facts.filter(f=>f.month===s.month).length,profileLabel:c.display_label};
 }
 function choices(s,c){
+ if(s.phase==="required")return s.checkpoints.filter(x=>x.month===s.month&&!x.resolved).map(x=>({id:x.id,title:"回应："+x.title,description:x.description+"（不新增承诺；必须在本月截止前记录回应。）",draft:{actionId:"acknowledge_no_commitment",targetId:x.id,proposalVersion:"m"+s.month}}));
+ if(s.phase!=="decision")return [];
  const base=c.actions.filter(a=>a.handler==="CONTACT").map(a=>({id:a.id,title:"就"+label(a.variant)+"发起磋商",description:"与"+c.initial.actors.find(x=>x.id===a.target_actor_id).name+"联系；对方将于下一声明检查点自主回应。",draft:{actionId:a.id,targetId:a.target_actor_id,proposalVersion:"v1"}}));
  const add=(a,title,description,target)=>base.push({id:a.id+"-"+target,title,description,draft:{actionId:a.id,targetId:target,proposalVersion:"m"+s.month}});
  for(const a of c.actions){
@@ -84,7 +95,12 @@ function quote(s,c,d){
  let ap=0,centimes=0,reason="";
  const end=d.actionId==="end_month";
  const a=c.actions.find(x=>x.id===d.actionId);
- if(s.phase!=="decision")reason="当前时段已经结束。";
+ if(s.phase==="required"){
+  if(a?.handler!=="ACKNOWLEDGE"||d.proposalVersion!=="m"+s.month||!s.checkpoints.some(x=>x.id===d.targetId&&x.month===s.month&&!x.resolved))reason="必须先回应本月到期事项。";
+  else if(!a.requires.every(k=>c.initial.actors.find(x=>x.kind==="player_central").capabilities.includes(k)))reason="无合法回应权限。";
+ }
+ else if(s.phase==="resume"&&!end)reason="当前仅可继续原月结算。";
+ else if(s.phase!=="decision"&&s.phase!=="resume")reason="当前时段已经结束。";
  else if(end){if(d.targetId!=="current_month"||d.proposalVersion!=="m"+s.month)reason="推进目标已经失效。";}
  else if(!a)reason="该行动未接入或目标已经失效。";
  else{
@@ -140,7 +156,19 @@ function settlePlans(s,c){
 }
 function apply(s,c,d,q){
  if(d.actionId==="end_month"){
-  resolveContacts(s,c);
+  if(s.phase==="decision"){
+   resolveContacts(s,c);
+   const events=(c.initial.hard_checkpoints??[]).filter(x=>x.month===s.month);
+   if(events.length){
+    for(const e of events){
+     const id="hard-"+e.id;
+     s.checkpoints.push({id,month:e.month,day:e.day,title:e.title,description:e.description,resolved:false});
+     addFact(s,id,e.title,e.description,s.month,"month_end");
+    }
+    s.phase="required";
+    return "已到本月真实测试截止检查点；先回应全部到期事项，再继续原月结算。";
+   }
+  }
   settlePlans(s,c);
   if(s.sealed.includes(s.month))fail("duplicate seal");
   s.sealed.push(s.month);
@@ -148,6 +176,12 @@ function apply(s,c,d,q){
   enter(s,c,s.month+1);return "本月已封存，进入"+monthLabel(s.month)+"。";
  }
  const a=c.actions.find(x=>x.id===d.actionId);
+ if(a.handler==="ACKNOWLEDGE"){
+  const x=s.checkpoints.find(x=>x.id===d.targetId);x.resolved=true;
+  addFact(s,x.id+"-ack","已记录到期回应","不新增承诺；仅解决该项回应，保留实际已发生事实。",s.month,"month_end");
+  if(!s.checkpoints.some(x=>x.month===s.month&&!x.resolved))s.phase="resume";
+  return "已记录回应。";
+ }
  if(a.handler==="SCHEDULE_ORGANIZATION"||a.handler==="START_PROJECT"){
   const id="plan-"+s.month+"-"+(s.plans.length+1);
   s.plans.push({id,actionId:a.id,month:s.month,kind:a.handler==="START_PROJECT"?"project":"organization",ap:q.ap,amount:q.centimes,status:"queued"});
@@ -158,7 +192,7 @@ function apply(s,c,d,q){
   const p=s.plans.find(p=>p.id===d.targetId);p.status="cancelled";addFact(s,p.id+"-cancel","已撤销预约","未执行的行动及经费预留已释放。");return "预约已撤销。";
  }
  if(a.handler==="PAUSE_PROJECT"){
-  const p=s.projects.find(p=>p.id===d.targetId);p.reserve=0;p.status="paused";addFact(s,p.id+"-pause-"+s.month,"已确认暂停长期工作","从下期起不再付费；保留当期已付款及实际执行记录。");return "下一期工作已暂停。";
+  const p=s.projects.find(p=>p.id===d.targetId);p.reserve=0;p.status="paused";reserveNext(s);addFact(s,p.id+"-pause-"+s.month,"已确认暂停长期工作","从下期起不再付费；保留当期已付款及实际执行记录。");return "下一期工作已暂停。";
  }
  if(a.handler==="ACCEPT_SHORTFALL"){addFact(s,"accept-shortfall-"+s.month,"已确认经费短缺","接受未付义务及后果；未免债、未支付、未新增承诺。");return "已记录未付义务；可继续推进。";}
  const id="contact-"+a.id;
@@ -169,13 +203,22 @@ function apply(s,c,d,q){
  return "接触已发出；费用已结算，等待对方回应。";
 }
 function validateState(s,c){
- if(!keys(s,["month","phase","entered","sealed","cash","spent","restricted","ledger","obligations","contacts","plans","projects","facts","processed"]))fail("state shape");
- if(!integer(s.month,0,59)||!["decision","ended"].includes(s.phase)||!integer(s.cash)||!integer(s.spent,0,2)||!integer(s.restricted,0,s.cash))fail("state values");
- for(const k of ["entered","sealed","ledger","obligations","contacts","plans","projects","facts","processed"])if(!Array.isArray(s[k]))fail("array "+k);
+ if(!keys(s,["month","phase","entered","sealed","cash","spent","restricted","projectHold","checkpoints","ledger","obligations","contacts","plans","projects","facts","processed"]))fail("state shape");
+ if(!integer(s.month,0,59)||!["decision","required","resume","ended"].includes(s.phase)||!integer(s.cash)||!integer(s.spent,0,2)||!integer(s.restricted,0,s.cash)||!integer(s.projectHold,0,s.cash))fail("state values");
+ for(const k of ["entered","sealed","checkpoints","ledger","obligations","contacts","plans","projects","facts","processed"])if(!Array.isArray(s[k]))fail("array "+k);
  if(s.entered.length!==s.month+1||s.entered.some((m,i)=>m!==i)||s.sealed.length!==s.month+(s.phase==="ended"?1:0)||s.sealed.some((m,i)=>m!==i)||s.phase==="ended"&&s.month!==59)fail("clock");
  const unique=(a,k)=>{if(new Set(a.map(x=>x[k])).size!==a.length)fail("duplicate "+k)};
  unique(s.ledger,"id");unique(s.obligations,"id");unique(s.contacts,"id");unique(s.contacts,"actionId");unique(s.facts,"id");unique(s.processed,"requestId");
  const validMonth=m=>integer(m,0,s.month);
+ unique(s.checkpoints,"id");
+ for(const x of s.checkpoints){
+  const e=(c.initial.hard_checkpoints??[]).find(e=>"hard-"+e.id===x.id);
+  if(!keys(x,["id","month","day","title","description","resolved"])||!e||!validMonth(x.month)||x.month!==e.month||x.day!==e.day||x.title!==e.title||x.description!==e.description||typeof x.resolved!=="boolean"||!s.facts.some(f=>f.id===x.id&&f.month===x.month)||x.resolved!==s.facts.some(f=>f.id===x.id+"-ack"&&f.month===x.month))fail("checkpoint");
+  if(x.month<s.month&&!x.resolved||s.sealed.includes(x.month)&&!x.resolved)fail("unresolved sealed checkpoint");
+ }
+ for(const e of c.initial.hard_checkpoints??[]){if((s.sealed.includes(e.month)||e.month===s.month&&["required","resume"].includes(s.phase))!==s.checkpoints.some(x=>x.id==="hard-"+e.id))fail("checkpoint coverage");}
+ const here=s.checkpoints.filter(x=>x.month===s.month);
+ if(s.phase==="required"&&(!here.length||!here.some(x=>!x.resolved))||s.phase==="resume"&&(!here.length||here.some(x=>!x.resolved))||s.phase==="decision"&&here.length)fail("checkpoint cursor");
  let balance=c.initial.party_cash;
  for(const t of s.ledger){if(!keys(t,["id","month","delta","kind","ref"])||!safeId(t.id)||!safeId(t.ref)||!validMonth(t.month)||!Number.isSafeInteger(t.delta)||!["income","routine","contact","organization","project_start","project_month"].includes(t.kind))fail("ledger row");balance+=t.delta;if(!integer(balance))fail("ledger balance");}
  if(balance!==s.cash)fail("cash");
@@ -192,8 +235,8 @@ function validateState(s,c){
   if(!keys(x,["id","actionId","issue","month","status","responseMonth"])||!a||x.id!=="contact-"+a.id||x.issue!==a.issue||!validMonth(x.month)||!["sent","accepted","rejected","waiting"].includes(x.status))fail("contact");
   const fee=s.ledger.filter(t=>t.kind==="contact"&&t.ref===x.id);if(fee.length!==1||fee[0].delta!==-a.cost||fee[0].id!==x.id+"-fee"||fee[0].month!==x.month)fail("contact fee");
   const sent=s.facts.find(f=>f.id===x.id),reply=s.facts.find(f=>f.id===x.id+"-reply");if(!sent||sent.month!==x.month)fail("contact fact");
-  if(x.status==="sent"){if(x.responseMonth!==null||reply||s.sealed.includes(x.month))fail("pending reply");}
-  else if(x.responseMonth!==x.month||!s.sealed.includes(x.month)||!reply||reply.month!==x.responseMonth)fail("reply fact");
+  if(x.status==="sent"){if(x.responseMonth!==null||reply||s.sealed.includes(x.month)||x.month===s.month&&["required","resume"].includes(s.phase))fail("pending reply");}
+  else if(x.responseMonth!==x.month||(!s.sealed.includes(x.month)&&!(x.month===s.month&&["required","resume"].includes(s.phase)))||!reply||reply.month!==x.responseMonth)fail("reply fact");
   if(x.month===s.month)spent+=a.ap;
  }
  unique(s.plans,"id");unique(s.projects,"id");
@@ -216,11 +259,12 @@ function validateState(s,c){
   const fees=s.ledger.filter(t=>t.kind==="project_month"&&t.ref===p.id);
   if(fees.length!==p.paid.length||fees.some(t=>t.delta!==-p.fee||t.id!==p.id+"-fee-"+t.month||!p.paid.includes(t.month)))fail("project payment");
  }
+ if(s.projectHold>0){const next=s.projects.filter(p=>p.status==="active"&&s.month<p.last);const demand=next.reduce((n,p)=>n+p.fee,0);if(next.length<2||next.some(p=>p.reserve!==0)||demand<=s.projectHold||available(s)!==0)fail("project conflict pool");}
  if(s.ledger.some(t=>["organization","project_start"].includes(t.kind)&&!s.plans.some(p=>p.id===t.ref)||t.kind==="project_month"&&!s.projects.some(p=>p.id===t.ref)))fail("orphan project ledger");
  if(s.ledger.some(t=>t.kind==="contact"&&!s.contacts.some(x=>x.id===t.ref))||spent+reservedAP(s)>2||s.spent!==spent)fail("action budget");
  for(const p of s.processed){if(!keys(p,["requestId","canonical","status","message","month"])||!safeId(p.requestId)||typeof p.canonical!=="string"||!["committed","rejected"].includes(p.status)||typeof p.message!=="string"||!validMonth(p.month))fail("processed");let payload=JSON.parse(p.canonical);if(!validCommand({requestId:p.requestId,...payload}))fail("processed payload");}
  const committed=s.processed.filter(p=>p.status==="committed").map(p=>JSON.parse(p.canonical).draft);
- if(committed.filter(d=>d.actionId==="end_month").length!==s.sealed.length||committed.filter(d=>c.actions.some(a=>a.id===d.actionId&&a.handler==="CONTACT")).length!==s.contacts.length||committed.filter(d=>c.actions.some(a=>a.id===d.actionId&&["START_PROJECT","SCHEDULE_ORGANIZATION"].includes(a.handler))).length!==s.plans.length)fail("processed commit count");
+ if(committed.filter(d=>d.actionId==="end_month").length!==s.sealed.length+new Set(s.checkpoints.map(x=>x.month)).size||committed.filter(d=>d.actionId==="acknowledge_no_commitment").length!==s.checkpoints.filter(x=>x.resolved).length||committed.filter(d=>c.actions.some(a=>a.id===d.actionId&&a.handler==="CONTACT")).length!==s.contacts.length||committed.filter(d=>c.actions.some(a=>a.id===d.actionId&&["START_PROJECT","SCHEDULE_ORGANIZATION"].includes(a.handler))).length!==s.plans.length)fail("processed commit count");
 }
 export function createCoreSession(rawConfig){
  const c=loadF1(rawConfig),configIdentity=checksum(canonical(c));
