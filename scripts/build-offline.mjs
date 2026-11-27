@@ -1,7 +1,7 @@
 // A separate classic script bundle. Reject residual assets/chunks instead of silently omitting them.
 import {build} from "vite";
 import {mkdir,writeFile} from "node:fs/promises";
-const result=await build({configFile:false,esbuild:{jsx:"automatic"},build:{target:"es2022",write:false,cssCodeSplit:false,lib:{entry:"src/app/probe.tsx",name:"FrontPopulaireProbe",formats:["iife"],fileName:"probe"},rollupOptions:{output:{inlineDynamicImports:true}}}});
+const result=await build({configFile:false,define:{"process.env.NODE_ENV":JSON.stringify("production")},esbuild:{jsx:"automatic"},build:{target:"es2022",write:false,cssCodeSplit:false,lib:{entry:"src/app/probe.tsx",name:"FrontPopulaireProbe",formats:["iife"],fileName:"probe"},rollupOptions:{output:{inlineDynamicImports:true}}}});
 const outputs=(Array.isArray(result)?result:[result]).flatMap(x=>x.output??[]);
 const chunks=outputs.filter(x=>x.type==="chunk");
 if(chunks.length!==1||chunks[0].imports.length||chunks[0].dynamicImports.length)throw Error("expected one self-contained classic chunk");

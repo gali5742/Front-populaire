@@ -58,7 +58,7 @@ const vectors=[
   }
 ] as const;
 describe("keyed random v1",()=>{
- it("fixed vectors",()=>{for(const v of vectors)expect(draw64(...v.key).toString(16).padStart(16,"0")).toBe(v.hex)});
+ it("fixed vectors",()=>{for(const v of vectors)expect(draw64(v.key[0],v.key[1],v.key[2],v.key[3],v.key[4],v.key[5]).toString(16).padStart(16,"0")).toBe(v.hex)});
  it("unrelated draw and reordered objects do not shift keys",()=>{const a=draw64(...vectors[0].key);draw64(...vectors[2].key);draw64(...vectors[1].key);expect(draw64(...vectors[0].key)).toBe(a)});
  it("valid range and malformed inputs",()=>{for(const b of [1,2,3,100,Number.MAX_SAFE_INTEGER]){const v=uniformInt(1,"D2","t","p","o",b);expect(v).toBeGreaterThanOrEqual(0);expect(v).toBeLessThan(b)}expect(()=>uniformInt(1,"D2","t","p","o",0)).toThrow()});
 });

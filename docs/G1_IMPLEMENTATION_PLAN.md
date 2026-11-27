@@ -2,7 +2,7 @@
 版本 v0.2；2026-11-27；G1 PLAN APPROVED / G2-A AUTHORIZED / VALIDATION PENDING（D87）。依据D85及用户确认启动G1；v0.2及G1-R01–R05获用户确认，技术方向锁定，授权G2-A；实际依赖锁定及G2-A验收尚待完成。D1–D8为原则通过基准；未修改历史底库与58张视觉基准。
 
 ## 1. 技术选型与交付边界（G1-01）
-推荐TypeScript严格模式、React组件、原生CSS、Node.js 24 LTS、Vite、npm锁文件、Vitest无DOM规则测试、Playwright真实浏览器测试。引擎无React、DOM、网络、系统时钟及随机全局依赖；不引入运行时LLM、后台数据库、服务器、重型事件溯源或全局状态框架。先以单进程同步事务推进；性能测量需要时才引入Web Worker，不改变接口。官方参考：[Node.js LTS](https://nodejs.org/en/about/previous-releases)、[Vite构建](https://vite.dev/guide/build)、[Vitest](https://vitest.dev/guide/)、[Playwright浏览器](https://playwright.dev/docs/browsers)、[MDN本地存储](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)（2026-11-27核对）。具体相容版本及依赖锁定在G1技术确认后的实际工具链验证，不猜测当前小版本。软件及素材许可证另登记，不直接复制受限字体/史料插画。
+推荐TypeScript严格模式、React组件、原生CSS、Node.js 24 LTS、Vite、npm锁文件、Vitest无DOM规则测试、Playwright真实浏览器测试。引擎无React、DOM、网络、系统时钟及随机全局依赖；不引入运行时LLM、后台数据库、服务器、重型事件溯源或全局状态框架。先以单进程同步事务推进；性能测量需要时才引入Web Worker，不改变接口。官方参考：[Node.js LTS](https://nodejs.org/en/about/previous-releases)、[Vite构建](https://vite.dev/guide/build)、[Vitest](https://vitest.dev/guide/)、[Playwright浏览器](https://playwright.dev/docs/browsers)、[MDN本地存储](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)（2026-11-27核对）。技术方向已按D87确认，具体相容版本及依赖锁定在G2-A实际工具链验证，不猜测当前小版本。软件及素材许可证另登记，不直接复制受限字体/史料插画。
 开发/CI使用本地开发服务器或静态测试服务器；玩家交付优先提供无需安装、无需服务器、无需网络即可直接打开的HTML。Vite默认静态构建并不保证file://可用，单文件交付需专门内联/打包脚本、资源与配置内嵌、无运行时fetch/CDN及外部字体、无不可用动态模块加载；另保留标准静态构建供托管。先验证最小构建产物在桌面Chrome/Edge的file://与断网条件、导入导出和刷新；Firefox作为补充兼容目标，实际测试范围确认后登记。localStorage在file://行为不保证，浏览器自动存档仅尽力而为并显示失败；手动版本化JSON导出/导入是必要路径，不依赖存储权限或固定文件路径。G1当前未做实际构建、安装、CI或浏览器测试。
  
 ### 1.1 G1-R01 双构建、离线脚本及字体
