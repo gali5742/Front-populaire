@@ -40,6 +40,21 @@ jobs:
           name: g2-a-package-lock
           path: package-lock.json
           if-no-files-found: error
+      - name: Recover verified bootstrap lock for repository sync
+        run: |
+          node --input-type=module - <<'NODE'
+          import { readFileSync } from 'node:fs';
+          import { createHash } from 'node:crypto';
+          const bytes = readFileSync('package-lock.json');
+          const digest = createHash('sha256').update(bytes).digest('hex');
+          const expected = '520e94729de7d861e03bd01ea4f39fdc19d83c36533220bc4f17b29388a3c7a1';
+          if (digest !== expected) throw new Error('Bootstrap lock changed; review new artifact instead');
+          const text = bytes.toString('base64');
+          const chunks = text.match(/.{1,1024}/g);
+          console.log('LOCK_SYNC_SHA256 ' + digest);
+          chunks.forEach((chunk, index) => console.log('LOCK_SYNC_CHUNK ' + index + ' ' + chunk));
+          console.log('LOCK_SYNC_COUNT ' + chunks.length);
+          NODE
       - name: Typecheck, registry, unit tests and both builds
         run: npm run check
       - name: Install Chromium
