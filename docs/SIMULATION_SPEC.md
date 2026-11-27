@@ -1,6 +1,6 @@
 # 模拟机制框架
 状态：Phase 0.5B基本同意；下列已确认边界与拟议接口分开。尚无可运行引擎。
-实施前机制细化已启动，参见[Phase 0.5D与D1](MECHANISM_DESIGN_DRAFT.md)、[D2](MECHANISM_D2_DRAFT.md)；两份v0.2已获原则通过（D78、D79），具体参数、历史及运行验证仍待完成。[D3党内政治制度](MECHANISM_D3_DRAFT.md)v0.2及六项接口修订已获原则通过（D80）；[D4党际关系与群众运动](MECHANISM_D4_DRAFT.md)v0.2及六项接口调整已获原则通过（D81）；[D5议会与政府](MECHANISM_D5_DRAFT.md)v0.2及六项接口修订已获原则通过（D82）；[D6选举](MECHANISM_D6_DRAFT.md)v0.2及R01–R08、D1时序（T27–T30）、D5交接与UI配套补丁均获原则通过（D83）；[D7经济与社会反馈](MECHANISM_D7_DRAFT.md)为v0.1候选待审阅，不替代已确认边界。
+实施前机制细化已启动，参见[Phase 0.5D与D1](MECHANISM_DESIGN_DRAFT.md)、[D2](MECHANISM_D2_DRAFT.md)；两份v0.2已获原则通过（D78、D79），具体参数、历史及运行验证仍待完成。[D3党内政治制度](MECHANISM_D3_DRAFT.md)v0.2及六项接口修订已获原则通过（D80）；[D4党际关系与群众运动](MECHANISM_D4_DRAFT.md)v0.2及六项接口调整已获原则通过（D81）；[D5议会与政府](MECHANISM_D5_DRAFT.md)v0.2及六项接口修订已获原则通过（D82）；[D6选举](MECHANISM_D6_DRAFT.md)v0.2及R01–R08、D1时序（T27–T30）、D5交接与UI配套补丁均获原则通过（D83）；[D7经济与社会反馈](MECHANISM_D7_DRAFT.md)为v0.2候选待复审，R01–R08、D1支付（T31–T34）、D5财政接口（L49–L50）及UI配套补丁待D84统一原则确认，不替代已确认边界。
 
 ## 已确认的范围
 | 项目 | 规则 |
