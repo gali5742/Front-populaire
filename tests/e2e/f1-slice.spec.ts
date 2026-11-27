@@ -78,3 +78,11 @@ test("explicit deadline fixture: cancel from work, close does not clear, save an
  await page.locator(".action").first().getByRole("button",{name:"查看方案 >"}).click();await page.getByRole("button",{name:"确认提交"}).click();await page.getByRole("button",{name:"继续结算 →"}).click();await expect(page.getByRole("dialog")).toContainText("已处理事项不会重复执行");await page.getByRole("button",{name:"确认提交"}).click();await expect(page.locator(".resources")).toContainText("29日截止检查点");
  await page.locator(".action").first().getByRole("button",{name:"查看方案 >"}).click();await page.getByRole("button",{name:"确认提交"}).click();await page.getByRole("button",{name:"继续结算 →"}).click();await page.getByRole("button",{name:"确认提交"}).click();await expect(page.locator(".resources")).toContainText("1934年2月");await expect(page.getByLabel("可用党资金")).toHaveText("12,000 F");
 });
+
+test("explicit payment fixture displays actual shortage and independent payment, then settles on new funds",async({page,context})=>{
+ await context.setOffline(true);const url=pathToFileURL(resolve("dist-offline/front-populaire-f1.html"));url.searchParams.set("scenario","payments");await page.goto(url.href);
+ await expect(page.getByText("支付冲突测试夹具",{exact:false})).toBeVisible();await expect(page.getByLabel("可用党资金")).toHaveText("0 F");
+ const account=page.locator(".side dl");await expect(account).toContainText("8,000 F");await expect(account).toContainText("10,000 F");await expect(account).toContainText("2,000 F");
+ await page.locator(".action").filter({has:page.getByRole("heading",{name:"确认经费短缺",exact:true})}).getByRole("button",{name:"查看方案 >"}).click();await page.getByRole("button",{name:"确认提交"}).click();await expect(account).toContainText("10,000 F");
+ await page.getByRole("button",{name:"结束本月 →"}).click();await page.getByRole("button",{name:"确认提交"}).click();await expect(page.getByLabel("可用党资金")).toHaveText("1,000 F");await expect(account).not.toContainText("10,000 F");
+});

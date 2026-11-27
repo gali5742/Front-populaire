@@ -1,7 +1,7 @@
 // G2-B: deliberately limited F1 vertical slice. All state private to the session.
 import {loadF1} from "../config/f1-schema.mjs";
 import {planDuePayments} from "./payment-plan.mjs";
-const RULES="g2-c-5", FORMAT="front-populaire-save-1";
+const RULES="g2-c-6", FORMAT="front-populaire-save-1";
 const copy=x=>JSON.parse(JSON.stringify(x));
 const fail=m=>{throw new Error(m)};
 const integer=(x,min=0,max=Number.MAX_SAFE_INTEGER)=>Number.isSafeInteger(x)&&x>=min&&x<=max;
@@ -11,6 +11,7 @@ const canonical=x=>JSON.stringify(x,(_k,v)=>obj(v)?Object.fromEntries(Object.key
 function checksum(text){let h=0x811c9dc5;for(let i=0;i<text.length;i++)h=Math.imul(h^text.charCodeAt(i),0x01000193)>>>0;return h.toString(16).padStart(8,"0")}
 const daysInMonth=m=>{const y=1934+Math.floor(m/12);return [31,y%4===0&&(y%100!==0||y%400===0)?29:28,31,30,31,30,31,31,30,31,30,31][m%12]};
 const monthLabel=m=>(1934+Math.floor(m/12))+"年"+(m%12+1)+"月";
+const planInvalidated=(s,c,a)=>s.checkpoints.some(x=>x.month===s.month&&(c.initial.hard_checkpoints??[]).some(e=>"hard-"+e.id===x.id&&(e.invalidates??[]).includes(a.id)));
 const currentDay=s=>s.checkpoints.filter(x=>x.month===s.month).reduce((n,x)=>Math.max(n,x.day),0);
 const factDate=f=>monthLabel(f.month)+(f.slot.startsWith("day-")?f.slot.slice(4)+"日":"");
 const label=v=>v==="statement"?"共同声明":"组织协作";
@@ -73,7 +74,8 @@ function enter(s,c,m){
  s.restricted=result.restricted;
  if(result.conflict){
   const x=result.conflict;
-  addFact(s,"shortfall-"+m,"经费短缺处置","到期同级义务竞争：未获独立保障的需求 "+x.unbacked+" 生丁，可用于该冲突 "+x.pool+" 生丁，缺口 "+(x.unbacked-x.pool)+" 生丁；保留实际未付义务，不擅自部分支付。",m,"opening");
+  const items=obligations.filter(o=>x.ids.includes(o.id)).map(o=>o.id+"（到期 "+monthLabel(o.month)+"，"+(o.amount/100)+" F，专款 "+(o.reserve/100)+" F）").join("；");
+  addFact(s,"shortfall-"+m,"经费短缺处置","同级到期义务："+items+"。未获独立保障的需求 "+(x.unbacked/100)+" F，可用于该冲突 "+(x.pool/100)+" F，缺口 "+((x.unbacked-x.pool)/100)+" F；保留实际未付义务，不擅自部分支付。可零资源接受未付事实，不免债。",m,"opening");
  }
  if(s.restricted!==Math.min(s.cash-reservedMoney(s),dueUnbacked(s)))fail("payment conservation");
  const active=s.projects.filter(p=>fundedCandidate(p)&&m>=p.first&&m<=p.last);
@@ -182,7 +184,7 @@ function settlePlans(s,c){
  for(const p of queued(s)){
   const a=c.actions.find(a=>a.id===p.actionId);
   const central=c.initial.actors.find(a=>a.kind==="player_central");
-  if(!a.requires.every(k=>central.capabilities.includes(k))){p.status="failed";addFact(s,p.id+"-failed","预约失效","条件不再满足；释放未执行预留。",s.month,"month_end");continue;}
+  if(planInvalidated(s,c,a)||!a.requires.every(k=>central.capabilities.includes(k))){p.status="failed";addFact(s,p.id+"-failed","预约失效","执行前条件不再满足；释放未执行预留，不自动改选其他方案。",s.month,"month_end");continue;}
   p.status="executed";s.spent+=p.ap;
   if(p.kind==="organization"){transaction(s,p.id+"-fee",-p.amount,"organization",p.id);addFact(s,p.id+"-done","组织活动已执行","实际费用已支付，未虚构额外政治收益。",s.month,"month_end");}
   else{
@@ -264,7 +266,7 @@ function validateState(s,c){
  unique(s.checkpoints,"id");
  for(const x of s.checkpoints){
   const e=(c.initial.hard_checkpoints??[]).find(e=>"hard-"+e.id===x.id);
-  if(!keys(x,["id","month","day","batch","title","description","resolved"])||!e||!validMonth(x.month)||x.month!==e.month||x.day!==e.day||!integer(x.batch,1,32)||x.title!==e.title||x.description!==e.description||typeof x.resolved!=="boolean"||!s.facts.some(f=>f.id===x.id&&f.month===x.month)||x.resolved!==s.facts.some(f=>f.id===x.id+"-ack"&&f.month===x.month))fail("checkpoint");
+  if(!keys(x,["id","month","day","batch","title","description","resolved"])||!e||!validMonth(x.month)||x.month!==e.month||x.day!==e.day||!integer(x.batch,1,32)||x.title!==e.title||x.description!==e.description||typeof x.resolved!=="boolean"||!s.facts.some(f=>f.id===x.id&&f.month===x.month&&f.slot==="day-"+x.day)||x.resolved!==s.facts.some(f=>f.id===x.id+"-ack"&&f.month===x.month&&f.slot==="day-"+x.day))fail("checkpoint");
   if(x.month<s.month&&!x.resolved||s.sealed.includes(x.month)&&!x.resolved)fail("unresolved sealed checkpoint");
  }
  // Verify saved cursor is a valid prefix of the dated dependency schedule.
@@ -321,6 +323,8 @@ function validateState(s,c){
   if(p.status==="queued"&&(p.month!==s.month||s.sealed.includes(p.month)))fail("pending plan");
   if(p.status==="executed"&&!s.sealed.includes(p.month))fail("plan execution date");
   const fees=s.ledger.filter(t=>["organization","project_start"].includes(t.kind)&&t.ref===p.id);
+  if(p.status==="failed"&&(!s.sealed.includes(p.month)||!s.facts.some(f=>f.id===p.id+"-failed"&&f.month===p.month)))fail("failed plan");
+  if(p.status==="cancelled"&&!s.facts.some(f=>f.id===p.id+"-cancel"&&f.month===p.month))fail("cancelled plan");
   const expected=p.status==="executed"?(p.kind==="organization"||a.cost>0?1:0):0;
   if(fees.length!==expected||fees.some(t=>t.id!==p.id+"-fee"||t.month!==p.month||t.delta!==-a.cost||t.kind!==(p.kind==="organization"?"organization":"project_start")))fail("plan fee");
   if((p.status==="executed"&&p.kind==="project")!==s.projects.some(x=>x.id===p.id))fail("project reference");
@@ -339,6 +343,7 @@ function validateState(s,c){
  if(s.ledger.some(t=>t.kind==="contact"&&!s.contacts.some(x=>x.id===t.ref))||spent+reservedAP(s)>2||s.spent!==spent)fail("action budget");
  for(const p of s.processed){if(!keys(p,["requestId","canonical","status","message","month"])||!safeId(p.requestId)||typeof p.canonical!=="string"||!["committed","rejected"].includes(p.status)||typeof p.message!=="string"||!validMonth(p.month))fail("processed");let payload=JSON.parse(p.canonical);if(!validCommand({requestId:p.requestId,...payload}))fail("processed payload");}
  const committed=s.processed.filter(p=>p.status==="committed").map(p=>JSON.parse(p.canonical).draft);
+ if(committed.filter(d=>d.actionId==="cancel_pending").length!==s.plans.filter(p=>p.status==="cancelled").length||committed.filter(d=>["pause_adjustable_project","resume_project","terminate_project"].includes(d.actionId)).length!==s.facts.filter(f=>/^plan-\d+-\d+-manage-\d+$/.test(f.id)).length)fail("management record count");
  if(committed.filter(d=>d.actionId==="end_month").length!==s.sealed.length+new Set(s.checkpoints.map(x=>x.batch)).size||committed.filter(d=>d.actionId==="acknowledge_no_commitment").length!==s.checkpoints.filter(x=>x.resolved).length||committed.filter(d=>c.actions.some(a=>a.id===d.actionId&&a.handler==="CONTACT")).length!==s.contacts.length||committed.filter(d=>c.actions.some(a=>a.id===d.actionId&&["START_PROJECT","SCHEDULE_ORGANIZATION"].includes(a.handler))).length!==s.plans.length)fail("processed commit count");
 }
 export function createCoreSession(rawConfig){

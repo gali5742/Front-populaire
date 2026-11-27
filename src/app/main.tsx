@@ -30,7 +30,7 @@ function App(){
  function openConfirm(title:string,draft:ActionDraft,description="",parentWork?:string){setActionFeedback("");setModal({kind:"confirm",draft,quote:session.previewQuote(draft),title,description,parentWork,requestId:requestId()});}
  function confirm(){
   if(modal?.kind!=="confirm"||locked.current||!modal.quote.allowed)return;
-  locked.current=true;try{const result=session.dispatch({requestId:modal.requestId,draft:modal.draft,confirmedQuote:modal.quote});setSnap(result.snapshot);setActionFeedback(result.message);returnFromConfirm();}finally{locked.current=false;}
+  locked.current=true;try{const result=session.dispatch({requestId:modal.requestId,draft:modal.draft,confirmedQuote:modal.quote});setSnap(result.snapshot);setActionFeedback(result.message);if(result.snapshot.requiredBlock)setNav("action");returnFromConfirm();}finally{locked.current=false;}
  }
  function exportFile(){const url=URL.createObjectURL(new Blob([session.exportSave()],{type:"application/json"}));const a=document.createElement("a");a.href=url;a.download="front-populaire-f1.json";a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
  const recordList=(items:readonly RecordSummary[],isWork=false)=>items.length?<ul className="records">{items.map(f=><li key={f.id}><span>{f.title}<small>{f.knownAt}</small></span><button className="link" onClick={()=>setModal({kind:isWork&&session.queryWorkDetail(f.id)?"work":"detail",id:f.id})}>查看详情 &gt;</button></li>)}</ul>:<p className="muted">没有符合条件的记录。</p>;
