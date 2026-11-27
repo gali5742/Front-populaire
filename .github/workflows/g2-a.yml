@@ -46,6 +46,12 @@ jobs:
         run: npx playwright install --with-deps chromium
       - name: Offline browser test
         run: npm run test:e2e
+      - name: Upload verified F1 slice
+        uses: actions/upload-artifact@v4
+        with:
+          name: g2-b-offline-f1
+          path: dist-offline/front-populaire-f1.html
+          if-no-files-found: error
       - name: Upload verified engineering probe
         uses: actions/upload-artifact@v4
         with:

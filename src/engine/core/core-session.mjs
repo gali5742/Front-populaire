@@ -80,7 +80,7 @@ function apply(s,c,d,q){
   resolveContacts(s,c);
   if(s.sealed.includes(s.month))fail("duplicate seal");
   s.sealed.push(s.month);
-  if(s.month===59){s.phase="ended";s.spent=2;return "1938年12月已封存；没有第61个月。";}
+  if(s.month===59){s.phase="ended";return "1938年12月已封存；没有第61个月。";}
   enter(s,c,s.month+1);return "本月已封存，进入"+monthLabel(s.month)+"。";
  }
  const a=c.actions.find(x=>x.id===d.actionId);
@@ -118,7 +118,7 @@ function validateState(s,c){
   else if(x.responseMonth!==x.month||!s.sealed.includes(x.month)||!reply||reply.month!==x.responseMonth)fail("reply fact");
   if(x.month===s.month)spent+=a.ap;
  }
- if(s.ledger.some(t=>t.kind==="contact"&&!s.contacts.some(x=>x.id===t.ref))||spent>2||s.spent!==(s.phase==="ended"?2:spent))fail("action budget");
+ if(s.ledger.some(t=>t.kind==="contact"&&!s.contacts.some(x=>x.id===t.ref))||spent>2||s.spent!==spent)fail("action budget");
  for(const p of s.processed){if(!keys(p,["requestId","canonical","status","message","month"])||!safeId(p.requestId)||typeof p.canonical!=="string"||!["committed","rejected"].includes(p.status)||typeof p.message!=="string"||!validMonth(p.month))fail("processed");let payload=JSON.parse(p.canonical);if(!validCommand({requestId:p.requestId,...payload}))fail("processed payload");}
  if(s.processed.filter(p=>p.status==="committed").length!==s.contacts.length+s.sealed.length)fail("processed commit count");
 }
