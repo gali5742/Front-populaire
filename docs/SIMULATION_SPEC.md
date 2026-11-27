@@ -1,6 +1,6 @@
 # 模拟机制框架
 状态：Phase 0.5B基本同意；下列已确认边界与拟议接口分开。尚无可运行引擎。
-实施前机制细化已启动，参见[Phase 0.5D与D1](MECHANISM_DESIGN_DRAFT.md)、[D2](MECHANISM_D2_DRAFT.md)；两份v0.2已获原则通过（D78、D79），具体参数、历史及运行验证仍待完成。[D3党内政治制度](MECHANISM_D3_DRAFT.md)为候选，待审阅，不替代已确认边界。
+实施前机制细化已启动，参见[Phase 0.5D与D1](MECHANISM_DESIGN_DRAFT.md)、[D2](MECHANISM_D2_DRAFT.md)；两份v0.2已获原则通过（D78、D79），具体参数、历史及运行验证仍待完成。[D3党内政治制度](MECHANISM_D3_DRAFT.md)为v0.2候选，六项接口修订待用户复审，不替代已确认边界。
 
 ## 已确认的范围
 | 项目 | 规则 |
