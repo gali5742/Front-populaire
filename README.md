@@ -83,4 +83,4 @@
 
 [G2-C C-R09–R12收尾修订](docs/G2_C_STATUS.md)：已获授权，完整CI复验通过（46单测、7 E2E）；17项F1 PASS相关测试复跑，315项NOT_RUN；待用户人工确认。[最新离线HTML](https://github.com/gali5742/Front-populaire/actions/runs/45977995535/artifacts/15187877657)。
 
-D92 C-R13：长期工作玩家文案、侧栏短摘要及终止当月收尾可见性修订候选（g2-c-8），待CI；此前g2-c-7产物仍为上一验证版本。
+D92 C-R13：长期工作玩家文案、侧栏短摘要及终止当月收尾可见性（g2-c-8），[CI完整复验通过](https://github.com/gali5742/Front-populaire/actions/runs/45980063791)（48单测、8 E2E），[最新离线HTML](https://github.com/gali5742/Front-populaire/actions/runs/45980063791/artifacts/15189046317)；待人工确认。
