@@ -1,0 +1,25 @@
+import {test,expect} from "@playwright/test";
+import {pathToFileURL} from "node:url";
+import {resolve} from "node:path";
+test("offline file protocol probe, import/export and failed import",async({page,context})=>{
+ const outside:string[]=[];const errors:string[]=[];
+ page.on("request",r=>{if(/^https?:/i.test(r.url()))outside.push(r.url())});
+ page.on("pageerror",e=>errors.push(e.message));
+ await context.setOffline(true);
+ await page.goto(pathToFileURL(resolve("dist-offline/front-probe.html")).href);
+ await expect(page.getByRole("button",{name:"测试交互"})).toBeVisible();
+ await page.getByRole("button",{name:"测试交互"}).click();
+ await expect(page.getByLabel("测试计数")).toHaveText("1");
+ const downloadPromise=page.waitForEvent("download");
+ await page.getByRole("button",{name:"导出试验存档"}).click();
+ const download=await downloadPromise;
+ expect(download.suggestedFilename()).toBe("front-probe.json");
+ const saved=await download.path();if(!saved)throw Error("download unavailable");
+ await page.reload();
+ await page.locator('input[type=file]').setInputFiles(saved);
+ await expect(page.getByLabel("测试计数")).toHaveText("1");
+ await page.locator('input[type=file]').setInputFiles({name:"bad.json",mimeType:"application/json",buffer:Buffer.from("{bad")});
+ await expect(page.getByRole("status")).toContainText("导入失败");
+ await expect(page.getByLabel("测试计数")).toHaveText("1");
+ expect(outside).toEqual([]);expect(errors).toEqual([]);
+});
