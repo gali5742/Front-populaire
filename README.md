@@ -20,7 +20,7 @@
 | [MECHANISM_D8_DRAFT](docs/MECHANISM_D8_DRAFT.md) | 历史初始化、最小实现及综合验收 v0.2（D85原则通过，G0收束） |
 | [G1_IMPLEMENTATION_PLAN](docs/G1_IMPLEMENTATION_PLAN.md) | G1实施方案v0.2及R01–R05原则通过（D87） |
 | [ACCEPTANCE_REGISTER](docs/ACCEPTANCE_REGISTER.csv) | 332项原始验收断言与阶段映射；全部NOT_RUN |
-| [F1-G2-CORE-001](data/fixtures/f1-g2-core-v01.json) | 首批合成测试配置候选，非历史初值、未运行 |
+| [F1-G2-CORE-001 v0.2](data/fixtures/f1-g2-core-v02.json) | 合成基准加载schema；[v0.1原始测试意图](data/fixtures/f1-g2-core-v01.json)保留，非历史初值、未执行政治测试 |
 | [HISTORICAL_MODEL](docs/HISTORICAL_MODEL.md) | 历史证据与模拟参数转换纪律 |
 | [DECISION_LOG](docs/DECISION_LOG.md) | 已确认、替代及暂定决策 |
 | [OPEN_ISSUES](docs/OPEN_ISSUES.md) | 历史、机制、UI及实现遗留事项 |

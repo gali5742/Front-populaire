@@ -14,7 +14,9 @@
     "check:registry": "node scripts/check-registry.mjs",
     "test": "vitest run tests/unit",
     "test:e2e": "playwright test",
-    "check": "npm run typecheck && npm run check:registry && npm test && npm run build && npm run build:offline"
+    "check": "npm run typecheck && npm run check:registry && npm run check:fixture && npm run check:boundaries && npm test && npm run build && npm run build:offline",
+    "check:fixture": "node scripts/check-fixture.mjs",
+    "check:boundaries": "node scripts/check-boundaries.mjs --self-test"
   },
   "dependencies": {
     "react": "^19.2.0",
