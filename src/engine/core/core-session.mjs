@@ -1,6 +1,6 @@
 // G2-B: deliberately limited F1 vertical slice. All state private to the session.
 import {loadF1} from "../config/f1-schema.mjs";
-const RULES="g2-c-2", FORMAT="front-populaire-save-1";
+const RULES="g2-c-3", FORMAT="front-populaire-save-1";
 const copy=x=>JSON.parse(JSON.stringify(x));
 const fail=m=>{throw new Error(m)};
 const integer=(x,min=0,max=Number.MAX_SAFE_INTEGER)=>Number.isSafeInteger(x)&&x>=min&&x<=max;
@@ -29,12 +29,14 @@ const queued=s=>s.plans.filter(p=>p.status==="queued");
 const reservedAP=s=>queued(s).reduce((n,p)=>n+p.ap,0);
 const reservedMoney=s=>queued(s).reduce((n,p)=>n+p.amount,0)+s.projects.reduce((n,p)=>n+p.reserve,0);
 const available=s=>s.cash-s.restricted-s.projectHold-reservedMoney(s);
+const openProject=p=>["active","manual_pause","funding_shortfall"].includes(p.status);
+const fundedCandidate=p=>["active","funding_shortfall"].includes(p.status);
 const routineDue=s=>s.obligations.filter(o=>!o.paid).reduce((n,o)=>n+o.amount,0);
 function reserveNext(s){
  // In F1 these are adjustable, equal-priority next-period plans.
  s.projectHold=0;
  for(const p of s.projects)p.reserve=0;
- const next=s.projects.filter(p=>p.status==="active"&&s.month<p.last);
+ const next=s.projects.filter(p=>fundedCandidate(p)&&s.month<p.last);
  const demand=next.reduce((n,p)=>n+p.fee,0),pool=available(s);
  if(!integer(demand)||!integer(pool))fail("next reserve pool");
  if(demand<=pool){for(const p of next)p.reserve=p.fee;}
@@ -59,14 +61,14 @@ function enter(s,c,m){
  s.projectHold=0;
  if(total<=s.cash){for(const o of unpaid){transaction(s,"pay-"+o.id,-o.amount,"routine",o.id);o.paid=true;}s.restricted=0;}
  else{s.restricted=Math.min(s.cash,total);addFact(s,"shortfall-"+m,"例行经费短缺","到期例行费用未获足额保障；保留实际未付义务和受限资金，不自动分配。",m,"opening");}
- const active=s.projects.filter(p=>p.status==="active"&&m>=p.first&&m<=p.last);
+ const active=s.projects.filter(p=>fundedCandidate(p)&&m>=p.first&&m<=p.last);
  const demand=active.reduce((n,p)=>n+p.fee,0);
  if(!integer(demand))fail("project demand overflow");
  if(demand<=available(s)){
-  for(const p of active){transaction(s,p.id+"-fee-"+m,-p.fee,"project_month",p.id);p.paid.push(m);}
+  for(const p of active){transaction(s,p.id+"-fee-"+m,-p.fee,"project_month",p.id);p.paid.push(m);p.status="active";}
  }else{
   // Equal priority adjustable plans: no arbitrary winner or partial payment.
-  for(const p of active){p.status="paused";addFact(s,p.id+"-short-"+m,"长期工作经费不足","本期未获合法足额经费，暂停；不计付费进展，不生成虚构债务。",m,"opening");}
+  for(const p of active){p.status="funding_shortfall";addFact(s,p.id+"-short-"+m,"长期工作经费不足","本期未获合法足额经费，暂停；不计付费进展，不生成虚构债务。",m,"opening");}
  }
  reserveNext(s);
 }
@@ -75,7 +77,7 @@ function initial(c){
  enter(s,c,0);return s;
 }
 function snapshot(s,c){
- return {time:{monthIndex:s.month,label:monthLabel(s.month),phase:s.phase},identity:c.initial.actors.find(a=>a.kind==="player_central").name,actionRemaining:s.phase==="ended"?0:2-s.spent-reservedAP(s),partyAvailableCentimes:available(s),partyCashCentimes:s.cash,restrictedCentimes:s.restricted+s.projectHold,reservedCentimes:reservedMoney(s),reservedAP:reservedAP(s),unpaidCentimes:routineDue(s),requiredBlock:s.phase==="required",workCount:s.contacts.filter(x=>x.status==="sent"||x.status==="waiting").length+queued(s).length+s.projects.filter(p=>["active","paused"].includes(p.status)).length,briefCount:s.facts.filter(f=>f.month===s.month).length,profileLabel:c.display_label};
+ return {time:{monthIndex:s.month,label:monthLabel(s.month),phase:s.phase},identity:c.initial.actors.find(a=>a.kind==="player_central").name,actionRemaining:s.phase==="ended"?0:2-s.spent-reservedAP(s),partyAvailableCentimes:available(s),partyCashCentimes:s.cash,restrictedCentimes:s.restricted+s.projectHold,reservedCentimes:reservedMoney(s),reservedAP:reservedAP(s),unpaidCentimes:routineDue(s),requiredBlock:s.phase==="required",workCount:s.contacts.filter(x=>x.status==="sent"||x.status==="waiting").length+queued(s).length+s.projects.filter(openProject).length,briefCount:s.facts.filter(f=>f.month===s.month).length,profileLabel:c.display_label};
 }
 function choices(s,c){
  if(s.phase==="required")return s.checkpoints.filter(x=>x.month===s.month&&!x.resolved).map(x=>({id:x.id,title:"回应："+x.title,description:x.description+"（不新增承诺；必须在本月截止前记录回应。）",draft:{actionId:"acknowledge_no_commitment",targetId:x.id,proposalVersion:"m"+s.month}}));
@@ -85,18 +87,41 @@ function choices(s,c){
  for(const a of c.actions){
   if(a.handler==="SCHEDULE_ORGANIZATION")add(a,"安排组织活动","确认后预留行动与经费；本月底校验、执行并结算。","current_month");
   if(a.handler==="START_PROJECT")add(a,"安排三个月长期工作","月底启动，次月首付。仅预留启动费及首期资金，不预付全部费用。","current_month");
-  if(a.handler==="CANCEL_PENDING")for(const p of queued(s))add(a,"撤销"+(p.kind==="project"?"长期工作安排":"组织活动安排"),"仅释放未执行预留，不返还已发生费用。",p.id);
-  if(a.handler==="PAUSE_PROJECT")for(const p of s.projects.filter(p=>p.status==="active"&&s.month<p.last))add(a,"暂停长期工作","从下一执行月起暂停，释放可撤销的下一期预留；本期已付款不退还。",p.id);
   if(a.handler==="ACCEPT_SHORTFALL"&&routineDue(s)>0&&!s.facts.some(f=>f.id==="accept-shortfall-"+s.month))add(a,"确认经费短缺","接受实际未付义务及后果，不新增承诺、不免债。","current_month");
  }
  return base;
 }
+// Management commands reuse the command channel without becoming political action cards.
+function findAction(c,id){
+ const action=c.actions.find(x=>x.id===id);
+ if(action)return action;
+ if(["resume_project","terminate_project"].includes(id))return {id,handler:id==="resume_project"?"RESUME_PROJECT":"TERMINATE_PROJECT",ap:0,cost:0,requires:["plan_project"]};
+}
+function workDetail(s,c,id){
+ const plan=s.plans.find(p=>"work-"+p.id===id);
+ const project=s.projects.find(p=>"work-"+p.id===id);
+ if(!plan)return null;
+ const draft=(actionId,title,description)=>{const d={actionId,targetId:plan.id,proposalVersion:"m"+s.month};return {id:actionId+"-"+plan.id,title,description,draft:d,quote:quote(s,c,d)}};
+ const ops=[];
+ if(project){
+  const names={active:"执行中",manual_pause:"主动暂停",funding_shortfall:"经费不足",completed:"已完成",expired:"计划期结束（未完成）",terminated:"已终止"};
+  if(s.phase==="decision"&&s.month<project.last&&openProject(project)){
+   if(fundedCandidate(project))ops.push(draft("pause_adjustable_project","暂停工作","从下一执行月起暂停；释放可撤销预留，本期已经支付的费用不退还。"));
+   if(project.status==="manual_pause"||project.status==="funding_shortfall")ops.push(draft("resume_project","恢复工作","保留原项目和已执行月份，从下一执行月重新核验经费；不延长本F1计划期限。"));
+   ops.push(draft("terminate_project","终止工作","结束后续执行并释放合法可撤销预留；已付款和已执行成果保留。"));
+  }
+  const demand=fundedCandidate(project)&&s.month<project.last?project.fee:0;
+  return {id,title:"长期工作",description:"本F1工作有固定执行期限；已付款月份在月底登记执行，不能保证政治收益。",status:names[project.status],period:monthLabel(project.first)+" — "+monthLabel(project.last),progress:project.progress.length,plannedMonths:project.last-project.first+1,paidCentimes:project.paid.length*project.fee+(c.actions.find(a=>a.id===plan.actionId)?.cost??0),reservedCentimes:project.reserve,nextDemandCentimes:demand,operations:ops};
+ }
+ if(plan.status==="queued"&&["decision","required"].includes(s.phase))ops.push(draft("cancel_pending","撤销预约","释放尚未执行的行动及资金预留，不退款或重置已有政治事实。"));
+ return {id,title:plan.kind==="project"?"长期工作预约":"组织活动预约",description:"仅预留资源，实际执行以前可按权限撤销。",status:{queued:"待执行",cancelled:"已撤销",failed:"已失效",executed:"已执行"}[plan.status],period:monthLabel(plan.month),progress:null,plannedMonths:null,paidCentimes:plan.status==="executed"?plan.amount:0,reservedCentimes:plan.status==="queued"?plan.amount:0,nextDemandCentimes:0,operations:ops};
+}
 function quote(s,c,d){
  let ap=0,centimes=0,reason="";
  const end=d.actionId==="end_month";
- const a=c.actions.find(x=>x.id===d.actionId);
+ const a=findAction(c,d.actionId);
  if(s.phase==="required"){
-  if(a?.handler!=="ACKNOWLEDGE"||d.proposalVersion!=="m"+s.month||!s.checkpoints.some(x=>x.id===d.targetId&&x.month===s.month&&!x.resolved))reason="必须先回应本月到期事项。";
+  if(d.proposalVersion!=="m"+s.month||!(a?.handler==="ACKNOWLEDGE"&&s.checkpoints.some(x=>x.id===d.targetId&&x.month===s.month&&!x.resolved)||a?.handler==="CANCEL_PENDING"&&queued(s).some(p=>p.id===d.targetId)))reason="必须先回应本月到期事项；仅可撤销合法未执行预约。";
   else if(!a.requires.every(k=>c.initial.actors.find(x=>x.kind==="player_central").capabilities.includes(k)))reason="无合法回应权限。";
  }
  else if(s.phase==="resume"&&!end)reason="当前仅可继续原月结算。";
@@ -117,13 +142,15 @@ function quote(s,c,d){
    else if(a.handler==="START_PROJECT"&&s.month+a.duration>=60)reason="计划执行期超出本局范围。";
    else if(queued(s).some(p=>p.actionId===a.id))reason="本月已有同类预约。";
   }else if(a.handler==="CANCEL_PENDING"){if(!queued(s).some(p=>p.id===d.targetId))reason="没有可撤销的预约。";}
-  else if(a.handler==="PAUSE_PROJECT"){if(!s.projects.some(p=>p.id===d.targetId&&p.status==="active"&&s.month<p.last))reason="没有可暂停的未来工作。";}
+  else if(a.handler==="PAUSE_PROJECT"){if(!s.projects.some(p=>p.id===d.targetId&&fundedCandidate(p)&&s.month<p.last))reason="没有可暂停的未来工作。";}
+  else if(a.handler==="RESUME_PROJECT"){if(!s.projects.some(p=>p.id===d.targetId&&["manual_pause","funding_shortfall"].includes(p.status)&&s.month<p.last))reason="没有可恢复的未来工作。";}
+  else if(a.handler==="TERMINATE_PROJECT"){if(!s.projects.some(p=>p.id===d.targetId&&openProject(p)&&s.month<p.last))reason="没有可终止的未来工作。";}
   else if(a.handler==="ACCEPT_SHORTFALL"){if(d.targetId!=="current_month"||!routineDue(s)||s.facts.some(f=>f.id==="accept-shortfall-"+s.month))reason="没有待确认的经费短缺。";}
   else reason="该行动尚未接入。";
   if(!reason&&s.spent+reservedAP(s)+ap>2)reason="本月行动机会不足。";
   if(!reason&&centimes>available(s))reason="可用党资金不足。";
  }
- return {quoteId:canonical([RULES,s.month,d,ap,centimes,reason]),allowed:!reason,ap,centimes,reason:reason||"可提交；不保证对方接受。"};
+ return {quoteId:canonical([RULES,s.month,s.phase,s.checkpoints.filter(x=>x.month===s.month).length,d,ap,centimes,reason,s.facts.filter(f=>f.id.startsWith(d.targetId+"-")&&f.month===s.month).length]),allowed:!reason,ap,centimes,reason:reason||(a?.handler==="CONTACT"?"可提交；不保证对方接受。":"满足当前程序条件，可提交。")};
 }
 function resolveContacts(s,c){
  for(const x of s.contacts.filter(x=>x.status==="sent")){
@@ -151,7 +178,7 @@ function settlePlans(s,c){
  }
  for(const p of s.projects){
   if(p.paid.includes(s.month)&&!p.progress.includes(s.month)){p.progress.push(s.month);addFact(s,p.id+"-progress-"+s.month,"长期工作月度执行","本月实际付款并登记执行月份，不代表确定的政治成果。",s.month,"month_end");}
-  if(s.month>=p.last&&["active","paused"].includes(p.status)){p.reserve=0;p.status="completed";addFact(s,p.id+"-closed","长期工作计划期结束","已执行 "+p.progress.length+" 个月；未付费月份不计进展。",s.month,"month_end");}
+  if(s.month>=p.last&&openProject(p)){p.reserve=0;p.status=p.progress.length===p.last-p.first+1?"completed":"expired";addFact(s,p.id+"-closed","长期工作计划期结束","已执行 "+p.progress.length+" 个月；未付费月份不计进展。",s.month,"month_end");}
  }
 }
 function apply(s,c,d,q){
@@ -175,7 +202,7 @@ function apply(s,c,d,q){
   if(s.month===59){s.phase="ended";return "1938年12月已封存；没有第61个月。";}
   enter(s,c,s.month+1);return "本月已封存，进入"+monthLabel(s.month)+"。";
  }
- const a=c.actions.find(x=>x.id===d.actionId);
+ const a=findAction(c,d.actionId);
  if(a.handler==="ACKNOWLEDGE"){
   const x=s.checkpoints.find(x=>x.id===d.targetId);x.resolved=true;
   addFact(s,x.id+"-ack","已记录到期回应","不新增承诺；仅解决该项回应，保留实际已发生事实。",s.month,"month_end");
@@ -191,8 +218,12 @@ function apply(s,c,d,q){
  if(a.handler==="CANCEL_PENDING"){
   const p=s.plans.find(p=>p.id===d.targetId);p.status="cancelled";addFact(s,p.id+"-cancel","已撤销预约","未执行的行动及经费预留已释放。");return "预约已撤销。";
  }
- if(a.handler==="PAUSE_PROJECT"){
-  const p=s.projects.find(p=>p.id===d.targetId);p.reserve=0;p.status="paused";reserveNext(s);addFact(s,p.id+"-pause-"+s.month,"已确认暂停长期工作","从下期起不再付费；保留当期已付款及实际执行记录。");return "下一期工作已暂停。";
+ if(["PAUSE_PROJECT","RESUME_PROJECT","TERMINATE_PROJECT"].includes(a.handler)){
+  const p=s.projects.find(p=>p.id===d.targetId);
+  const id=p.id+"-manage-"+(s.processed.length+1);
+  if(a.handler==="PAUSE_PROJECT"){p.reserve=0;p.status="manual_pause";reserveNext(s);addFact(s,id,"已确认暂停长期工作","从下期起不再付费；保留当期已付款及实际执行记录。");return "下一期工作已暂停。";}
+  if(a.handler==="RESUME_PROJECT"){p.status="active";reserveNext(s);if(p.reserve<p.fee)p.status="funding_shortfall";addFact(s,id,"已确认恢复长期工作","原项目保留；下一执行月核验实际资金，不补记错过月份。");return "已安排恢复；下期按实际经费执行。";}
+  p.reserve=0;p.status="terminated";reserveNext(s);addFact(s,id,"已终止长期工作","释放未执行可撤销预留，已付款及当期实际执行保留。");return "长期工作已终止。";
  }
  if(a.handler==="ACCEPT_SHORTFALL"){addFact(s,"accept-shortfall-"+s.month,"已确认经费短缺","接受未付义务及后果；未免债、未支付、未新增承诺。");return "已记录未付义务；可继续推进。";}
  const id="contact-"+a.id;
@@ -253,13 +284,13 @@ function validateState(s,c){
  }
  for(const p of s.projects){
   const plan=s.plans.find(x=>x.id===p.id),a=c.actions.find(a=>a.id===plan?.actionId);
-  if(!keys(p,["id","first","last","fee","reserve","paid","progress","status"])||!plan||plan.status!=="executed"||plan.kind!=="project"||p.first!==plan.month+1||p.last!==plan.month+a.duration||p.last>59||p.fee!==a.monthly_fee||!integer(p.reserve,0,p.fee)||!Array.isArray(p.paid)||!Array.isArray(p.progress)||!["active","paused","completed"].includes(p.status))fail("project");
-  if(p.status!=="active"&&p.reserve!==0||p.status==="active"&&s.month>=p.last&&p.reserve!==0||p.status==="completed"&&(!s.sealed.includes(p.last)))fail("project status");
+  if(!keys(p,["id","first","last","fee","reserve","paid","progress","status"])||!plan||plan.status!=="executed"||plan.kind!=="project"||p.first!==plan.month+1||p.last!==plan.month+a.duration||p.last>59||p.fee!==a.monthly_fee||!integer(p.reserve,0,p.fee)||!Array.isArray(p.paid)||!Array.isArray(p.progress)||!["active","manual_pause","funding_shortfall","completed","expired","terminated"].includes(p.status))fail("project");
+  if(!fundedCandidate(p)&&p.reserve!==0||fundedCandidate(p)&&s.month>=p.last&&p.reserve!==0||["completed","expired"].includes(p.status)&&(!s.sealed.includes(p.last))||p.status==="completed"&&p.progress.length!==p.last-p.first+1||p.status==="expired"&&p.progress.length===p.last-p.first+1)fail("project status");
   if(new Set(p.paid).size!==p.paid.length||new Set(p.progress).size!==p.progress.length||p.paid.some(m=>!integer(m,p.first,Math.min(s.month,p.last)))||p.progress.some(m=>!p.paid.includes(m)||!s.sealed.includes(m))||p.paid.some(m=>s.sealed.includes(m)&&!p.progress.includes(m)))fail("project progress");
   const fees=s.ledger.filter(t=>t.kind==="project_month"&&t.ref===p.id);
   if(fees.length!==p.paid.length||fees.some(t=>t.delta!==-p.fee||t.id!==p.id+"-fee-"+t.month||!p.paid.includes(t.month)))fail("project payment");
  }
- if(s.projectHold>0){const next=s.projects.filter(p=>p.status==="active"&&s.month<p.last);const demand=next.reduce((n,p)=>n+p.fee,0);if(next.length<2||next.some(p=>p.reserve!==0)||demand<=s.projectHold||available(s)!==0)fail("project conflict pool");}
+ if(s.projectHold>0){const next=s.projects.filter(p=>fundedCandidate(p)&&s.month<p.last);const demand=next.reduce((n,p)=>n+p.fee,0);if(next.length<2||next.some(p=>p.reserve!==0)||demand<=s.projectHold||available(s)!==0)fail("project conflict pool");}
  if(s.ledger.some(t=>["organization","project_start"].includes(t.kind)&&!s.plans.some(p=>p.id===t.ref)||t.kind==="project_month"&&!s.projects.some(p=>p.id===t.ref)))fail("orphan project ledger");
  if(s.ledger.some(t=>t.kind==="contact"&&!s.contacts.some(x=>x.id===t.ref))||spent+reservedAP(s)>2||s.spent!==spent)fail("action budget");
  for(const p of s.processed){if(!keys(p,["requestId","canonical","status","message","month"])||!safeId(p.requestId)||typeof p.canonical!=="string"||!["committed","rejected"].includes(p.status)||typeof p.message!=="string"||!validMonth(p.month))fail("processed");let payload=JSON.parse(p.canonical);if(!validCommand({requestId:p.requestId,...payload}))fail("processed payload");}
@@ -295,7 +326,8 @@ export function createCoreSession(rawConfig){
   getSnapshot:view,
   listActions:()=>choices(s,c).map(a=>({...a,quote:quote(s,c,a.draft)})),
   queryArchive:archive,
-  queryWork:()=>[...s.contacts.filter(x=>x.status==="sent"||x.status==="waiting").map(x=>({id:x.status==="waiting"?x.id+"-reply":x.id,title:"等待"+label(c.actions.find(a=>a.id===x.actionId).variant)+"回应",knownAt:monthLabel(x.responseMonth??x.month)})),...queued(s).map(p=>({id:p.id,title:p.kind==="project"?"待启动长期工作":"待执行组织活动",knownAt:monthLabel(p.month)})),...s.projects.filter(p=>["active","paused"].includes(p.status)).map(p=>({id:p.id+"-done",title:"长期工作 · "+(p.status==="paused"?"已暂停":"执行中")+" · "+p.progress.length+" / "+(p.last-p.first+1)+"月",knownAt:monthLabel(p.first)}))],
+  queryWork:()=>[...s.contacts.filter(x=>x.status==="sent"||x.status==="waiting").map(x=>({id:x.status==="waiting"?x.id+"-reply":x.id,title:"等待"+label(c.actions.find(a=>a.id===x.actionId).variant)+"回应",knownAt:monthLabel(x.responseMonth??x.month)})),...queued(s).map(p=>({id:"work-"+p.id,title:p.kind==="project"?"待启动长期工作":"待执行组织活动",knownAt:monthLabel(p.month)})),...s.projects.filter(openProject).map(p=>({id:"work-"+p.id,title:"长期工作 · "+({active:"执行中",manual_pause:"主动暂停",funding_shortfall:"经费不足"}[p.status])+" · "+p.progress.length+" / "+(p.last-p.first+1)+"月",knownAt:monthLabel(p.first)}))],
+  queryWorkDetail:id=>workDetail(s,c,id),
   queryDetail:id=>{const f=s.facts.find(f=>f.id===id);return f?{id:f.id,title:f.title,description:f.description}:null},
   previewQuote:d=>validDraft(d)?quote(s,c,d):{quoteId:"invalid",allowed:false,ap:0,centimes:0,reason:"方案无效。"},
   dispatch,

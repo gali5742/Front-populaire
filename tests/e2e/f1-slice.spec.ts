@@ -39,7 +39,7 @@ test("G2-C reservations, cancellation, scope and isolated feedback",async({page,
  await context.setOffline(true);await page.goto(pathToFileURL(resolve("dist-offline/front-populaire-f1.html")).href);
  const choose=async(title:string)=>{await page.locator(".action").filter({has:page.getByRole("heading",{name:title,exact:true})}).getByRole("button",{name:"查看方案 >"}).click();await page.getByRole("button",{name:"确认提交"}).click()};
  await choose("安排组织活动");await expect(page.getByLabel("可用党资金")).toHaveText("8,000 F");await expect(page.getByLabel("剩余行动")).toHaveText("仍有 1 次行动可用");
- await choose("撤销组织活动安排");await expect(page.getByLabel("可用党资金")).toHaveText("11,000 F");
+ await expect(page.locator(".action").getByText("撤销组织活动安排")).toHaveCount(0);await page.locator(".side").getByRole("button",{name:"查看详情 >"}).click();await page.getByRole("button",{name:"撤销预约",exact:true}).click();await page.getByRole("button",{name:"确认提交"}).click();await page.getByRole("dialog",{name:"工作详情"}).getByRole("button",{name:"关闭",exact:true}).click();await expect(page.getByLabel("可用党资金")).toHaveText("11,000 F");
  const actionStatus=page.getByRole("status",{name:"操作反馈",exact:true});await expect(actionStatus).toHaveText("预约已撤销。");
  await page.getByRole("button",{name:"设置",exact:true}).click();await expect(page.getByRole("status",{name:"存档反馈",exact:true})).toHaveText("");
  await page.locator("input[type=file]").setInputFiles({name:"bad.json",mimeType:"application/json",buffer:Buffer.from("{bad")});await expect(page.getByRole("status",{name:"存档反馈",exact:true})).toContainText("保留当前会话");
@@ -48,4 +48,16 @@ test("G2-C reservations, cancellation, scope and isolated feedback",async({page,
  await page.getByRole("button",{name:"档案",exact:true}).click();await page.getByLabel("搜索记录").fill("不存在");
  await page.getByRole("button",{name:/本月记录（/}).click();await expect(page.getByLabel("搜索记录")).toHaveValue("");await expect(page.getByLabel("记录范围")).toHaveValue("month");await expect(page.getByText("共 0 条可知记录")).toBeVisible();
  await page.getByLabel("记录范围").selectOption("all");await expect(page.getByText("共 5 条可知记录")).toBeVisible();
+});
+
+test("work details show real progress and management actions not catalog cards",async({page,context})=>{
+ await context.setOffline(true);await page.goto(pathToFileURL(resolve("dist-offline/front-populaire-f1.html")).href);
+ await page.locator(".action").filter({has:page.getByRole("heading",{name:"安排三个月长期工作"})}).getByRole("button",{name:"查看方案 >"}).click();await page.getByRole("button",{name:"确认提交"}).click();
+ await page.getByRole("button",{name:"结束本月 →"}).click();await page.getByRole("button",{name:"确认提交"}).click();
+ await expect(page.locator(".action").getByText("暂停工作",{exact:true})).toHaveCount(0);
+ await page.locator(".side").getByRole("button",{name:"查看详情 >"}).click();const detail=page.getByRole("dialog",{name:"工作详情"});
+ await expect(detail).toContainText("执行中");await expect(detail).toContainText("5,000 F");await detail.getByRole("button",{name:"暂停工作",exact:true}).click();
+ await page.getByRole("button",{name:"返回",exact:true}).click();await expect(detail).toContainText("执行中");
+ await detail.getByRole("button",{name:"暂停工作",exact:true}).click();await page.getByRole("button",{name:"确认提交"}).click();await expect(detail).toContainText("主动暂停");
+ await detail.getByRole("button",{name:"恢复工作",exact:true}).click();await page.getByRole("button",{name:"确认提交"}).click();await expect(detail).toContainText("执行中");await detail.getByRole("button",{name:"关闭",exact:true}).click();
 });
