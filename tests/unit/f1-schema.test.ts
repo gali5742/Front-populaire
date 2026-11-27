@@ -1,0 +1,8 @@
+import {it,expect} from "vitest";
+import {readFileSync} from "node:fs";
+import {loadF1,validateF1} from "../../src/engine/config/f1-schema.mjs";
+const fresh=()=>JSON.parse(readFileSync(new URL("../../data/fixtures/f1-g2-core-v02.json",import.meta.url),"utf8"));
+it("loads explicit synthetic fixture",()=>expect(loadF1(JSON.stringify(fresh())).actions).toHaveLength(8));
+it("rejects invalid costs, missing data and resource overflow",()=>{for(const change of [(x:any)=>delete x.actions[0].cost,(x:any)=>x.initial.party_cash=-1,(x:any)=>x.parameters.monthly_income=Number.MAX_SAFE_INTEGER+1,(x:any)=>x.initial.party_cash=Number.MAX_SAFE_INTEGER,(x:any)=>delete x.actions[3].reserve_first_fee,(x:any)=>x.initial.reserved_cash=1]){const x=fresh();change(x);expect(()=>validateF1(x)).toThrow()}});
+it("rejects broken references, duplicate IDs and invalid capabilities",()=>{for(const change of [(x:any)=>x.initial.issues=[],(x:any)=>x.actions[0].target_actor_id="f1-union",(x:any)=>x.initial.actors.push(x.initial.actors[0]),(x:any)=>x.actions.push(x.actions[0]),(x:any)=>x.initial.actors[1].capabilities.push("contact"),(x:any)=>x.initial.issues[0].source_fact_id="missing"]){const x=fresh();change(x);expect(()=>validateF1(x)).toThrow()}});
+it("rejects unsupported policies, handlers, historical values and schema",()=>{for(const change of [(x:any)=>x.actions[0].handler="FREE",(x:any)=>x.actions[4].cost=1,(x:any)=>x.parameters.policies.shortfall="AUTO_PAY",(x:any)=>x.synthetic=false,(x:any)=>x.initial.members=131000,(x:any)=>x.initial.hidden_default=0,(x:any)=>x.schema_version="0.1"]){const x=fresh();change(x);expect(()=>validateF1(x)).toThrow()}});

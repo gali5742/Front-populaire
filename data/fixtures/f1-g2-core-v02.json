@@ -1,0 +1,207 @@
+{
+  "schema_version": "0.2",
+  "profile_id": "F1-G2-CORE-001",
+  "synthetic": true,
+  "assumption_id": "G1-F1-001",
+  "display_label": "F1 合成规则测试（非1934史实）",
+  "seed": 19340101,
+  "clock": {
+    "start_month": "1934-01",
+    "end_month": "1938-12",
+    "initial_month_index": 0,
+    "action_allowance": 2,
+    "initial_phase": "month_entry"
+  },
+  "currency": {
+    "unit": "centime",
+    "centimes_per_franc": 100
+  },
+  "initial": {
+    "party_cash": 1000000,
+    "spent_ap": 0,
+    "reserved_ap": 0,
+    "reserved_cash": 0,
+    "restricted_cash": 0,
+    "members": null,
+    "chamber_seats": null,
+    "actors": [
+      {
+        "id": "f1-central",
+        "kind": "player_central",
+        "name": "测试中央领导层",
+        "capabilities": [
+          "contact",
+          "organize",
+          "plan_project",
+          "respond",
+          "cancel_pending"
+        ]
+      },
+      {
+        "id": "f1-party-a",
+        "kind": "party",
+        "name": "测试政治团体A",
+        "capabilities": [
+          "reply"
+        ],
+        "private_preference": {
+          "statement": "accept",
+          "coordination": "reject"
+        }
+      },
+      {
+        "id": "f1-union",
+        "kind": "union",
+        "name": "测试社会组织",
+        "capabilities": [
+          "independent_action"
+        ]
+      }
+    ],
+    "facts": [
+      {
+        "id": "f1-public-request",
+        "type": "public_statement",
+        "actor_id": "f1-party-a",
+        "text": "愿讨论共同声明。",
+        "occurred": {
+          "month": 0,
+          "slot": "opening"
+        },
+        "disclosed": {
+          "month": 0,
+          "slot": "opening"
+        },
+        "audience": "public"
+      }
+    ],
+    "issues": [
+      {
+        "id": "f1-issue",
+        "participants": [
+          "f1-central",
+          "f1-party-a"
+        ],
+        "variants": [
+          "statement",
+          "coordination"
+        ],
+        "initial_status": "open",
+        "source_fact_id": "f1-public-request"
+      }
+    ]
+  },
+  "parameters": {
+    "monthly_income": 200000,
+    "monthly_routine_due": 100000,
+    "project_execution_months": 3,
+    "project_month_fee": 500000,
+    "project_start_fee": 0,
+    "project_start_ap": 1,
+    "negotiation_max_exchanges": 2,
+    "policies": {
+      "entry": "FIRST_MONTH_INCLUDED",
+      "contact_response": "NEXT_DECLARED_CHECKPOINT",
+      "project_start": "UNDATED_MONTH_END",
+      "first_payment": "NEXT_MONTH_ENTRY",
+      "reservation": "ONE_NEXT_EXECUTION_MONTH",
+      "unfunded": "PAUSE_FIXED_END",
+      "project_change": "NEXT_EXECUTION_MONTH",
+      "shortfall": "NO_UNAUTHORIZED_ALLOCATION",
+      "negotiation": "FINITE_ADMISSIBLE_VARIANTS",
+      "randomness": "NONE_BASELINE"
+    }
+  },
+  "actions": [
+    {
+      "id": "contact_statement",
+      "kind": "immediate",
+      "ap": 1,
+      "cost": 100000,
+      "requires": [
+        "contact"
+      ],
+      "issue": "f1-issue",
+      "variant": "statement",
+      "target_actor_id": "f1-party-a",
+      "handler": "CONTACT"
+    },
+    {
+      "id": "contact_coordination",
+      "kind": "immediate",
+      "ap": 1,
+      "cost": 100000,
+      "requires": [
+        "contact"
+      ],
+      "issue": "f1-issue",
+      "variant": "coordination",
+      "target_actor_id": "f1-party-a",
+      "handler": "CONTACT"
+    },
+    {
+      "id": "organize_notice",
+      "kind": "scheduled",
+      "ap": 1,
+      "cost": 300000,
+      "requires": [
+        "organize"
+      ],
+      "execution": "undated month end",
+      "handler": "SCHEDULE_ORGANIZATION"
+    },
+    {
+      "id": "start_project",
+      "kind": "project",
+      "ap": 1,
+      "cost": 0,
+      "reserve_first_fee": 500000,
+      "requires": [
+        "plan_project"
+      ],
+      "duration": 3,
+      "monthly_fee": 500000,
+      "handler": "START_PROJECT"
+    },
+    {
+      "id": "acknowledge_no_commitment",
+      "kind": "required_response",
+      "ap": 0,
+      "cost": 0,
+      "requires": [
+        "respond"
+      ],
+      "handler": "ACKNOWLEDGE"
+    },
+    {
+      "id": "cancel_pending",
+      "kind": "cancel",
+      "ap": 0,
+      "cost": 0,
+      "requires": [
+        "cancel_pending"
+      ],
+      "handler": "CANCEL_PENDING"
+    },
+    {
+      "id": "pause_adjustable_project",
+      "kind": "routine_adjustment",
+      "ap": 0,
+      "cost": 0,
+      "requires": [
+        "plan_project"
+      ],
+      "handler": "PAUSE_PROJECT"
+    },
+    {
+      "id": "accept_shortfall",
+      "kind": "shortfall_response",
+      "ap": 0,
+      "cost": 0,
+      "requires": [
+        "respond"
+      ],
+      "handler": "ACCEPT_SHORTFALL"
+    }
+  ]
+}
