@@ -101,5 +101,11 @@ test("C-R11–R12 paid period and next pause are distinct; work feedback isolate
  await page.locator(".side").getByRole("button",{name:"查看详情 >"}).click();await expect(page.getByRole("status",{name:"工作操作反馈"})).toHaveText("");await detail.getByRole("button",{name:"关闭",exact:true}).click();
  await advance();await page.locator(".side").getByRole("button",{name:"查看详情 >"}).click();await expect(detail).toContainText("本期未执行（未付款）");await expect(detail).toContainText("10,000 F");await expect(detail).toContainText("2 / 3月");await detail.getByRole("button",{name:"关闭",exact:true}).click();
  await advance();await page.getByRole("button",{name:"档案",exact:true}).click();await page.getByLabel("搜索记录").fill("长期工作月度执行");await expect(page.getByText("共 2 条可知记录")).toBeVisible();
- await page.getByLabel("搜索记录").fill("长期工作计划期结束");await expect(page.getByText("长期工作计划期结束（未完成）",{exact:true})).toBeVisible();
+ await page.getByLabel("搜索记录").fill("长期工作计划期结束");await expect(page.getByText("共 1 条可知记录")).toBeVisible();
+ const closed=page.locator(".main-panel .records li").filter({hasText:"长期工作计划期结束（未完成）"});
+ await expect(closed).toHaveCount(1);await expect(closed).toBeVisible();await expect(closed.locator("small")).toHaveText("1934年4月");
+ await closed.getByRole("button",{name:"查看详情 >"}).click();
+ const record=page.getByRole("dialog",{name:"记录详情"});
+ await expect(record.getByRole("heading",{name:"长期工作计划期结束（未完成）",exact:true})).toBeVisible();
+ await expect(record).toContainText("已执行 2 / 3 个月");
 });
