@@ -67,7 +67,7 @@ function quote(s,c,d){
 function resolveContacts(s,c){
  for(const x of s.contacts.filter(x=>x.status==="sent")){
   const a=c.actions.find(a=>a.id===x.actionId);
-  const actor=c.initial.actors.find(a=>a.id===a.target_actor_id);
+  const actor=c.initial.actors.find(candidate=>candidate.id===a.target_actor_id);
   const response=actor.private_preference[a.variant];
   x.status=response==="wait"?"waiting":response==="accept"?"accepted":"rejected";
   x.responseMonth=s.month;
@@ -151,7 +151,7 @@ export function createCoreSession(rawConfig){
   getSnapshot:view,
   listActions:()=>choices(s,c).map(a=>({...a,quote:quote(s,c,a.draft)})),
   queryArchive:archive,
-  queryWork:()=>s.contacts.filter(x=>x.status==="sent"||x.status==="waiting").map(x=>({id:x.id,title:"等待"+label(c.actions.find(a=>a.id===x.actionId).variant)+"回应",knownAt:monthLabel(x.month)})),
+  queryWork:()=>s.contacts.filter(x=>x.status==="sent"||x.status==="waiting").map(x=>({id:x.status==="waiting"?x.id+"-reply":x.id,title:"等待"+label(c.actions.find(a=>a.id===x.actionId).variant)+"回应",knownAt:monthLabel(x.responseMonth??x.month)})),
   queryDetail:id=>{const f=s.facts.find(f=>f.id===id);return f?{id:f.id,title:f.title,description:f.description}:null},
   previewQuote:d=>validDraft(d)?quote(s,c,d):{quoteId:"invalid",allowed:false,ap:0,centimes:0,reason:"方案无效。"},
   dispatch,

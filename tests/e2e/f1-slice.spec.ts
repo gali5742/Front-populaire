@@ -27,10 +27,10 @@ test("F1 offline political contact, archive, month transition and save recovery"
  await expect(page.getByLabel("搜索记录")).toHaveValue("拒绝方案");
  await page.getByRole("button",{name:"设置",exact:true}).click();
  const download=page.waitForEvent("download");await page.getByRole("button",{name:"导出存档"}).click();const saved=await (await download).path();if(!saved)throw Error("download unavailable");
- await page.reload();await expect(page.getByText("1934年1月",{exact:true})).toBeVisible();
+ await page.reload();await expect(page.locator(".resources").getByText("1934年1月",{exact:true})).toBeVisible();
  await page.getByRole("button",{name:"设置",exact:true}).click();await page.locator("input[type=file]").setInputFiles(saved);
- await expect(page.getByText("1934年2月",{exact:true})).toBeVisible();await expect(page.getByLabel("可用党资金")).toHaveText("11,000 F");
+ await expect(page.locator(".resources").getByText("1934年2月",{exact:true})).toBeVisible();await expect(page.getByLabel("可用党资金")).toHaveText("11,000 F");
  await page.getByRole("button",{name:"设置",exact:true}).click();await page.locator("input[type=file]").setInputFiles({name:"bad.json",mimeType:"application/json",buffer:Buffer.from("{bad")});
  await expect(page.getByRole("status",{name:"存档反馈"})).toContainText("保留当前会话");await page.getByRole("button",{name:"关闭",exact:true}).click();
- await expect(page.getByText("1934年2月",{exact:true})).toBeVisible();expect(outside).toEqual([]);expect(errors).toEqual([]);
+ await expect(page.locator(".resources").getByText("1934年2月",{exact:true})).toBeVisible();expect(outside).toEqual([]);expect(errors).toEqual([]);
 });
