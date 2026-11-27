@@ -61,3 +61,20 @@ test("work details show real progress and management actions not catalog cards",
  await detail.getByRole("button",{name:"暂停工作",exact:true}).click();await page.getByRole("button",{name:"确认提交"}).click();await expect(detail).toContainText("主动暂停");
  await detail.getByRole("button",{name:"恢复工作",exact:true}).click();await page.getByRole("button",{name:"确认提交"}).click();await expect(detail).toContainText("执行中");await detail.getByRole("button",{name:"关闭",exact:true}).click();
 });
+
+test("explicit deadline fixture: cancel from work, close does not clear, save and resume ordered dates",async({page,context})=>{
+ await context.setOffline(true);const url=pathToFileURL(resolve("dist-offline/front-populaire-f1.html"));url.searchParams.set("scenario","deadlines");await page.goto(url.href);
+ await expect(page.getByText("硬检查点测试夹具",{exact:false})).toBeVisible();
+ await page.locator(".action").filter({has:page.getByRole("heading",{name:"安排组织活动"})}).getByRole("button",{name:"查看方案 >"}).click();await page.getByRole("button",{name:"确认提交"}).click();
+ await page.getByRole("button",{name:"结束本月 →"}).click();await page.getByRole("button",{name:"确认提交"}).click();
+ await expect(page.locator(".resources")).toContainText("26日截止检查点");
+ await page.locator(".side").getByRole("button",{name:"查看详情 >"}).click();await page.getByRole("button",{name:"撤销预约"}).click();await page.getByRole("button",{name:"确认提交"}).click();await page.getByRole("button",{name:"关闭",exact:true}).click();
+ await expect(page.getByRole("button",{name:"结束本月 →"})).toBeDisabled();
+ await page.locator(".action").first().getByRole("button",{name:"查看方案 >"}).click();await page.getByRole("button",{name:"返回",exact:true}).click();await expect(page.getByRole("button",{name:"结束本月 →"})).toBeDisabled();
+ await page.locator(".action").first().getByRole("button",{name:"查看方案 >"}).click();await page.getByRole("button",{name:"确认提交"}).click();await expect(page.getByRole("button",{name:"结束本月 →"})).toBeDisabled();
+ await page.getByRole("button",{name:"设置",exact:true}).click();const downloading=page.waitForEvent("download");await page.getByRole("button",{name:"导出存档"}).click();const path=await (await downloading).path();if(!path)throw Error("no save");
+ await page.reload();await page.getByRole("button",{name:"设置",exact:true}).click();await page.locator("input[type=file]").setInputFiles(path);
+ await expect(page.locator(".resources")).toContainText("26日截止检查点");await expect(page.getByRole("button",{name:"结束本月 →"})).toBeDisabled();
+ await page.locator(".action").first().getByRole("button",{name:"查看方案 >"}).click();await page.getByRole("button",{name:"确认提交"}).click();await page.getByRole("button",{name:"继续结算 →"}).click();await expect(page.getByRole("dialog")).toContainText("已处理事项不会重复执行");await page.getByRole("button",{name:"确认提交"}).click();await expect(page.locator(".resources")).toContainText("29日截止检查点");
+ await page.locator(".action").first().getByRole("button",{name:"查看方案 >"}).click();await page.getByRole("button",{name:"确认提交"}).click();await page.getByRole("button",{name:"继续结算 →"}).click();await page.getByRole("button",{name:"确认提交"}).click();await expect(page.locator(".resources")).toContainText("1934年2月");await expect(page.getByLabel("可用党资金")).toHaveText("12,000 F");
+});

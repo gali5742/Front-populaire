@@ -49,7 +49,11 @@ export function validateF1(input) {
  for(const issue of issues)for(const variant of issue.variants)if(!actions.some(a=>a.handler==="CONTACT"&&a.issue===issue.id&&a.variant===variant))fail("actions","missing contact variant");
  if(i.hard_checkpoints!==undefined){
   const events=arr(i.hard_checkpoints,"hard_checkpoints",0,32);
-  unique(events.map(e=>{object(e,"hard checkpoint",["id","month","day","title","description"]);id(e.id,"checkpoint id");if(e.id.length>100)fail("checkpoint id","too long");integer(e.month,"checkpoint month",0,59);const y=1934+Math.floor(e.month/12),m=e.month%12;const days=[31,y%4===0&&(y%100!==0||y%400===0)?29:28,31,30,31,30,31,31,30,31,30,31];equals(e.day,"checkpoint deadline",days[m]);str(e.title,"checkpoint title");str(e.description,"checkpoint description");if(factIds.has("hard-"+e.id)||factIds.has("hard-"+e.id+"-ack"))fail("checkpoint","fact collision");return e.id;}),"checkpoint ids");
+  unique(events.map(e=>{object(e,"hard checkpoint",["id","month","day","title","description"],["after"]);id(e.id,"checkpoint id");if(e.id.length>100)fail("checkpoint id","too long");integer(e.month,"checkpoint month",0,59);const y=1934+Math.floor(e.month/12),m=e.month%12;const days=[31,y%4===0&&(y%100!==0||y%400===0)?29:28,31,30,31,30,31,31,30,31,30,31];integer(e.day,"checkpoint deadline",1,days[m]);str(e.title,"checkpoint title");str(e.description,"checkpoint description");if(factIds.has("hard-"+e.id)||factIds.has("hard-"+e.id+"-ack"))fail("checkpoint","fact collision");return e.id;}),"checkpoint ids");
+  const eventIds=new Set(events.map(e=>e.id));
+  const generated=events.flatMap(e=>["hard-"+e.id,"hard-"+e.id+"-ack"]);unique(generated,"generated checkpoint facts");
+  for(const e of events){if(e.after!==undefined){refs(e.after,"checkpoint dependencies",eventIds,0);for(const dep of e.after){const parent=events.find(x=>x.id===dep);if(parent.month!==e.month||parent.day>e.day||dep===e.id)fail("checkpoint dependency","invalid date or self");}}}
+  const done=new Set();while(done.size<events.length){const ready=events.filter(e=>!done.has(e.id)&&(e.after??[]).every(id=>done.has(id)));if(!ready.length)fail("checkpoint dependencies","cycle");for(const e of ready)done.add(e.id);}
   if(events.length&&!central[0].capabilities.includes("respond"))fail("hard_checkpoints","zero-cost response unavailable");
  }
  return input;
