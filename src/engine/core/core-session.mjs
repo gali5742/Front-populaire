@@ -1,7 +1,7 @@
 // G2-B: deliberately limited F1 vertical slice. All state private to the session.
 import {loadF1} from "../config/f1-schema.mjs";
 import {planDuePayments} from "./payment-plan.mjs";
-const RULES="g2-c-7", FORMAT="front-populaire-save-1";
+const RULES="g2-c-8", FORMAT="front-populaire-save-1";
 const copy=x=>JSON.parse(JSON.stringify(x));
 const fail=m=>{throw new Error(m)};
 const integer=(x,min=0,max=Number.MAX_SAFE_INTEGER)=>Number.isSafeInteger(x)&&x>=min&&x<=max;
@@ -35,6 +35,9 @@ const reservedAP=s=>queued(s).reduce((n,p)=>n+p.ap,0);
 const reservedMoney=s=>queued(s).reduce((n,p)=>n+p.amount,0)+s.projects.reduce((n,p)=>n+p.reserve,0)+s.binding.reduce((n,o)=>n+(o.paid?0:o.reserve),0);
 const available=s=>s.cash-s.restricted-s.projectHold-reservedMoney(s);
 const openProject=p=>["active","manual_pause","funding_shortfall"].includes(p.status);
+const paidUnsettled=(s,p)=>p.paid.includes(s.month)&&!p.progress.includes(s.month);
+const visibleWork=(s,p)=>openProject(p)||p.status==="terminated"&&paidUnsettled(s,p);
+const moneyText=n=>new Intl.NumberFormat("zh-CN",{maximumFractionDigits:2}).format(n/100)+" F";
 const fundedCandidate=p=>["active","funding_shortfall"].includes(p.status);
 const dueBindings=s=>s.binding.filter(o=>!o.paid&&o.month<=s.month);
 const routineDue=s=>s.obligations.filter(o=>!o.paid).reduce((n,o)=>n+o.amount,0)+dueBindings(s).reduce((n,o)=>n+o.amount,0);
@@ -52,7 +55,7 @@ function reserveNext(s){
  else if(next.length){
   s.projectHold=pool;
   const id="project-reserve-short-"+s.month;
-  if(!s.facts.some(f=>f.id===id))addFact(s,id,"下一期经费竞争","同级工作争用下一期资金；保留共享受限金额，不擅自选择分配对象。",s.month,"decision");
+  if(!s.facts.some(f=>f.id===id))addFact(s,id,"下月工作经费不足","多项工作需要使用同一笔经费。目前资金不足以覆盖所有项目，暂不指定哪项工作优先。",s.month,"decision");
  }
 }
 function enter(s,c,m){
@@ -85,7 +88,7 @@ function enter(s,c,m){
   for(const p of active){transaction(s,p.id+"-fee-"+m,-p.fee,"project_month",p.id);p.paid.push(m);p.status="active";}
  }else{
   // Equal priority adjustable plans: no arbitrary winner or partial payment.
-  for(const p of active){p.status="funding_shortfall";addFact(s,p.id+"-short-"+m,"长期工作经费不足","本期未获合法足额经费，不计付费进展，不生成虚构债务；如未来执行授权仍有效，下期月初自动重新核验。",m,"opening");}
+  for(const p of active){p.status="funding_shortfall";addFact(s,p.id+"-short-"+m,"长期工作经费不足",monthLabel(m)+"未能支付工作费用，本月不开展工作。"+(m<p.last?"下月若未主动暂停或终止，将根据届时资金情况自动尝试恢复。":"已到原定计划的最后一个月。"),m,"opening");}
  }
  reserveNext(s);
 }
@@ -94,7 +97,7 @@ function initial(c){
  enter(s,c,0);return s;
 }
 function snapshot(s,c){
- return {time:{monthIndex:s.month,label:monthLabel(s.month),phase:s.phase,checkpointDay:currentDay(s)||null},identity:c.initial.actors.find(a=>a.kind==="player_central").name,actionRemaining:s.phase==="ended"?0:2-s.spent-reservedAP(s),partyAvailableCentimes:available(s),partyCashCentimes:s.cash,restrictedCentimes:s.restricted+s.projectHold,reservedCentimes:reservedMoney(s),reservedAP:reservedAP(s),unpaidCentimes:routineDue(s),unpaidGapCentimes:dueUnbacked(s)-s.restricted,projectGapCentimes:projectGap(s),requiredBlock:s.phase==="required",workCount:s.contacts.filter(x=>x.status==="sent"||x.status==="waiting").length+queued(s).length+s.projects.filter(openProject).length,briefCount:s.facts.filter(f=>f.month===s.month).length,profileLabel:c.display_label};
+ return {time:{monthIndex:s.month,label:monthLabel(s.month),phase:s.phase,checkpointDay:currentDay(s)||null},identity:c.initial.actors.find(a=>a.kind==="player_central").name,actionRemaining:s.phase==="ended"?0:2-s.spent-reservedAP(s),partyAvailableCentimes:available(s),partyCashCentimes:s.cash,restrictedCentimes:s.restricted+s.projectHold,reservedCentimes:reservedMoney(s),reservedAP:reservedAP(s),unpaidCentimes:routineDue(s),unpaidGapCentimes:dueUnbacked(s)-s.restricted,projectGapCentimes:projectGap(s),requiredBlock:s.phase==="required",workCount:s.contacts.filter(x=>x.status==="sent"||x.status==="waiting").length+queued(s).length+s.projects.filter(p=>visibleWork(s,p)).length,briefCount:s.facts.filter(f=>f.month===s.month).length,profileLabel:c.display_label};
 }
 function choices(s,c){
  if(s.phase==="required")return s.checkpoints.filter(x=>x.month===s.month&&!x.resolved).map(x=>({id:x.id,title:"回应："+x.title,description:x.description+"（不新增承诺；必须在本月截止前记录回应。）",draft:{actionId:"acknowledge_no_commitment",targetId:x.id,proposalVersion:"m"+s.month}}));
@@ -103,7 +106,7 @@ function choices(s,c){
  const add=(a,title,description,target)=>base.push({id:a.id+"-"+target,title,description,draft:{actionId:a.id,targetId:target,proposalVersion:"m"+s.month}});
  for(const a of c.actions){
   if(a.handler==="SCHEDULE_ORGANIZATION")add(a,"安排组织活动","确认后预留行动与经费；本月底校验、执行并结算。","current_month");
-  if(a.handler==="START_PROJECT")add(a,"安排三个月长期工作","月底启动，次月首付。仅预留启动费及首期资金，不预付全部费用。","current_month");
+  if(a.handler==="START_PROJECT")add(a,"安排三个月长期工作","本月底安排启动，从下个月开始，每月支付工作经费，最多执行三个月。现在只预留启动及首月费用。","current_month");
   if(a.handler==="ACCEPT_SHORTFALL"&&routineDue(s)>0&&!s.facts.some(f=>f.id==="accept-shortfall-"+s.month))add(a,"确认经费短缺","接受实际未付义务及后果，不新增承诺、不免债。","current_month");
  }
  return base;
@@ -117,10 +120,25 @@ function findAction(c,id){
 // Current paid execution and future authorization are different time slices.
 function projectPeriods(s,p){
  const paid=p.paid.includes(s.month),settled=p.progress.includes(s.month);
- const current=settled?"本期已结算":paid?"本期执行中（已付款，月底结算）":s.month>p.last||s.month<p.first?"本期不在执行窗口":"本期未执行（未付款）";
- const next=p.status==="terminated"?"后续已终止":s.month>=p.last||["completed","expired"].includes(p.status)?"无后续执行期":p.status==="manual_pause"?monthLabel(s.month+1)+"起主动暂停":monthLabel(s.month+1)+"已安排，月初核验经费"+(p.reserve<p.fee?"（尚未独立足额保障）":"");
+ const shortage=s.facts.some(f=>f.id===p.id+"-short-"+s.month);
+ const current=monthLabel(s.month)+"："+(settled?"已完成本月工作":paid?"正常进行，费用已付":s.month>p.last||s.month<p.first?"不在计划期内":shortage?"经费不足，未开展工作":p.status==="manual_pause"?"已暂停，未付款":p.status==="terminated"?"已终止，未付款":"未开展工作，未付款");
+ const next=p.status==="terminated"?"不再安排后续工作":s.month>=p.last||["completed","expired"].includes(p.status)?"原定计划期结束，不再安排":monthLabel(s.month+1)+"："+(p.status==="manual_pause"?"已安排暂停":p.reserve<p.fee?"计划继续，经费尚未备齐":"计划继续，经费已预留；以月初实际付款为准");
  return {currentPeriod:current,nextPeriod:next};
 }
+function workSummary(s,p){
+ const current=paidUnsettled(s,p);
+ if(p.status==="terminated")return "本月收尾";
+ if(p.status==="manual_pause")return current?(s.month+1)%12+1+"月起暂停":"已暂停";
+ if(s.facts.some(f=>f.id===p.id+"-short-"+s.month))return "本月经费不足";
+ return current?"正常进行":"待执行";
+}
+function paidNote(s,p){
+ return paidUnsettled(s,p)?monthLabel(s.month)+"的费用已经支付，工作照常进行，月底计入进度。":"已完成的工作和已付费用不变。";
+}
+function releaseNote(s,p){
+ return p.reserve>0?"目前为该项目预留 "+moneyText(p.reserve)+"，调整后会重新分配，不一定全部成为可用资金。":s.projectHold>0?"下月的共同工作经费将重新分配。":"";
+}
+function projectPaid(c,plan,p){return p.paid.length*p.fee+(c.actions.find(a=>a.id===plan.actionId)?.cost??0);}
 function workDetail(s,c,id){
  const plan=s.plans.find(p=>"work-"+p.id===id);
  const project=s.projects.find(p=>"work-"+p.id===id);
@@ -130,12 +148,12 @@ function workDetail(s,c,id){
  if(project){
   const names={active:"执行中",manual_pause:"主动暂停",funding_shortfall:"经费不足",completed:"已完成",expired:"计划期结束（未完成）",terminated:"已终止"};
   if(s.phase==="decision"&&s.month<project.last&&openProject(project)){
-   if(fundedCandidate(project))ops.push(draft("pause_adjustable_project","暂停工作","从下一执行月起暂停；释放可撤销预留，本期已经支付的费用不退还。"));
-   if(project.status==="manual_pause")ops.push(draft("resume_project","恢复工作","保留原项目和已执行月份，从下一执行月重新核验经费；不延长本F1计划期限。"));
-   ops.push(draft("terminate_project","终止工作","结束后续执行并释放合法可撤销预留；已付款和已执行成果保留。"));
+   if(fundedCandidate(project))ops.push(draft("pause_adjustable_project","暂停工作","从"+monthLabel(s.month+1)+"起暂停工作。"+paidNote(s,project)+releaseNote(s,project)));
+   if(project.status==="manual_pause")ops.push(draft("resume_project","恢复工作","从"+monthLabel(s.month+1)+"起重新安排工作，月初经费充足才会执行。原定结束月份不变，错过的月份不会补做。"));
+   ops.push(draft("terminate_project","终止工作","不再安排后续工作。"+paidNote(s,project)+releaseNote(s,project)));
   }
   const demand=fundedCandidate(project)&&s.month<project.last?project.fee:0;
-  return {id,title:"长期工作",description:"本F1工作有固定执行期限；已付款月份在月底登记执行，不能保证政治收益。",status:names[project.status],...projectPeriods(s,project),period:monthLabel(project.first)+" — "+monthLabel(project.last),progress:project.progress.length,plannedMonths:project.last-project.first+1,paidCentimes:project.paid.length*project.fee+(c.actions.find(a=>a.id===plan.actionId)?.cost??0),reservedCentimes:project.reserve,nextDemandCentimes:demand,operations:ops};
+  return {id,title:"长期工作",description:(paidUnsettled(s,project)?"本月工作将在月底计入进度。":"")+(project.status==="funding_shortfall"&&s.month<project.last?"下月将根据党内资金情况自动尝试恢复工作。":"")+(project.status==="manual_pause"&&s.month<project.last?"可以恢复下月的工作，但不会延长原定期限。":""),status:names[project.status],...projectPeriods(s,project),period:monthLabel(project.first)+" — "+monthLabel(project.last),progress:project.progress.length,plannedMonths:project.last-project.first+1,paidCentimes:projectPaid(c,plan,project),reservedCentimes:project.reserve,nextDemandCentimes:demand,operations:ops};
  }
  if(plan.status==="queued"&&["decision","required"].includes(s.phase))ops.push(draft("cancel_pending","撤销预约","释放尚未执行的行动及资金预留，不退款或重置已有政治事实。"));
  return {id,title:plan.kind==="project"?"长期工作预约":"组织活动预约",description:"仅预留资源，实际执行以前可按权限撤销。",status:{queued:"待执行",cancelled:"已撤销",failed:"已失效",executed:"已执行"}[plan.status],period:monthLabel(plan.month),currentPeriod:null,nextPeriod:null,progress:null,plannedMonths:null,paidCentimes:plan.status==="executed"?plan.amount:0,reservedCentimes:plan.status==="queued"?plan.amount:0,nextDemandCentimes:0,operations:ops};
@@ -197,12 +215,12 @@ function settlePlans(s,c){
   else{
    if(a.cost)transaction(s,p.id+"-fee",-a.cost,"project_start",p.id);
    s.projects.push({id:p.id,first:s.month+1,last:s.month+a.duration,fee:a.monthly_fee,reserve:a.reserve_first_fee,paid:[],progress:[],status:"active"});
-   addFact(s,p.id+"-done","长期工作已启动","首期执行为下月；首期经费仍为预留，尚未支付。",s.month,"month_end");
+   addFact(s,p.id+"-done","长期工作已安排启动","从"+monthLabel(s.month+1)+"开始工作，原定执行至"+monthLabel(s.month+a.duration)+"。首月费用将在下月初支付。",s.month,"month_end");
   }
  }
  for(const p of s.projects){
-  if(p.paid.includes(s.month)&&!p.progress.includes(s.month)){p.progress.push(s.month);addFact(s,p.id+"-progress-"+s.month,"长期工作月度执行（本期结算）","本期费用已于月初支付；月底登记第 "+p.progress.length+" 个实际执行月，不代表确定的政治成果。",s.month,"month_end");}
-  if(s.month>=p.last&&openProject(p)){p.reserve=0;p.status=p.progress.length===p.last-p.first+1?"completed":"expired";addFact(s,p.id+"-closed","长期工作计划期结束（"+(p.status==="completed"?"已完成":"未完成")+"）","已执行 "+p.progress.length+" / "+(p.last-p.first+1)+" 个月；未付费月份不计进展。",s.month,"month_end");}
+  if(p.paid.includes(s.month)&&!p.progress.includes(s.month)){p.progress.push(s.month);addFact(s,p.id+"-progress-"+s.month,"完成"+monthLabel(s.month)+"的长期工作","本月支出 "+moneyText(p.fee)+"。累计完成 "+p.progress.length+" / "+(p.last-p.first+1)+" 个月的工作。",s.month,"month_end");}
+  if(s.month>=p.last&&openProject(p)){p.reserve=0;p.status=p.progress.length===p.last-p.first+1?"completed":"expired";addFact(s,p.id+"-closed","长期工作到期"+(p.status==="completed"?"已完成":"未完成"),"原计划执行 "+(p.last-p.first+1)+" 个月，实际执行 "+p.progress.length+" 个月，累计支出 "+moneyText(projectPaid(c,s.plans.find(x=>x.id===p.id),p))+"。",s.month,"month_end");}
  }
 }
 function apply(s,c,d,q){
@@ -250,9 +268,9 @@ function apply(s,c,d,q){
  if(["PAUSE_PROJECT","RESUME_PROJECT","TERMINATE_PROJECT"].includes(a.handler)){
   const p=s.projects.find(p=>p.id===d.targetId);
   const id=p.id+"-manage-"+(s.processed.length+1);
-  if(a.handler==="PAUSE_PROJECT"){p.reserve=0;p.status="manual_pause";reserveNext(s);addFact(s,id,"已确认暂停长期工作（"+monthLabel(s.month+1)+"起）","从下期起不再付费；当期已付款的工作仍于月底结算，已付费用不退还。");return monthLabel(s.month+1)+"起暂停；当期已付款的工作仍于月底结算。";}
-  if(a.handler==="RESUME_PROJECT"){p.status="active";reserveNext(s);addFact(s,id,"已确认恢复长期工作（"+monthLabel(s.month+1)+"起）","恢复未来执行授权；下一执行月核验实际资金，不补记错过月份。"+(p.reserve<p.fee?"下期经费尚未独立足额保障。":""));return "已安排恢复；下期按实际经费执行。";}
-  p.reserve=0;p.status="terminated";reserveNext(s);addFact(s,id,"已终止长期工作（后续执行）","释放未执行可撤销预留；当期已付款的工作仍于月底结算。");return "后续工作已终止；当期已付款的工作仍于月底结算。";
+  if(a.handler==="PAUSE_PROJECT"){p.reserve=0;p.status="manual_pause";reserveNext(s);addFact(s,id,"决定从"+monthLabel(s.month+1)+"起暂停长期工作",paidNote(s,p));return monthLabel(s.month+1)+"起暂停。"+paidNote(s,p);}
+  if(a.handler==="RESUME_PROJECT"){p.status="active";reserveNext(s);addFact(s,id,"决定恢复长期工作","从"+monthLabel(s.month+1)+"起重新安排工作，月初经费充足才会执行。原定结束月份不变。"+(p.reserve<p.fee?"目前经费尚未备齐。":""));return "已安排恢复"+monthLabel(s.month+1)+"的工作，能否执行取决于月初经费。";}
+  p.reserve=0;p.status="terminated";reserveNext(s);addFact(s,id,"决定终止长期工作","不再安排后续工作。"+paidNote(s,p));return "不再安排后续工作。"+paidNote(s,p);
  }
  if(a.handler==="ACCEPT_SHORTFALL"){addFact(s,"accept-shortfall-"+s.month,"已确认经费短缺","接受未付义务及后果；未免债、未支付、未新增承诺。");return "已记录未付义务；可继续推进。";}
  const id="contact-"+a.id;
@@ -382,7 +400,7 @@ export function createCoreSession(rawConfig){
   getSnapshot:view,
   listActions:()=>choices(s,c).map(a=>({...a,quote:quote(s,c,a.draft)})),
   queryArchive:archive,
-  queryWork:()=>[...s.contacts.filter(x=>x.status==="sent"||x.status==="waiting").map(x=>({id:x.status==="waiting"?x.id+"-reply":x.id,title:"等待"+label(c.actions.find(a=>a.id===x.actionId).variant)+"回应",knownAt:monthLabel(x.responseMonth??x.month)})),...queued(s).map(p=>({id:"work-"+p.id,title:p.kind==="project"?"待启动长期工作":"待执行组织活动",knownAt:monthLabel(p.month)})),...s.projects.filter(openProject).map(p=>({id:"work-"+p.id,title:"长期工作 · "+projectPeriods(s,p).currentPeriod+" · "+projectPeriods(s,p).nextPeriod+" · "+p.progress.length+" / "+(p.last-p.first+1)+"月",knownAt:monthLabel(p.first)}))],
+  queryWork:()=>[...s.contacts.filter(x=>x.status==="sent"||x.status==="waiting").map(x=>({id:x.status==="waiting"?x.id+"-reply":x.id,title:"等待"+label(c.actions.find(a=>a.id===x.actionId).variant)+"回应",knownAt:monthLabel(x.responseMonth??x.month)})),...queued(s).map(p=>({id:"work-"+p.id,title:p.kind==="project"?"待启动长期工作":"待执行组织活动",knownAt:monthLabel(p.month)})),...s.projects.filter(p=>visibleWork(s,p)).map(p=>({id:"work-"+p.id,title:"长期工作 · "+workSummary(s,p)+" · "+p.progress.length+" / "+(p.last-p.first+1)+"月",knownAt:monthLabel(p.first)}))],
   queryWorkDetail:id=>workDetail(s,c,id),
   queryDetail:id=>{const f=s.facts.find(f=>f.id===id);return f?{id:f.id,title:f.title,description:f.description}:null},
   previewQuote:d=>validDraft(d)?quote(s,c,d):{quoteId:"invalid",allowed:false,ap:0,centimes:0,reason:"方案无效。"},

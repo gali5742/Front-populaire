@@ -6,9 +6,9 @@ const make=(cash=1000000,income=200000,due=100000)=>{const c=JSON.parse(rawFixtu
 function act(g:GameSession,id:string,requestId:string){const a=[...g.listActions(),...g.queryWork().flatMap(w=>g.queryWorkDetail(w.id)?.operations??[])].find(x=>x.draft.actionId===id);if(!a)throw Error("missing "+id);return g.dispatch({requestId,draft:a.draft,confirmedQuote:a.quote});}
 function end(g:GameSession,requestId:string){const draft:ActionDraft={actionId:"end_month",targetId:"current_month",proposalVersion:"m"+g.getSnapshot().time.monthIndex};return g.dispatch({requestId,draft,confirmedQuote:g.previewQuote(draft)});}
 it("reserve, cancel, reschedule, execute once",()=>{const g=make(1000000,0,0);expect(act(g,"organize_notice","a").status).toBe("committed");expect(g.getSnapshot()).toMatchObject({partyCashCentimes:1000000,partyAvailableCentimes:700000,reservedCentimes:300000,actionRemaining:1});expect(act(g,"cancel_pending","b").status).toBe("committed");expect(g.getSnapshot()).toMatchObject({partyCashCentimes:1000000,reservedCentimes:0,actionRemaining:2});expect(act(g,"organize_notice","c").status).toBe("committed");expect(end(g,"d").status).toBe("committed");expect(g.getSnapshot()).toMatchObject({partyCashCentimes:700000,reservedCentimes:0,actionRemaining:2});expect(g.queryArchive({text:"组织活动已执行",page:1,pageSize:20}).total).toBe(1)});
-it("three paid months, rolling reserve and final completion",()=>{const g=make(2000000,0,0);expect(act(g,"start_project","p").status).toBe("committed");expect(g.getSnapshot()).toMatchObject({partyCashCentimes:2000000,reservedCentimes:500000,actionRemaining:1});expect(end(g,"jan").status).toBe("committed");expect(g.getSnapshot()).toMatchObject({partyCashCentimes:1500000,reservedCentimes:500000});expect(end(g,"feb").status).toBe("committed");expect(g.getSnapshot()).toMatchObject({partyCashCentimes:1000000,reservedCentimes:500000});expect(end(g,"mar").status).toBe("committed");expect(g.getSnapshot()).toMatchObject({partyCashCentimes:500000,reservedCentimes:0});expect(end(g,"apr").status).toBe("committed");expect(g.queryArchive({text:"长期工作月度执行",page:1,pageSize:20}).total).toBe(3);expect(g.queryArchive({text:"长期工作计划期结束",page:1,pageSize:20}).total).toBe(1)});
-it("pause releases next fee, keeps already paid progress",()=>{const g=make(2000000,0,0);act(g,"start_project","p");expect(end(g,"jan").status).toBe("committed");expect(act(g,"pause_adjustable_project","pause").status).toBe("committed");expect(g.getSnapshot()).toMatchObject({partyCashCentimes:1500000,reservedCentimes:0});expect(end(g,"feb").status).toBe("committed");expect(g.getSnapshot().partyCashCentimes).toBe(1500000);expect(g.queryArchive({text:"长期工作月度执行",page:1,pageSize:20}).total).toBe(1)});
-it("project shortfall does not create debt or free progress",()=>{const g=make(600000,0,0);expect(act(g,"start_project","p").status).toBe("committed");expect(end(g,"jan").status).toBe("committed");expect(g.getSnapshot()).toMatchObject({partyCashCentimes:100000,reservedCentimes:100000});expect(end(g,"feb").status).toBe("committed");expect(g.getSnapshot()).toMatchObject({partyCashCentimes:100000,reservedCentimes:100000,unpaidCentimes:0});expect(g.queryArchive({text:"长期工作月度执行",page:1,pageSize:20}).total).toBe(1)});
+it("three paid months, rolling reserve and final completion",()=>{const g=make(2000000,0,0);expect(act(g,"start_project","p").status).toBe("committed");expect(g.getSnapshot()).toMatchObject({partyCashCentimes:2000000,reservedCentimes:500000,actionRemaining:1});expect(end(g,"jan").status).toBe("committed");expect(g.getSnapshot()).toMatchObject({partyCashCentimes:1500000,reservedCentimes:500000});expect(end(g,"feb").status).toBe("committed");expect(g.getSnapshot()).toMatchObject({partyCashCentimes:1000000,reservedCentimes:500000});expect(end(g,"mar").status).toBe("committed");expect(g.getSnapshot()).toMatchObject({partyCashCentimes:500000,reservedCentimes:0});expect(end(g,"apr").status).toBe("committed");expect(g.queryArchive({text:"累计完成",page:1,pageSize:20}).total).toBe(3);expect(g.queryArchive({text:"长期工作到期",page:1,pageSize:20}).total).toBe(1)});
+it("pause releases next fee, keeps already paid progress",()=>{const g=make(2000000,0,0);act(g,"start_project","p");expect(end(g,"jan").status).toBe("committed");expect(act(g,"pause_adjustable_project","pause").status).toBe("committed");expect(g.getSnapshot()).toMatchObject({partyCashCentimes:1500000,reservedCentimes:0});expect(end(g,"feb").status).toBe("committed");expect(g.getSnapshot().partyCashCentimes).toBe(1500000);expect(g.queryArchive({text:"累计完成",page:1,pageSize:20}).total).toBe(1)});
+it("project shortfall does not create debt or free progress",()=>{const g=make(600000,0,0);expect(act(g,"start_project","p").status).toBe("committed");expect(end(g,"jan").status).toBe("committed");expect(g.getSnapshot()).toMatchObject({partyCashCentimes:100000,reservedCentimes:100000});expect(end(g,"feb").status).toBe("committed");expect(g.getSnapshot()).toMatchObject({partyCashCentimes:100000,reservedCentimes:100000,unpaidCentimes:0});expect(g.queryArchive({text:"累计完成",page:1,pageSize:20}).total).toBe(1)});
 it("month filter and pending save preserve quote and reservations",()=>{const g=make();act(g,"organize_notice","a");const saved=g.exportSave(),h=make();expect(h.importSave(saved).ok).toBe(true);expect(h.getSnapshot()).toEqual(g.getSnapshot());expect(end(h,"end").status).toBe("committed");expect(h.queryArchive({text:"",page:1,pageSize:20,monthIndex:1}).total).toBe(h.getSnapshot().briefCount);expect(h.queryArchive({text:"组织活动已执行",page:1,pageSize:20,monthIndex:0}).total).toBe(1)});
 it("shortfall acknowledge does not remove obligations",()=>{const g=make(50000,0,100000);expect(g.getSnapshot()).toMatchObject({restrictedCentimes:50000,unpaidCentimes:100000,partyAvailableCentimes:0});expect(act(g,"accept_shortfall","a").status).toBe("committed");expect(g.getSnapshot()).toMatchObject({restrictedCentimes:50000,unpaidCentimes:100000});expect(end(g,"end").status).toBe("committed");expect(g.getSnapshot().unpaidCentimes).toBe(200000)});
 
@@ -81,23 +81,40 @@ it("C-R10 funding shortfall does not accept resume commands; automatic recovery 
  expect(detail.status).toBe("经费不足");expect(detail.operations.some(o=>o.draft.actionId==="resume_project")).toBe(false);
  const draft={actionId:"resume_project",targetId:id.slice(5),proposalVersion:"m2"};
  for(const requestId of ["invalid-resume-1","invalid-resume-2"]){const confirmedQuote=g.previewQuote(draft);expect(confirmedQuote.allowed).toBe(false);expect(g.dispatch({requestId,draft,confirmedQuote}).status).toBe("rejected");}
- expect(g.queryArchive({text:"已确认恢复长期工作",page:1,pageSize:20}).total).toBe(0);
+ expect(g.queryArchive({text:"决定恢复长期工作",page:1,pageSize:20}).total).toBe(0);
  end(g,"mar");expect(g.queryWorkDetail(id)?.status).toBe("执行中");
 });
 it("C-R10 explicit resume when funds are insufficient grants authorization once, not paid execution",()=>{
  const g=make(1000000,0,0);act(g,"start_project","p");end(g,"jan");const id=g.queryWork()[0].id;
  manage(g,id,"pause_adjustable_project","pause");act(g,"organize_notice","notice");expect(manage(g,id,"resume_project","resume").status).toBe("committed");
  expect(g.queryWorkDetail(id)?.operations.some(o=>o.draft.actionId==="resume_project")).toBe(false);
- expect(g.queryWorkDetail(id)?.nextPeriod).toContain("尚未独立足额保障");
+ expect(g.queryWorkDetail(id)?.nextPeriod).toContain("经费尚未备齐");
  const draft={actionId:"resume_project",targetId:id.slice(5),proposalVersion:"m1"};expect(g.dispatch({requestId:"again",draft,confirmedQuote:g.previewQuote(draft)}).status).toBe("rejected");
- expect(g.queryArchive({text:"已确认恢复长期工作",page:1,pageSize:20}).total).toBe(1);
+ expect(g.queryArchive({text:"决定恢复长期工作",page:1,pageSize:20}).total).toBe(1);
 });
 it("C-R11 paid March remains execution; April pause is unpaid and deadline expires incomplete",()=>{
  const g=make(2000000,0,0);act(g,"start_project","p");end(g,"jan");end(g,"feb");const id=g.queryWork()[0].id;
  expect(manage(g,id,"pause_adjustable_project","pause").status).toBe("committed");
- expect(g.queryWorkDetail(id)).toMatchObject({currentPeriod:"本期执行中（已付款，月底结算）",nextPeriod:"1934年4月起主动暂停",paidCentimes:1000000,progress:1,reservedCentimes:0});
- end(g,"mar");expect(g.queryWorkDetail(id)).toMatchObject({currentPeriod:"本期未执行（未付款）",nextPeriod:"无后续执行期",paidCentimes:1000000,progress:2});
- expect(g.queryArchive({text:"长期工作月度执行",page:1,pageSize:20,monthIndex:2}).total).toBe(1);
- end(g,"apr");expect(g.queryArchive({text:"长期工作月度执行",page:1,pageSize:20,monthIndex:3}).total).toBe(0);
+ expect(g.queryWorkDetail(id)).toMatchObject({currentPeriod:"1934年3月：正常进行，费用已付",nextPeriod:"1934年4月：已安排暂停",paidCentimes:1000000,progress:1,reservedCentimes:0});
+ end(g,"mar");expect(g.queryWorkDetail(id)).toMatchObject({currentPeriod:"1934年4月：已暂停，未付款",nextPeriod:"原定计划期结束，不再安排",paidCentimes:1000000,progress:2});
+ expect(g.queryArchive({text:"累计完成",page:1,pageSize:20,monthIndex:2}).total).toBe(1);
+ end(g,"apr");expect(g.queryArchive({text:"累计完成",page:1,pageSize:20,monthIndex:3}).total).toBe(0);
  expect(g.queryWorkDetail(id)?.status).toBe("计划期结束（未完成）");
+});
+
+it("C-R13 terminated paid work remains visible until its month is settled, including save recovery",()=>{
+ const g=make(2000000,0,0);act(g,"start_project","p");end(g,"jan");const id=g.queryWork()[0].id;
+ expect(manage(g,id,"terminate_project","stop").status).toBe("committed");
+ expect(g.getSnapshot().workCount).toBe(1);expect(g.queryWork()[0].title).toContain("本月收尾");
+ expect(g.queryWorkDetail(id)).toMatchObject({status:"已终止",currentPeriod:"1934年2月：正常进行，费用已付",nextPeriod:"不再安排后续工作",paidCentimes:500000,reservedCentimes:0,progress:0,operations:[]});
+ const h=make(2000000,0,0);expect(h.importSave(g.exportSave()).ok).toBe(true);expect(h.getSnapshot().workCount).toBe(1);
+ expect(end(h,"feb").status).toBe("committed");expect(h.queryWork()).toHaveLength(0);expect(h.getSnapshot().workCount).toBe(0);
+ expect(h.queryWorkDetail(id)?.progress).toBe(1);expect(h.queryArchive({text:"累计完成",page:1,pageSize:20,monthIndex:1}).total).toBe(1);
+ expect(end(h,"mar").status).toBe("committed");expect(h.queryWorkDetail(id)?.paidCentimes).toBe(500000);
+});
+it("C-R13 paid and unpaid work explanations follow actual payment, including final shortage",()=>{
+ const g=make(300000,200000,0);act(g,"start_project","p");end(g,"jan");end(g,"feb");const id=g.queryWork()[0].id;
+ expect(g.queryWorkDetail(id)?.currentPeriod).toBe("1934年3月：经费不足，未开展工作");expect(g.queryWorkDetail(id)?.description).toContain("自动尝试恢复");
+ expect(g.queryWorkDetail(id)?.operations.some(o=>o.draft.actionId==="resume_project")).toBe(false);
+ end(g,"mar");expect(g.queryWorkDetail(id)?.currentPeriod).toBe("1934年4月：正常进行，费用已付");expect(g.queryWorkDetail(id)?.nextPeriod).toBe("原定计划期结束，不再安排");
 });

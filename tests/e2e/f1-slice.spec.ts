@@ -56,10 +56,10 @@ test("work details show real progress and management actions not catalog cards",
  await page.getByRole("button",{name:"结束本月 →"}).click();await page.getByRole("button",{name:"确认提交"}).click();
  await expect(page.locator(".action").getByText("暂停工作",{exact:true})).toHaveCount(0);
  await page.locator(".side").getByRole("button",{name:"查看详情 >"}).click();const detail=page.getByRole("dialog",{name:"工作详情"});
- await expect(detail).toContainText("执行中");await expect(detail).toContainText("5,000 F");await detail.getByRole("button",{name:"暂停工作",exact:true}).click();
- await page.getByRole("button",{name:"返回",exact:true}).click();await expect(detail).toContainText("执行中");
- await detail.getByRole("button",{name:"暂停工作",exact:true}).click();await page.getByRole("button",{name:"确认提交"}).click();await expect(detail).toContainText("主动暂停");
- await detail.getByRole("button",{name:"恢复工作",exact:true}).click();await page.getByRole("button",{name:"确认提交"}).click();await expect(detail).toContainText("执行中");await detail.getByRole("button",{name:"关闭",exact:true}).click();
+ await expect(detail).toContainText("正常进行");await expect(detail).toContainText("5,000 F");await detail.getByRole("button",{name:"暂停工作",exact:true}).click();
+ await page.getByRole("button",{name:"返回",exact:true}).click();await expect(detail).toContainText("正常进行");
+ await detail.getByRole("button",{name:"暂停工作",exact:true}).click();await page.getByRole("button",{name:"确认提交"}).click();await expect(detail).toContainText("已安排暂停");
+ await detail.getByRole("button",{name:"恢复工作",exact:true}).click();await page.getByRole("button",{name:"确认提交"}).click();await expect(detail).toContainText("正常进行");await detail.getByRole("button",{name:"关闭",exact:true}).click();
 });
 
 test("explicit deadline fixture: cancel from work, close does not clear, save and resume ordered dates",async({page,context})=>{
@@ -94,18 +94,32 @@ test("C-R11–R12 paid period and next pause are distinct; work feedback isolate
  const detail=page.getByRole("dialog",{name:"工作详情"}),global=page.getByRole("status",{name:"操作反馈",exact:true});
  await choose("安排三个月长期工作");await advance();await advance();
  await page.locator(".side").getByRole("button",{name:"查看详情 >"}).click();
- await expect(detail).toContainText("本期执行中");await expect(page.getByRole("status",{name:"工作操作反馈"})).toHaveText("");
+ await expect(detail).toContainText("正常进行，费用已付");await expect(page.getByRole("status",{name:"工作操作反馈"})).toHaveText("");
  await detail.getByRole("button",{name:"暂停工作",exact:true}).click();await page.getByRole("button",{name:"确认提交"}).click();
- await expect(detail).toContainText("本期执行中");await expect(detail).toContainText("1934年4月起主动暂停");await expect(page.getByRole("status",{name:"工作操作反馈"})).toContainText("4月起暂停");
+ await expect(detail).toContainText("正常进行，费用已付");await expect(detail).toContainText("1934年4月：已安排暂停");await expect(page.getByRole("status",{name:"工作操作反馈"})).toContainText("4月起暂停");
  await detail.getByRole("button",{name:"关闭",exact:true}).click();await expect(global).toContainText("1934年3月");
  await page.locator(".side").getByRole("button",{name:"查看详情 >"}).click();await expect(page.getByRole("status",{name:"工作操作反馈"})).toHaveText("");await detail.getByRole("button",{name:"关闭",exact:true}).click();
- await advance();await page.locator(".side").getByRole("button",{name:"查看详情 >"}).click();await expect(detail).toContainText("本期未执行（未付款）");await expect(detail).toContainText("10,000 F");await expect(detail).toContainText("2 / 3月");await detail.getByRole("button",{name:"关闭",exact:true}).click();
- await advance();await page.getByRole("button",{name:"档案",exact:true}).click();await page.getByLabel("搜索记录").fill("长期工作月度执行");await expect(page.getByText("共 2 条可知记录")).toBeVisible();
- await page.getByLabel("搜索记录").fill("长期工作计划期结束");await expect(page.getByText("共 1 条可知记录")).toBeVisible();
- const closed=page.locator(".main-panel .records li").filter({hasText:"长期工作计划期结束（未完成）"});
+ await advance();await page.locator(".side").getByRole("button",{name:"查看详情 >"}).click();await expect(detail).toContainText("1934年4月：已暂停，未付款");await expect(detail).toContainText("10,000 F");await expect(detail).toContainText("2 / 3个月");await detail.getByRole("button",{name:"关闭",exact:true}).click();
+ await advance();await page.getByRole("button",{name:"档案",exact:true}).click();await page.getByLabel("搜索记录").fill("累计完成");await expect(page.getByText("共 2 条可知记录")).toBeVisible();
+ await page.getByLabel("搜索记录").fill("长期工作到期");await expect(page.getByText("共 1 条可知记录")).toBeVisible();
+ const closed=page.locator(".main-panel .records li").filter({hasText:"长期工作到期未完成"});
  await expect(closed).toHaveCount(1);await expect(closed).toBeVisible();await expect(closed.locator("small")).toHaveText("1934年4月");
  await closed.getByRole("button",{name:"查看详情 >"}).click();
  const record=page.getByRole("dialog",{name:"记录详情"});
- await expect(record.getByRole("heading",{name:"长期工作计划期结束（未完成）",exact:true})).toBeVisible();
- await expect(record).toContainText("已执行 2 / 3 个月");
+ await expect(record.getByRole("heading",{name:"长期工作到期未完成",exact:true})).toBeVisible();
+ await expect(record).toContainText("实际执行 2 个月");
+});
+
+test("C-R13 termination leaves paid work visible until month close",async({page,context})=>{
+ await context.setOffline(true);await page.goto(pathToFileURL(resolve("dist-offline/front-populaire-f1.html")).href);
+ await page.locator(".action").filter({has:page.getByRole("heading",{name:"安排三个月长期工作"})}).getByRole("button",{name:"查看方案 >"}).click();await page.getByRole("button",{name:"确认提交"}).click();
+ const advance=async()=>{await page.getByRole("button",{name:"结束本月 →"}).click();await page.getByRole("button",{name:"确认提交"}).click()};
+ await advance();await page.locator(".side").getByRole("button",{name:"查看详情 >"}).click();
+ const detail=page.getByRole("dialog",{name:"工作详情"});
+ await detail.getByRole("button",{name:"终止工作",exact:true}).click();await expect(page.getByRole("dialog")).toContainText("1934年2月的费用已经支付");await page.getByRole("button",{name:"确认提交"}).click();
+ await expect(detail).toContainText("正常进行，费用已付");await expect(detail).toContainText("不再安排后续工作");await expect(detail.getByRole("button",{name:"恢复工作"})).toHaveCount(0);
+ await detail.getByRole("button",{name:"关闭",exact:true}).click();await expect(page.locator(".side")).toContainText("本月收尾");await expect(page.locator(".side")).toContainText("工作项目（1）");
+ await advance();await expect(page.locator(".side")).toContainText("工作项目（0）");await expect(page.locator(".side")).toContainText("当前无在途工作");
+ await page.getByRole("button",{name:"档案",exact:true}).click();await page.getByLabel("搜索记录").fill("累计完成");await expect(page.getByText("共 1 条可知记录")).toBeVisible();
+ await expect(page.locator(".main-panel .records")).toContainText("完成1934年2月的长期工作");
 });
