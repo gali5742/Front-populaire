@@ -1,6 +1,7 @@
 // G2-B: deliberately limited F1 vertical slice. All state private to the session.
 import {loadF1} from "../config/f1-schema.mjs";
-const RULES="g2-c-4", FORMAT="front-populaire-save-1";
+import {planDuePayments} from "./payment-plan.mjs";
+const RULES="g2-c-5", FORMAT="front-populaire-save-1";
 const copy=x=>JSON.parse(JSON.stringify(x));
 const fail=m=>{throw new Error(m)};
 const integer=(x,min=0,max=Number.MAX_SAFE_INTEGER)=>Number.isSafeInteger(x)&&x>=min&&x<=max;
@@ -30,11 +31,14 @@ function transaction(s,id,delta,kind,ref){
 // Reservation ownership is explicit. A planned project fee is not a debt.
 const queued=s=>s.plans.filter(p=>p.status==="queued");
 const reservedAP=s=>queued(s).reduce((n,p)=>n+p.ap,0);
-const reservedMoney=s=>queued(s).reduce((n,p)=>n+p.amount,0)+s.projects.reduce((n,p)=>n+p.reserve,0);
+const reservedMoney=s=>queued(s).reduce((n,p)=>n+p.amount,0)+s.projects.reduce((n,p)=>n+p.reserve,0)+s.binding.reduce((n,o)=>n+(o.paid?0:o.reserve),0);
 const available=s=>s.cash-s.restricted-s.projectHold-reservedMoney(s);
 const openProject=p=>["active","manual_pause","funding_shortfall"].includes(p.status);
 const fundedCandidate=p=>["active","funding_shortfall"].includes(p.status);
-const routineDue=s=>s.obligations.filter(o=>!o.paid).reduce((n,o)=>n+o.amount,0);
+const dueBindings=s=>s.binding.filter(o=>!o.paid&&o.month<=s.month);
+const routineDue=s=>s.obligations.filter(o=>!o.paid).reduce((n,o)=>n+o.amount,0)+dueBindings(s).reduce((n,o)=>n+o.amount,0);
+const dueUnbacked=s=>routineDue(s)-dueBindings(s).reduce((n,o)=>n+o.reserve,0);
+const projectGap=s=>Math.max(0,s.projects.filter(p=>fundedCandidate(p)&&s.month<p.last).reduce((n,p)=>n+p.fee-p.reserve,0)-s.projectHold);
 function reserveNext(s){
  // In F1 these are adjustable, equal-priority next-period plans.
  s.projectHold=0;
@@ -56,14 +60,22 @@ function enter(s,c,m){
  if(c.parameters.monthly_income)transaction(s,"income-"+m,c.parameters.monthly_income,"income","monthly-income");
  const due=c.parameters.monthly_routine_due;
  if(due)s.obligations.push({id:"routine-"+m,month:m,amount:due,paid:false});
- const unpaid=s.obligations.filter(x=>!x.paid),total=routineDue(s);
- if(!integer(total))fail("obligation overflow");
- // F1 project fees are explicitly adjustable future plans, not binding obligations.
- // Release their old earmarks as a group before the higher priority routine obligations.
+ // F1 adjustable project fees yield to due binding obligations; dedicated earmarks do not.
  for(const p of s.projects)p.reserve=0;
- s.projectHold=0;
- if(total<=s.cash){for(const o of unpaid){transaction(s,"pay-"+o.id,-o.amount,"routine",o.id);o.paid=true;}s.restricted=0;}
- else{s.restricted=Math.min(s.cash,total);addFact(s,"shortfall-"+m,"例行经费短缺","到期例行费用未获足额保障；保留实际未付义务和受限资金，不自动分配。",m,"opening");}
+ s.projectHold=0;s.restricted=0;
+ const obligations=[...s.obligations.filter(o=>!o.paid).map(o=>({...o,kind:"routine",priority:1,reserve:0})),...dueBindings(s).map(o=>({...o,kind:"binding"}))];
+ const result=planDuePayments(s.cash,s.binding.filter(o=>!o.paid).reduce((n,o)=>n+o.reserve,0),obligations);
+ for(const id of result.payIds){
+  const o=s.obligations.find(o=>o.id===id)??s.binding.find(o=>o.id===id);
+  const kind=s.binding.includes(o)?"binding":"routine";
+  transaction(s,"pay-"+o.id,-o.amount,kind,o.id);o.paid=true;
+ }
+ s.restricted=result.restricted;
+ if(result.conflict){
+  const x=result.conflict;
+  addFact(s,"shortfall-"+m,"经费短缺处置","到期同级义务竞争：未获独立保障的需求 "+x.unbacked+" 生丁，可用于该冲突 "+x.pool+" 生丁，缺口 "+(x.unbacked-x.pool)+" 生丁；保留实际未付义务，不擅自部分支付。",m,"opening");
+ }
+ if(s.restricted!==Math.min(s.cash-reservedMoney(s),dueUnbacked(s)))fail("payment conservation");
  const active=s.projects.filter(p=>fundedCandidate(p)&&m>=p.first&&m<=p.last);
  const demand=active.reduce((n,p)=>n+p.fee,0);
  if(!integer(demand))fail("project demand overflow");
@@ -76,11 +88,11 @@ function enter(s,c,m){
  reserveNext(s);
 }
 function initial(c){
- const s={month:0,phase:"entry",entered:[],sealed:[],cash:c.initial.party_cash,spent:0,restricted:0,projectHold:0,checkpoints:[],ledger:[],obligations:[],contacts:[],plans:[],projects:[],facts:c.initial.facts.map(f=>({id:f.id,title:"公开政治表态",description:f.text,month:0,slot:"opening"})),processed:[]};
+ const s={month:0,phase:"entry",entered:[],sealed:[],cash:c.initial.party_cash,spent:0,restricted:0,projectHold:0,checkpoints:[],ledger:[],obligations:[],binding:(c.initial.binding_dues??[]).map(o=>({id:"binding-"+o.id,month:o.month,amount:o.amount,priority:o.priority,reserve:o.dedicated,paid:false})),contacts:[],plans:[],projects:[],facts:c.initial.facts.map(f=>({id:f.id,title:"公开政治表态",description:f.text,month:0,slot:"opening"})),processed:[]};
  enter(s,c,0);return s;
 }
 function snapshot(s,c){
- return {time:{monthIndex:s.month,label:monthLabel(s.month),phase:s.phase,checkpointDay:currentDay(s)||null},identity:c.initial.actors.find(a=>a.kind==="player_central").name,actionRemaining:s.phase==="ended"?0:2-s.spent-reservedAP(s),partyAvailableCentimes:available(s),partyCashCentimes:s.cash,restrictedCentimes:s.restricted+s.projectHold,reservedCentimes:reservedMoney(s),reservedAP:reservedAP(s),unpaidCentimes:routineDue(s),requiredBlock:s.phase==="required",workCount:s.contacts.filter(x=>x.status==="sent"||x.status==="waiting").length+queued(s).length+s.projects.filter(openProject).length,briefCount:s.facts.filter(f=>f.month===s.month).length,profileLabel:c.display_label};
+ return {time:{monthIndex:s.month,label:monthLabel(s.month),phase:s.phase,checkpointDay:currentDay(s)||null},identity:c.initial.actors.find(a=>a.kind==="player_central").name,actionRemaining:s.phase==="ended"?0:2-s.spent-reservedAP(s),partyAvailableCentimes:available(s),partyCashCentimes:s.cash,restrictedCentimes:s.restricted+s.projectHold,reservedCentimes:reservedMoney(s),reservedAP:reservedAP(s),unpaidCentimes:routineDue(s),unpaidGapCentimes:dueUnbacked(s)-s.restricted,projectGapCentimes:projectGap(s),requiredBlock:s.phase==="required",workCount:s.contacts.filter(x=>x.status==="sent"||x.status==="waiting").length+queued(s).length+s.projects.filter(openProject).length,briefCount:s.facts.filter(f=>f.month===s.month).length,profileLabel:c.display_label};
 }
 function choices(s,c){
  if(s.phase==="required")return s.checkpoints.filter(x=>x.month===s.month&&!x.resolved).map(x=>({id:x.id,title:"回应："+x.title,description:x.description+"（不新增承诺；必须在本月截止前记录回应。）",draft:{actionId:"acknowledge_no_commitment",targetId:x.id,proposalVersion:"m"+s.month}}));
@@ -242,9 +254,9 @@ function apply(s,c,d,q){
  return "接触已发出；费用已结算，等待对方回应。";
 }
 function validateState(s,c){
- if(!keys(s,["month","phase","entered","sealed","cash","spent","restricted","projectHold","checkpoints","ledger","obligations","contacts","plans","projects","facts","processed"]))fail("state shape");
+ if(!keys(s,["month","phase","entered","sealed","cash","spent","restricted","projectHold","checkpoints","ledger","obligations","binding","contacts","plans","projects","facts","processed"]))fail("state shape");
  if(!integer(s.month,0,59)||!["decision","required","resume","ended"].includes(s.phase)||!integer(s.cash)||!integer(s.spent,0,2)||!integer(s.restricted,0,s.cash)||!integer(s.projectHold,0,s.cash))fail("state values");
- for(const k of ["entered","sealed","checkpoints","ledger","obligations","contacts","plans","projects","facts","processed"])if(!Array.isArray(s[k]))fail("array "+k);
+ for(const k of ["entered","sealed","checkpoints","ledger","obligations","binding","contacts","plans","projects","facts","processed"])if(!Array.isArray(s[k]))fail("array "+k);
  if(s.entered.length!==s.month+1||s.entered.some((m,i)=>m!==i)||s.sealed.length!==s.month+(s.phase==="ended"?1:0)||s.sealed.some((m,i)=>m!==i)||s.phase==="ended"&&s.month!==59)fail("clock");
  const unique=(a,k)=>{if(new Set(a.map(x=>x[k])).size!==a.length)fail("duplicate "+k)};
  unique(s.ledger,"id");unique(s.obligations,"id");unique(s.contacts,"id");unique(s.contacts,"actionId");unique(s.facts,"id");unique(s.processed,"requestId");
@@ -273,12 +285,22 @@ function validateState(s,c){
  const here=s.checkpoints.filter(x=>x.month===s.month);
  if(s.phase==="required"&&(!here.length||!here.some(x=>!x.resolved))||s.phase==="resume"&&(!here.length||here.some(x=>!x.resolved))||s.phase==="decision"&&here.length)fail("checkpoint cursor");
  let balance=c.initial.party_cash;
- for(const t of s.ledger){if(!keys(t,["id","month","delta","kind","ref"])||!safeId(t.id)||!safeId(t.ref)||!validMonth(t.month)||!Number.isSafeInteger(t.delta)||!["income","routine","contact","organization","project_start","project_month"].includes(t.kind))fail("ledger row");balance+=t.delta;if(!integer(balance))fail("ledger balance");}
+ for(const t of s.ledger){if(!keys(t,["id","month","delta","kind","ref"])||!safeId(t.id)||!safeId(t.ref)||!validMonth(t.month)||!Number.isSafeInteger(t.delta)||!["income","routine","binding","contact","organization","project_start","project_month"].includes(t.kind))fail("ledger row");balance+=t.delta;if(!integer(balance))fail("ledger balance");}
  if(balance!==s.cash)fail("cash");
  for(const m of s.entered){const inc=s.ledger.filter(t=>t.kind==="income"&&t.month===m);if(c.parameters.monthly_income?(inc.length!==1||inc[0].id!=="income-"+m||inc[0].delta!==c.parameters.monthly_income):inc.length!==0)fail("income");}
  for(const o of s.obligations){if(!keys(o,["id","month","amount","paid"])||!validMonth(o.month)||o.id!=="routine-"+o.month||o.amount!==c.parameters.monthly_routine_due||typeof o.paid!=="boolean")fail("obligation");const pay=s.ledger.filter(t=>t.kind==="routine"&&t.ref===o.id);if(o.paid?(pay.length!==1||pay[0].id!=="pay-"+o.id||pay[0].delta!==-o.amount||pay[0].month<o.month):pay.length)fail("payment");}
  if(s.obligations.length!==(c.parameters.monthly_routine_due?s.entered.length:0)||s.ledger.some(t=>t.kind==="routine"&&!s.obligations.some(o=>o.id===t.ref)))fail("routine coverage");
- const unpaid=s.obligations.filter(o=>!o.paid).reduce((n,o)=>n+o.amount,0);if(!integer(unpaid)||s.restricted!==Math.min(s.cash-reservedMoney(s),unpaid)||!integer(available(s)))fail("restriction");
+ unique(s.binding,"id");
+ const bindingConfig=c.initial.binding_dues??[];
+ if(s.binding.length!==bindingConfig.length)fail("binding coverage");
+ for(const o of s.binding){
+  const e=bindingConfig.find(x=>"binding-"+x.id===o.id);
+  if(!keys(o,["id","month","amount","priority","reserve","paid"])||!e||o.month!==e.month||o.amount!==e.amount||o.priority!==e.priority||o.reserve!==e.dedicated||typeof o.paid!=="boolean")fail("binding obligation");
+  const pay=s.ledger.filter(t=>t.kind==="binding"&&t.ref===o.id);
+  if(o.paid?(pay.length!==1||pay[0].id!=="pay-"+o.id||pay[0].delta!==-o.amount||pay[0].month<o.month):pay.length)fail("binding payment");
+ }
+ if(s.ledger.some(t=>t.kind==="binding"&&!s.binding.some(o=>o.id===t.ref)))fail("orphan binding payment");
+ const unpaid=routineDue(s);if(!integer(unpaid)||!integer(dueUnbacked(s))||s.restricted!==Math.min(s.cash-reservedMoney(s),dueUnbacked(s))||!integer(available(s)))fail("restriction");
  for(const f of s.facts)if(!keys(f,["id","title","description","month","slot"])||!safeId(f.id)||!validMonth(f.month)||typeof f.title!=="string"||typeof f.description!=="string"||!["opening","decision","month_end"].includes(f.slot)&&!(/^day-\d{1,2}$/.test(f.slot)&&integer(Number(f.slot.slice(4)),1,daysInMonth(f.month))))fail("fact");
  for(const f of c.initial.facts)if(!s.facts.some(x=>x.id===f.id&&x.description===f.text&&x.month===0))fail("initial fact");
  let spent=0;
