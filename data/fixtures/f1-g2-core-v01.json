@@ -1,0 +1,367 @@
+{
+  "schema_version": "0.1",
+  "profile_id": "F1-G2-CORE-001",
+  "status": "CANDIDATE_NOT_RUN",
+  "synthetic": true,
+  "display_label": "F1 合成规则测试（非1934史实）",
+  "assumption_id": "G1-F1-001",
+  "scope": "D1/D2 core only; synthetic procedural actors; not F2; no historical party/chamber/cabinet counts",
+  "seed": 19340101,
+  "clock": {
+    "start_month": "1934-01",
+    "end_month": "1938-12",
+    "initial_month_index": 0,
+    "action_allowance": 2,
+    "initial_phase": "month_entry",
+    "calendar": "Gregorian civil dates; no action advances a day implicitly"
+  },
+  "currency": {
+    "unit": "centime",
+    "centimes_per_franc": 100,
+    "integer_safe": true
+  },
+  "initial": {
+    "party_cash": 1000000,
+    "spent_ap": 0,
+    "reserved_ap": 0,
+    "reserved_cash": 0,
+    "restricted_cash": 0,
+    "members": null,
+    "chamber_seats": null,
+    "actors": [
+      {
+        "id": "f1-central",
+        "kind": "player_central",
+        "name": "测试中央领导层",
+        "capabilities": [
+          "contact",
+          "organize",
+          "plan_project",
+          "respond",
+          "cancel_pending"
+        ]
+      },
+      {
+        "id": "f1-party-a",
+        "kind": "party",
+        "name": "测试政治团体A",
+        "capabilities": [
+          "reply"
+        ],
+        "private_preference": {
+          "statement": "accept",
+          "coordination": "reject"
+        }
+      },
+      {
+        "id": "f1-union",
+        "kind": "union",
+        "name": "测试社会组织",
+        "capabilities": [
+          "independent_action"
+        ]
+      }
+    ],
+    "facts": [
+      {
+        "id": "f1-public-request",
+        "type": "public_statement",
+        "actor_id": "f1-party-a",
+        "text": "愿讨论共同声明。",
+        "occurred": {
+          "month": 0,
+          "slot": "opening"
+        },
+        "disclosed": {
+          "month": 0,
+          "slot": "opening"
+        },
+        "audience": "public"
+      }
+    ]
+  },
+  "parameters": {
+    "monthly_income": 200000,
+    "monthly_routine_due": 100000,
+    "first_month_recurring_policy": "apply first-month ordinary income and expense at entry; initial cash is pre-entry",
+    "money_rounding": "integer centimes; reject unsafe integers",
+    "ordinary_contact_response": "next declared checkpoint; if current month-end normal response opportunity then next ordinary decision; actual response timestamp retained",
+    "project_execution_months": 3,
+    "project_month_fee": 500000,
+    "project_start_fee": 0,
+    "project_start_ap": 1,
+    "project_start": "end of confirmation month",
+    "first_project_payment": "next month opening",
+    "roll_reserve": "one next execution month after current payment; no reserve after last",
+    "project_unfunded": "pause without paid progress; fixed planned end; no automatic extension; explicit lawful resumption for remaining planned months",
+    "project_change_effect": "next execution month unless explicit fixture permits pending cancellation",
+    "same_level_conflict": "no allocation without valid rule; restrict available contested funds once; record actual due unpaid; zero-cost accept",
+    "negotiation": {
+      "variants": [
+        "statement",
+        "coordination"
+      ],
+      "max_exchanges": 2,
+      "closure": "close on agreement, explicit refusal with no new admissible variant, or bound; new instance only on real new opportunity",
+      "randomness": "none in baseline; seeded tie choice only in dedicated fixture"
+    },
+    "checkpoint_order": [
+      "actual earlier dates and dependencies",
+      "due entry income",
+      "due unavoidable payment",
+      "eligible due project payment",
+      "next-period reserve",
+      "ordinary decision when no earlier hard deadline",
+      "undated month-end execution",
+      "seal"
+    ]
+  },
+  "actions": [
+    {
+      "id": "contact_statement",
+      "kind": "immediate",
+      "ap": 1,
+      "cost": 100000,
+      "requires": [
+        "contact"
+      ],
+      "issue": "f1-issue",
+      "variant": "statement",
+      "result": "send contact; autonomous reply separately"
+    },
+    {
+      "id": "contact_coordination",
+      "kind": "immediate",
+      "ap": 1,
+      "cost": 100000,
+      "requires": [
+        "contact"
+      ],
+      "issue": "f1-issue",
+      "variant": "coordination",
+      "result": "send contact; autonomous reply separately"
+    },
+    {
+      "id": "organize_notice",
+      "kind": "scheduled",
+      "ap": 1,
+      "cost": 300000,
+      "requires": [
+        "organize"
+      ],
+      "execution": "undated month end",
+      "result": "record actual organization activity only on execution"
+    },
+    {
+      "id": "start_project",
+      "kind": "project",
+      "ap": 1,
+      "cost": 0,
+      "reserve_first_fee": 500000,
+      "requires": [
+        "plan_project"
+      ],
+      "duration": 3,
+      "monthly_fee": 500000,
+      "result": "queue start at undated month end; no paid progress before actual payment"
+    },
+    {
+      "id": "acknowledge_no_commitment",
+      "kind": "required_response",
+      "ap": 0,
+      "cost": 0,
+      "requires": [
+        "respond"
+      ],
+      "result": "record explicit no new commitment; resolve only referenced response"
+    },
+    {
+      "id": "cancel_pending",
+      "kind": "cancel",
+      "ap": 0,
+      "cost": 0,
+      "requires": [
+        "cancel_pending"
+      ],
+      "result": "only cancellable unstarted reservations released"
+    },
+    {
+      "id": "pause_adjustable_project",
+      "kind": "routine_adjustment",
+      "ap": 0,
+      "cost": 0,
+      "requires": [
+        "plan_project"
+      ],
+      "result": "fixture existing permission to pause future adjustable work only; no release of binding debt"
+    },
+    {
+      "id": "accept_shortfall",
+      "kind": "shortfall_response",
+      "ap": 0,
+      "cost": 0,
+      "requires": [
+        "respond"
+      ],
+      "result": "record unpaid due obligation and real consequences; no automatic release of constrained funds or debt"
+    }
+  ],
+  "scenario_overrides": [
+    {
+      "id": "F1-LEDGER-01",
+      "initial_cash": 1000000,
+      "monthly_income": 0,
+      "monthly_routine_due": 0,
+      "commands": [
+        "enter_month",
+        "schedule organize_notice",
+        "execute_at_month_end"
+      ],
+      "expected": {
+        "after_schedule": {
+          "cash": 1000000,
+          "reserved": 300000,
+          "available": 700000,
+          "ap_left": 1
+        },
+        "after_execution": {
+          "cash": 700000,
+          "reserved": 0,
+          "available": 700000,
+          "ap_left": 1
+        }
+      }
+    },
+    {
+      "id": "F1-PROJECT-01",
+      "initial_cash": 2000000,
+      "monthly_income": 0,
+      "monthly_routine_due": 0,
+      "commands": [
+        "enter January",
+        "start_project",
+        "seal January",
+        "enter February",
+        "seal February",
+        "enter March",
+        "seal March",
+        "enter April",
+        "seal April"
+      ],
+      "expected": {
+        "payments": 3,
+        "each_payment": 500000,
+        "final_cash": 500000,
+        "paid_execution_months": 3,
+        "next_reserve_after_final": 0
+      }
+    },
+    {
+      "id": "F1-SHORTFALL-01",
+      "initial_cash": 800000,
+      "monthly_income": 0,
+      "monthly_routine_due": 0,
+      "due_obligations": [
+        {
+          "id": "a",
+          "amount": 500000,
+          "kind": "binding",
+          "priority": "equal"
+        },
+        {
+          "id": "b",
+          "amount": 500000,
+          "kind": "binding",
+          "priority": "equal"
+        }
+      ],
+      "expected": {
+        "cash": 800000,
+        "restricted": 800000,
+        "available": 0,
+        "unpaid": 1000000,
+        "unfunded_gap": 200000,
+        "auto_payments": 0,
+        "zero_cost_continue": true
+      }
+    },
+    {
+      "id": "F1-NORESOURCE-01",
+      "initial_cash": 0,
+      "monthly_income": 0,
+      "monthly_routine_due": 0,
+      "initial_spent_ap": 2,
+      "required_events": [
+        "required-a",
+        "required-b"
+      ],
+      "expected": {
+        "zero_response_available": true,
+        "close_modal_resolves": false,
+        "each_event_resolved_separately": true
+      }
+    },
+    {
+      "id": "F1-PRIVATE-PAIR",
+      "world_a": {
+        "private_preference": "accept"
+      },
+      "world_b": {
+        "private_preference": "reject"
+      },
+      "common_public_record": "f1-public-request",
+      "expected": "PlayerView identical before actual disclosed response; legitimate response may diverge"
+    },
+    {
+      "id": "F1-ORDER-01",
+      "checkpoints": [
+        {
+          "id": "early",
+          "day": 20,
+          "type": "actual"
+        },
+        {
+          "id": "hard",
+          "day": 26,
+          "type": "required"
+        },
+        {
+          "id": "deadline",
+          "day": 29,
+          "type": "actual"
+        },
+        {
+          "id": "ordinary",
+          "day": 30,
+          "type": "undated_month_end"
+        }
+      ],
+      "expected_order": [
+        "early",
+        "hard",
+        "deadline",
+        "ordinary"
+      ],
+      "note": "Synthetic time order test; not historical election implementation"
+    },
+    {
+      "id": "F1-END-01",
+      "monthly_income": 0,
+      "monthly_routine_due": 0,
+      "commands": [
+        "enter first month",
+        "advance without discretionary action until final seal"
+      ],
+      "expected": {
+        "entered_months": 60,
+        "issued_ap_total": 120,
+        "month_61": false
+      }
+    }
+  ],
+  "notes": [
+    "All amounts and actors synthetic, no historical claim.",
+    "F1 proposal data and human-readable test intents, not executable fixtures until schema and test runner implemented.",
+    "No D3-D7 authority or election result simulated by this configuration; later fixtures separate."
+  ]
+}
