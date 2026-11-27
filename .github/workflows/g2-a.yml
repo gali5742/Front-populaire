@@ -1,0 +1,50 @@
+name: G2-A engineering verification
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/g2-a.yml'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'src/**'
+      - 'scripts/**'
+      - 'tests/**'
+      - 'vite.config.ts'
+      - 'tsconfig.json'
+      - 'playwright.config.ts'
+      - 'index.html'
+      - 'docs/ACCEPTANCE_REGISTER.csv'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Resolve dependencies (initial lock only)
+        run: |
+          node --version
+          npm --version
+          if [ -f package-lock.json ]; then npm ci; else npm install --no-audit --no-fund; fi
+      - name: Save dependency lock for review
+        uses: actions/upload-artifact@v4
+        with:
+          name: g2-a-package-lock
+          path: package-lock.json
+          if-no-files-found: error
+      - name: Typecheck, registry, unit tests and both builds
+        run: npm run check
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Offline browser test
+        run: npm run test:e2e
+      - name: Upload verified engineering probe
+        uses: actions/upload-artifact@v4
+        with:
+          name: g2-a-offline-probe
+          path: dist-offline/front-probe.html
+          if-no-files-found: error
