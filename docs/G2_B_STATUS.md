@@ -10,3 +10,5 @@ UI：使用暖白/暗红、共享顶底栏、行动页、方案确认、工作�
 [运行#9](https://github.com/gali5742/Front-populaire/actions/runs/45958977971)，提交b1c4e07c0a098eb62637f1909e50b49a2176afef，job 140372015166，Node24锁定依赖安装、TypeScript公开契约/UI类型检查、332原始断言对账与8源blob、F1 schema、AST自测10/10（10个源文件零违规）、5个Vitest文件20/20、标准及离线双构建、2条Chromium离线E2E、两个HTML归档均PASS。修复后对方接受/拒绝/等待、月底推进与实际费用、查询无副作用、配对可见性、损坏存档、幂等重放、60月封存全部有本轮规则测试证据。首轮真实失败（3项）及修复均保留记录。三项正式机制断言仅在F1范围通过，G5综合复验不豁免。记录版验收CSV更新后仍须自动对账。
 [可操作F1离线HTML归档](https://github.com/gali5742/Front-populaire/actions/runs/45958977971/artifacts/15179389744)：解压后打开front-populaire-f1.html；非历史游戏发布。G2-A试验页仍独立保留。实际测试平台Linux Chromium headless；Windows Chrome/Edge、Firefox、字体及58图一致性尚未验收。
 实现边界：当前规则核心为ES module .mjs，公共契约/UI为TypeScript，tsconfig checkJs=false；TypeScript通过不代表内部JS已严格类型化。后续逐步把内部领域记录迁至显式类型或受检查JSDoc，不把类型断言当运行时校验。当前存档仅支持同一配置/规则版本；校验和用于损坏检测，不是防作弊；尚无自动存档或完整随机抽样记录（F1基准无随机），没有覆盖复杂硬检查点中断恢复、真实授权变更、长期工作、一般支付优先和复杂磋商。此轮仅首个可操作闭环通过基准验证，G2-C未启动；不得宣称完整G2或F2可玩。
+
+用户人工测试报告（2026-11-27）：未发现明显问题。D89授权进入G2-C，非完整平台或视觉验收。

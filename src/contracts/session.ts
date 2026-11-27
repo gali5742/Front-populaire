@@ -1,8 +1,8 @@
 // Public query and command shapes only. No WorldState exported.
 export type PublicId=string;
 export type GameTime=Readonly<{monthIndex:number;label:string;phase:string}>;
-export type SessionSnapshot=Readonly<{time:GameTime;identity:string;actionRemaining:number;partyAvailableCentimes:number;partyCashCentimes:number;restrictedCentimes:number;requiredBlock:boolean;workCount:number;briefCount:number;profileLabel:string}>;
-export type ArchiveQuery=Readonly<{text:string;page:number;pageSize:number}>;
+export type SessionSnapshot=Readonly<{time:GameTime;identity:string;actionRemaining:number;partyAvailableCentimes:number;partyCashCentimes:number;restrictedCentimes:number;reservedCentimes:number;reservedAP:number;unpaidCentimes:number;requiredBlock:boolean;workCount:number;briefCount:number;profileLabel:string}>;
+export type ArchiveQuery=Readonly<{text:string;page:number;pageSize:number;monthIndex?:number}>;
 export type RecordSummary=Readonly<{id:PublicId;title:string;knownAt:string}>;
 export type ArchivePage=Readonly<{items:readonly RecordSummary[];total:number;page:number}>;
 export type DetailView=Readonly<{id:PublicId;title:string;description:string}>;
